@@ -12128,7 +12128,7 @@ function renderLeadSOW(){
   h+='<button class="btn btn-gold ls-gen" onclick="leadGenSOW()">'+_I('bulb')+' Generar borrador de SOW</button>';
   h+='<div class="ls-out-wrap" id="lsOutWrap" style="display:none"><div class="lp-sec-t" style="margin-top:0">Borrador (editable)</div>'
     +'<textarea class="ls-out" id="lsOut" placeholder="El borrador aparecerá aquí…"></textarea>'
-    +'<div class="ls-actions"><button class="btn btn-ghost btn-sm" onclick="leadCopySOW()">Copiar</button><button class="btn btn-gold btn-sm" onclick="leadSaveSOW()">Guardar SOW</button></div></div>';
+    +'<div class="ls-actions"><button class="btn btn-ghost btn-sm" onclick="leadCopySOW()">Copiar</button><button class="btn btn-ghost btn-sm" onclick="leadSowPdf()">'+_I('download')+' PDF</button><button class="btn btn-gold btn-sm" onclick="leadSaveSOW()">Guardar SOW</button></div></div>';
   area.innerHTML=h;
   if(p.sowDraft){var w=document.getElementById('lsOutWrap');var o=document.getElementById('lsOut');if(w&&o){w.style.display='';o.value=p.sowDraft;}}
 }
@@ -12142,17 +12142,172 @@ async function leadGenSOW(){
   if(!(p.description||'').trim()&&!notes.length){toast('Agrega una descripción o notas de fotos primero','err');return;}
   var w=document.getElementById('lsOutWrap');var o=document.getElementById('lsOut');var btn=document.querySelector('.ls-gen');
   if(w)w.style.display='';if(o)o.value='Generando borrador…';if(btn)btn.disabled=true;
-  var material='Proyecto: '+p.name+'\nDirección: '+(p.address||'—')+'\n\nDescripción del proyecto:\n'+((p.description||'').trim()||'(sin descripción)')
-    +'\n\nObservaciones desde fotos del sitio:\n'+(notes.length?notes.map(function(n,i){return (i+1)+'. '+n;}).join('\n'):'(ninguna)');
-  /* PROMPT BASE — reemplazar por las reglas del GPT de Dan en §8.2 */
-  var prompt='Eres un estimador senior de Formo Renovation, una empresa de remodelación residencial. Con la información del sitio de abajo, redacta un Scope of Work (SOW) profesional, claro y organizado por áreas/partidas. Usa encabezados por área y viñetas por partida, lenguaje concreto de construcción, y NO inventes medidas ni materiales que no se mencionen (marca lo faltante como "[por confirmar]"). Responde SOLO con el texto del SOW, sin preámbulo.\n\n=== INFORMACIÓN DEL SITIO ===\n'+material;
+  var material='Project name: '+(p.name||'Not provided')+'\nAddress: '+(p.address||'To be confirmed before work begins.')
+    +'\n\nProject description / client request:\n'+((p.description||'').trim()||'Not provided')
+    +'\n\nNotes from site photos (text only):\n'+(notes.length?notes.map(function(n){return '- '+n;}).join('\n'):'None provided');
   try{
-    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,messages:[{role:'user',content:prompt}]})});
+    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,system:SOW_RULES,messages:[{role:'user',content:'PROJECT INFORMATION:\n\n'+material}]})});
     var d=await res.json();if(!res.ok)throw new Error((d.error&&d.error.message)||'API error');
     var txt=((d.content.find(function(c){return c.type==='text';})||{}).text||'').trim();
     if(o)o.value=txt;
   }catch(err){if(o)o.value='';toast('Error: '+(err&&err.message||'error'),'err');}
   if(btn)btn.disabled=false;
+}
+/* Reglas del SOW de Formo (prompt fijo — GPT de Dan convertido) */
+var SOW_RULES=`You are a professional Scope of Work writer for Formo Renovation.
+
+Your task is to create a clear, organized, contractor-grade Scope of Work in native English using only the information provided by the user.
+
+COMPANY INFORMATION
+
+Formo Renovation
+Insured & W9 Ready
+
+Main services:
+- Drywall Level 5
+- Painting
+- Framing
+- Flooring
+- Tile
+- Remodeling
+
+CRITICAL SCOPE CONTROL
+
+Only include work that is explicitly mentioned in the project information, client request, notes, photos, measurements, quote, or messages provided.
+
+Do not assume or add work because it is common, related, nearby, recommended, or normally completed together.
+
+Follow these rules:
+- Mentioned work = included
+- Unmentioned work = excluded
+- Ambiguous work = state that it can be reviewed and priced separately
+- Do not invent measurements, quantities, materials, repairs, colors, surface conditions, or project details
+- Do not add warranties, timelines, payment terms, material allowances, or prices unless specifically provided
+- Do not add demolition, repairs, replacement, caulking, hardware work, specialty preparation, or protection unless explicitly mentioned
+- Do not expose internal costs
+
+IMPORTANT DESCRIPTION RULE
+
+Describe only what work is included.
+
+Do not describe: how the work will be performed, installation methods, painting methods, application procedures, work sequences, tools or equipment, number of coats, or sanding, priming, patching, masking, protection, or cleanup unless specifically mentioned.
+
+Each scope item must include only: the room, area, or location; the specific work included; and a short and basic explanation only when necessary to clarify the included work. Keep descriptions concise and scope-focused.
+
+DOORS RULE
+
+When doors are included, describe only the painting or staining work requested. Do not add hardware replacement, hinge work, door repairs, stripping, specialty preparation, or wood replacement. These items may only be included when explicitly mentioned.
+
+REQUIRED STRUCTURE
+
+Scope of Work - [Project Name, Area, or Address]
+
+Prepared by:
+Formo Renovation
+Insured & W9 Ready
+
+1. Project Overview
+Write a brief and professional summary of the requested work. Do not describe procedures, work methods, or execution details.
+
+2. Included Scope of Work
+Organize the work by trade, phase, room, area, or project section, depending on the information provided. For each item: identify the room or area, state the exact work included, keep the description brief, do not explain how the work will be completed, and do not expand the scope. When work is organized into phases, use headings such as "Phase 1 - Drywall Repairs". Do not place horizontal lines, divider lines, symbols, or decorative separators between phases or sections. Use spacing and headings only.
+
+3. General Notes
+Include only notes directly relevant to the listed scope. Use the following language when applicable: "Any work outside the listed scope will be reviewed and priced separately before proceeding." and "Any additional repairs, material replacement, or unforeseen conditions will require approval before moving forward." Do not state that preparation, protection, repairs, materials, or cleanup are included unless specifically confirmed.
+
+4. General Exclusion
+Include this exact statement: "Any work not specifically listed in this proposal is not included and may be priced separately if requested."
+
+5. Next Step
+End with: "Please let us know if you would like us to move forward so we can coordinate the next steps."
+
+6. Signature
+Dan Lares
+Formo Renovation
+615-608-1220
+dan@formorenovation.com
+
+FORMATTING RULES
+- Write in native English
+- Use a professional, warm, direct, and contractor-grade tone
+- Use clear headings and bullet points
+- Keep every scope item concise
+- Do not describe procedures or methods
+- Do not use tables unless specifically requested
+- Do not use horizontal lines between phases
+- Do not include customer information, pricing, payment terms, or client signature lines unless specifically requested
+- Do not repeat information
+- Do not add marketing language
+- Do not add work that was not explicitly provided
+- Keep the Scope of Work clean, organized, practical, and ready to send
+
+When information is incomplete, do not fabricate it. Use: "To be confirmed before work begins."
+
+Return ONLY the Scope of Work document text, with no preamble, no explanations, and no code fences.`;
+
+/* PDF sobrio del SOW (membrete Formo, jsPDF ya presente) */
+function _sowIsBullet(l){return /^[-•*]\s+/.test(l);}
+function _sowIsNumSec(l){return /^\d+\.\s+\S/.test(l);}
+function _sowPdf(p,text){
+  var jsPDF=window.jspdf.jsPDF;var d=new jsPDF({unit:'pt',format:'letter'});
+  var W=d.internal.pageSize.getWidth();var H=d.internal.pageSize.getHeight();var M=54;var y=58;
+  try{if(typeof FORMO_LOGO!=='undefined')d.addImage(FORMO_LOGO,'PNG',M,y-22,52,52);}catch(e){}
+  d.setFont('helvetica','bold');d.setFontSize(16);d.setTextColor(20);d.text('SCOPE OF WORK',W-M,y,{align:'right'});
+  d.setFont('helvetica','normal');d.setFontSize(9);d.setTextColor(130);d.text('Formo Renovation  ·  Insured & W9 Ready',W-M,y+15,{align:'right'});
+  y+=44;d.setDrawColor(210);d.line(M,y,W-M,y);y+=24;
+  var lines=String(text||'').replace(/\r/g,'').split('\n');
+  var maxW=W-2*M;
+  function pageBreak(need){if(y+ (need||0) > H-56){d.addPage();y=58;}}
+  for(var i=0;i<lines.length;i++){
+    var raw=lines[i];var l=raw.replace(/\s+$/,'');
+    var t=l.trim();
+    if(!t){y+=7;continue;}
+    // Skip decorative separators
+    if(/^[-=_*·]{3,}$/.test(t))continue;
+    if(_sowIsBullet(t)){
+      var bt=t.replace(/^[-•*]\s+/,'');
+      d.setFont('helvetica','normal');d.setFontSize(10.5);d.setTextColor(45);
+      var wrapped=d.splitTextToSize(bt,maxW-16);
+      pageBreak(wrapped.length*14);
+      d.setFillColor(150);d.circle(M+4,y-3.5,1.5,'F');
+      d.text(wrapped,M+14,y);y+=wrapped.length*14+2;
+    } else if(_sowIsNumSec(t)){
+      y+=8;pageBreak(20);
+      d.setFont('helvetica','bold');d.setFontSize(12.5);d.setTextColor(18);
+      d.text(t,M,y);y+=17;
+    } else if(/^phase\b/i.test(t)){
+      y+=6;pageBreak(18);
+      d.setFont('helvetica','bold');d.setFontSize(11);d.setTextColor(30);
+      d.text(t,M,y);y+=15;
+    } else {
+      // Subheading if next non-empty line is a bullet and this line is short
+      var nxt='';for(var j=i+1;j<lines.length;j++){if(lines[j].trim()){nxt=lines[j].trim();break;}}
+      var isSub=(t.length<52 && _sowIsBullet(nxt) && !/[.,:;]$/.test(t));
+      if(isSub){
+        y+=6;pageBreak(16);
+        d.setFont('helvetica','bold');d.setFontSize(10.5);d.setTextColor(35);
+        d.text(t,M,y);y+=15;
+      } else {
+        d.setFont('helvetica','normal');d.setFontSize(10.5);d.setTextColor(55);
+        var pw=d.splitTextToSize(t,maxW);
+        pageBreak(pw.length*14);
+        d.text(pw,M,y);y+=pw.length*14+3;
+      }
+    }
+  }
+  return d;
+}
+async function leadSowPdf(){
+  var p=CP();if(!p)return;
+  var o=document.getElementById('lsOut');var txt=(o&&o.value||p.sowDraft||'').trim();
+  if(!txt){toast('Genera o escribe el SOW primero','err');return;}
+  try{
+    await _loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+    var d=_sowPdf(p,txt);
+    var fname='SOW - '+String(p.name||'Project').replace(/[^\w\- ]+/g,'').trim()+'.pdf';
+    d.save(fname);
+    toast('PDF generado ✓');
+  }catch(err){console.error('sow pdf',err);toast('No se pudo crear el PDF: '+(err&&err.message||'error'),'err');}
 }
 function leadCopySOW(){var o=document.getElementById('lsOut');if(!o)return;o.select();try{document.execCommand('copy');toast('Copiado ✓');}catch(e){}}
 async function leadSaveSOW(){
@@ -12164,7 +12319,7 @@ async function leadSaveSOW(){
   toast('SOW guardado ✓ (listo para el estimador)');
 }
 
-['isLeadStage','applyLeadGating','renderLeadProject','_renderLeadGallery','_leadGalleryRefresh','_refreshLeadIfActive','leadSetCover','leadEditName','leadEditAddr','leadEditDesc','leadSetLabel','leadSaveCustomer','leadCoverSelect','renderLeadSOW','leadGenSOW','leadCopySOW','leadSaveSOW'
+['isLeadStage','applyLeadGating','renderLeadProject','_renderLeadGallery','_leadGalleryRefresh','_refreshLeadIfActive','leadSetCover','leadEditName','leadEditAddr','leadEditDesc','leadSetLabel','leadSaveCustomer','leadCoverSelect','renderLeadSOW','leadGenSOW','leadCopySOW','leadSaveSOW','leadSowPdf'
 ].forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
 
 </script>
