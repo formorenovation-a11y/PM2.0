@@ -2399,12 +2399,12 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:
       </div>
     </div>
     <!-- Recientes -->
-    <div class="home-sec-hd"><span class="home-sec-t">Recientes</span></div>
+    <div class="home-sec-hd"><span class="home-sec-t" id="recentHdTitle">Recent</span></div>
     <div class="recent-strip" id="recentStrip"></div>
 
     <!-- Carpetas / grid -->
     <div class="home-sec-hd">
-      <span class="home-sec-t" id="foldersHdTitle">Carpetas</span>
+      <span class="home-sec-t" id="foldersHdTitle">Folders</span>
       <div class="home-sec-act" id="foldersHdAct"></div>
     </div>
     <div class="folders-grid" id="foldersGrid"></div>
@@ -2645,6 +2645,8 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:
 .mbn-lead{display:none}
 body.lead-stage #mobileBottomNav .mbn-item:not(.mbn-lead){display:none}
 body.lead-stage #mobileBottomNav .mbn-lead{display:flex}
+#mobileBottomNav .mbn-lead-est{display:none}
+body.lead-stage.has-sow #mobileBottomNav .mbn-lead-est{display:flex}
 /* Proyecto/Fotos */
 #leadProjArea,#leadSowArea{max-width:640px;margin:0 auto;padding-bottom:40px}
 .lp-empty,.lp-ph-empty{color:var(--tx3);font-size:14px;padding:26px 14px;text-align:center}
@@ -2708,7 +2710,10 @@ body.lead-stage #mobileBottomNav .mbn-lead{display:flex}
 .ls-out{width:100%;min-height:320px;resize:vertical;background:var(--s1);border:1px solid var(--bd);border-radius:12px;color:var(--tx1);font-size:14px;line-height:1.55;padding:14px;font-family:inherit;white-space:pre-wrap}
 .ls-out:focus{outline:none;border-color:var(--gold)}
 .ls-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+.lead-cta-row{display:flex;flex-direction:column;gap:10px}
 .lead-nextbtn{width:100%;margin-top:24px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:15px;padding:14px}
+.lead-cta-row .lead-nextbtn{margin-top:0}
+.lead-cta-row .lead-nextbtn:first-child{margin-top:24px}
 .lead-nextbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 /* ── Estimador nativo ── */
 #leadEstArea{max-width:820px;margin:0 auto;padding-bottom:48px}
@@ -3470,7 +3475,7 @@ body.lead-stage #mobileBottomNav .mbn-lead{display:flex}
 <div class="ctx-menu" id="cardCtx">
   <div class="ctx-row" id="cctx-open">Open Project</div>
   <div class="ctx-div"></div>
-  <div class="ctx-lbl">Mover a carpeta</div>
+  <div class="ctx-lbl" id="cctxFoldLbl">Move to folder</div>
   <div id="cctx-folders"></div>
   <div class="ctx-div"></div>
   <div class="ctx-row danger" id="cctx-del">Delete</div>
@@ -3742,7 +3747,16 @@ const TXT={
 let LANG='en';
 function t(k){return(TXT[LANG]||TXT.en)[k]||k;}
 function setLang(l){LANG=l;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('on',b.dataset.l===l));applyLang();saveMeta();}
-function applyLang(){document.querySelectorAll('[data-t]').forEach(el=>{const k=el.dataset.t;if(k)el.textContent=t(k);});document.querySelectorAll('[data-tp]').forEach(el=>{const k=el.dataset.tp;if(k)el.placeholder=t(k);});}
+function applyLang(){document.querySelectorAll('[data-t]').forEach(el=>{const k=el.dataset.t;if(k)el.textContent=t(k);});document.querySelectorAll('[data-tp]').forEach(el=>{const k=el.dataset.tp;if(k)el.placeholder=t(k);});try{if(typeof _leadRerender==='function')_leadRerender();}catch(e){}}
+/* Base English, Spanish when ES is selected */
+function L(en,es){return (LANG==='es'&&es)?es:en;}
+function _leadRerender(){
+  if(!_activeId){if(typeof renderDash==='function')renderDash();return;}
+  var lp=document.getElementById('tab-leadproj');if(lp&&lp.classList.contains('on')){if(typeof renderLeadProject==='function')renderLeadProject();return;}
+  var ls=document.getElementById('tab-leadsow');if(ls&&ls.classList.contains('on')){if(typeof renderLeadSOW==='function')renderLeadSOW();return;}
+  var le=document.getElementById('tab-leadest');if(le&&le.classList.contains('on')){if(typeof _EST!=='undefined'&&_EST&&typeof _estRender==='function')_estRender();else if(typeof renderLeadEst==='function')renderLeadEst();return;}
+}
+window.L=L;
 
 const DEF_PHASES=[
   {id:'pre',name:'Pre-Construction',icon:'',order:0},{id:'demo',name:'Demo & Prep',icon:'',order:1},
@@ -3972,13 +3986,13 @@ function openProj(id){
   _calOffset=0;loadProjSettForm();if(typeof applyLeadGating==='function')applyLeadGating();switchTab((typeof isLeadStage==='function'&&isLeadStage(p))?'leadproj':'dash');renderProject();
   if(typeof renderClientFeedback==='function')renderClientFeedback();
 }
-function goHome(){_activeId=null;document.getElementById('dashView').style.display='block';document.getElementById('projView').style.display='none';document.getElementById('bcArea').innerHTML='';_mode='all';renderDash();}
+function goHome(){_activeId=null;document.body.classList.remove('lead-stage','has-sow','in-project');document.getElementById('dashView').style.display='block';document.getElementById('projView').style.display='none';document.getElementById('bcArea').innerHTML='';_mode='all';renderDash();}
 async function deleteCurProj(){const p=CP();if(!p)return;showConfirm('Delete "'+p.name+'"?',async function(){const id=p.id;delete PROJECTS[id];goHome();await fbDel(id);toast('Project deleted');});}
 async function quickDeleteProj(id){const p=PROJECTS[id];if(!p)return;showConfirm('Delete "'+p.name+'"?',async()=>{delete PROJECTS[id];renderDash();await fbDel(id);toast('Deleted');});}
 async function setProjStatus(id,status){const p=PROJECTS[id];if(!p)return;p.status=status;renderDash();await fbSave(p);}
 function openCardCtx(e,id){e.stopPropagation();_cardCtxId=id;
   var p=PROJECTS[id];var curK=p?projLabel(p):'';
-  var fc=document.getElementById('cctx-folders');
+  var _cfl=document.getElementById('cctxFoldLbl');if(_cfl)_cfl.textContent=L('Move to folder','Mover a carpeta');var fc=document.getElementById('cctx-folders');
   if(fc&&typeof getFolders==='function'){
     fc.innerHTML=getFolders().map(function(f){
       return '<div class="ctx-row ctx-fold'+(f.k===curK?' on':'')+'" onclick="moveProjToFolder(\''+id+'\',\''+f.k+'\')"><span class="ctx-fold-dot" style="background:'+f.c+'"></span>'+X(f.lbl)+(f.k===curK?' ✓':'')+'</div>';
@@ -4004,9 +4018,9 @@ function renderDash(){
     '<div class="stat-card"><div class="stat-lbl">Overall</div><div class="stat-val g">'+(allT.length?~~(done/allT.length*100):0)+'%</div></div>';
   // ── Tira de recientes ──
   var recent=all.slice().sort(function(a,b){return (b.updatedAt||b.createdAt||0)-(a.updatedAt||a.createdAt||0);}).slice(0,12);
-  var rs=document.getElementById('recentStrip');
+  var _rht=document.getElementById('recentHdTitle');if(_rht)_rht.textContent=L('Recent','Recientes');var rs=document.getElementById('recentStrip');
   if(rs){
-    if(!recent.length){rs.innerHTML='<div class="recent-empty">Aún no hay proyectos. Crea uno con "+ New Project".</div>';}
+    if(!recent.length){rs.innerHTML='<div class="recent-empty">'+L('No projects yet. Create one with "+ New Project".','Aún no hay proyectos. Crea uno con "+ New Project".')+'</div>';}
     else{rs.innerHTML=recent.map(function(p){
       var lm=(typeof projLabelMeta==='function')?projLabelMeta(projLabel(p)):{c:'#c9a84c',lbl:''};
       var thumb=p.photo?'<img src="'+X(p.photo)+'" alt="" loading="lazy">':'<div class="recent-ph">'+_I('house')+'</div>';
@@ -4025,32 +4039,32 @@ function renderDash(){
     var fmeta=folders.find(function(f){return f.k===_folderView;})||{k:_folderView,lbl:_folderView,c:'#c9a84c'};
     if(fg)fg.style.display='none';
     if(pg)pg.style.display='grid';
-    if(hd)hd.innerHTML='<button class="home-back" onclick="backToFolders()">&#8592; Carpetas</button> '+X(fmeta.lbl);
+    if(hd)hd.innerHTML='<button class="home-back" onclick="backToFolders()">&#8592; '+L('Folders','Carpetas')+'</button> '+X(fmeta.lbl);
     if(act)act.innerHTML='<button class="btn btn-gold btn-sm" onclick="startNewProject()">+ New Project</button>';
     var ps=all.filter(function(p){return projLabel(p)===_folderView;});
     var h='';for(var i=0;i<ps.length;i++){h+=_projCardHTML(ps[i]);}
-    if(!ps.length)h='<div class="recent-empty">No hay proyectos en esta carpeta.</div>';
+    if(!ps.length)h='<div class="recent-empty">'+L('No projects in this folder.','No hay proyectos en esta carpeta.')+'</div>';
     if(pg)pg.innerHTML=h;
   } else {
     if(fg)fg.style.display='grid';
     if(pg){pg.style.display='none';pg.innerHTML='';}
-    if(hd)hd.textContent='Carpetas';
-    if(act)act.innerHTML='<button class="btn btn-ghost btn-sm" onclick="openNewFolder()">+ Carpeta</button>';
+    if(hd)hd.textContent=L('Folders','Carpetas');
+    if(act)act.innerHTML='<button class="btn btn-ghost btn-sm" onclick="openNewFolder()">'+L('+ Folder','+ Carpeta')+'</button>';
     var fh='';
     folders.forEach(function(f){
       var inF=all.filter(function(p){return projLabel(p)===f.k;});
       var thumbs=inF.filter(function(p){return p.photo;}).slice(0,3);
       var tHTML=thumbs.map(function(p){return '<img class="ft" src="'+X(p.photo)+'" alt="">';}).join('');
       if(inF.length>thumbs.length&&thumbs.length)tHTML+='<div class="ft-more">+'+(inF.length-thumbs.length)+'</div>';
-      if(!thumbs.length)tHTML='<div class="folder-empty-mini">'+(inF.length?inF.length+' sin foto':'Vacía')+'</div>';
+      if(!thumbs.length)tHTML='<div class="folder-empty-mini">'+(inF.length?inF.length+' '+L('no photo','sin foto'):L('Empty','Vacía'))+'</div>';
       fh+='<div class="folder-card" onclick="openFolder(\''+f.k+'\')">'
         +'<div class="folder-accent" style="background:'+f.c+'"></div>'
-        +'<button class="folder-menu" onclick="event.stopPropagation();customizeFolder(\''+f.k+'\')" title="Opciones">&#8943;</button>'
+        +'<button class="folder-menu" onclick="event.stopPropagation();customizeFolder(\''+f.k+'\')" title="'+L('Options','Opciones')+'">&#8943;</button>'
         +'<div class="folder-top"><div class="folder-ico" style="background:'+f.c+'22;color:'+f.c+'">'+_I('folder')+'</div>'
-        +'<div class="folder-meta"><div class="folder-name">'+X(f.lbl)+'</div><div class="folder-count">'+inF.length+' proyecto'+(inF.length===1?'':'s')+'</div></div></div>'
+        +'<div class="folder-meta"><div class="folder-name">'+X(f.lbl)+'</div><div class="folder-count">'+inF.length+' '+(inF.length===1?L('project','proyecto'):L('projects','proyectos'))+'</div></div></div>'
         +'<div class="folder-thumbs">'+tHTML+'</div></div>';
     });
-    fh+='<div class="folder-card folder-new" onclick="openNewFolder()"><div class="fn-plus">+</div><div>Nueva carpeta</div></div>';
+    fh+='<div class="folder-card folder-new" onclick="openNewFolder()"><div class="fn-plus">+</div><div>'+L('New folder','Nueva carpeta')+'</div></div>';
     if(fg)fg.innerHTML=fh;
   }
   renderDashTiles();
@@ -4109,13 +4123,13 @@ function _foldOpenModal(name,color,canDelete){
   if(!ov){ov=document.createElement('div');ov.id='foldModal';ov.className='ov';document.body.appendChild(ov);}
   var swatches=FOLD_PALETTE.map(function(c){return '<button type="button" class="fold-color'+(c===color?' on':'')+'" style="background:'+c+'" onclick="_foldPickColor(\''+c+'\')"></button>';}).join('');
   ov.innerHTML='<div class="modal sm" onclick="event.stopPropagation()">'
-    +'<div class="mhd"><h3>'+(_foldEdit&&_foldEdit.isNew?'Nueva carpeta':'Personalizar carpeta')+'</h3><button class="mcls" onclick="cm(\'foldModal\')">&#10005;</button></div>'
+    +'<div class="mhd"><h3>'+(_foldEdit&&_foldEdit.isNew?L('New folder','Nueva carpeta'):L('Customize folder','Personalizar carpeta'))+'</h3><button class="mcls" onclick="cm(\'foldModal\')">&#10005;</button></div>'
     +'<div class="mbody">'
-    +'<div class="f"><label>Nombre</label><input id="foldName" value="'+X(name)+'" placeholder="Ej. Remodelaciones" maxlength="28"></div>'
-    +'<div class="f"><label>Color</label><div class="fold-colors" id="foldColors">'+swatches+'</div></div>'
+    +'<div class="f"><label>'+L('Name','Nombre')+'</label><input id="foldName" value="'+X(name)+'" placeholder="'+L('e.g. Remodels','Ej. Remodelaciones')+'" maxlength="28"></div>'
+    +'<div class="f"><label>'+L('Color','Color')+'</label><div class="fold-colors" id="foldColors">'+swatches+'</div></div>'
     +'<div style="display:flex;gap:8px;justify-content:space-between;margin-top:18px">'
-    +(canDelete?'<button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="deleteFolder()">Eliminar</button>':'<span></span>')
-    +'<div style="display:flex;gap:8px"><button class="btn btn-ghost btn-sm" onclick="cm(\'foldModal\')">Cancelar</button><button class="btn btn-gold btn-sm" onclick="saveFolder()">Guardar</button></div>'
+    +(canDelete?'<button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="deleteFolder()">'+L('Delete','Eliminar')+'</button>':'<span></span>')
+    +'<div style="display:flex;gap:8px"><button class="btn btn-ghost btn-sm" onclick="cm(\'foldModal\')">'+L('Cancel','Cancelar')+'</button><button class="btn btn-gold btn-sm" onclick="saveFolder()">'+L('Save','Guardar')+'</button></div>'
     +'</div></div></div>';
   ov.onclick=function(e){if(e.target===ov)cm('foldModal');};
   om('foldModal');
@@ -4123,25 +4137,25 @@ function _foldOpenModal(name,color,canDelete){
 }
 function _foldPickColor(c){_foldColorSel=c;document.querySelectorAll('#foldColors .fold-color').forEach(function(b){b.classList.toggle('on',b.style.background===c||(b.getAttribute('style')||'').indexOf(c)>=0);});}
 function saveFolder(){
-  var name=((document.getElementById('foldName')||{}).value||'').trim();if(!name){toast('Ponle un nombre','err');return;}
+  var name=((document.getElementById('foldName')||{}).value||'').trim();if(!name){toast(L('Give it a name','Ponle un nombre'),'err');return;}
   var color=_foldColorSel||'#c9a84c';
   if(!_foldEdit)return;
   if(_foldEdit.isNew){if(!META.folders)META.folders=[];META.folders.push({k:'cust_'+ID(),lbl:name,c:color});}
   else if(_foldEdit.builtin){if(!META.folderOverrides)META.folderOverrides={};META.folderOverrides[_foldEdit.k]={lbl:name,c:color};}
   else{var f=(META.folders||[]).find(function(x){return x.k===_foldEdit.k;});if(f){f.lbl=name;f.c=color;}}
-  saveMeta();cm('foldModal');renderDash();toast('Carpeta guardada ✓');
+  saveMeta();cm('foldModal');renderDash();toast(L('Folder saved ✓','Carpeta guardada ✓'));
 }
 function deleteFolder(){
   if(!_foldEdit||_foldEdit.isNew||_foldEdit.builtin)return;var k=_foldEdit.k;
-  showConfirm('¿Eliminar esta carpeta? Los proyectos NO se borran; quedarán sin carpeta hasta que los muevas.',function(){
+  showConfirm(L('Delete this folder? Projects are NOT deleted; they stay unfiled until you move them.','¿Eliminar esta carpeta? Los proyectos NO se borran; quedarán sin carpeta hasta que los muevas.'),function(){
     META.folders=(META.folders||[]).filter(function(x){return x.k!==k;});saveMeta();cm('foldModal');
-    if(_folderView===k)_folderView=null;renderDash();toast('Carpeta eliminada');
+    if(_folderView===k)_folderView=null;renderDash();toast(L('Folder deleted','Carpeta eliminada'));
   });
 }
 async function moveProjToFolder(id,k){
   var p=PROJECTS[id];if(!p)return;p.label=k;
   if(k==='done')p.status='done';else if(k==='lost')p.status='hold';else p.status='active';
-  closeCardCtx();renderDash();await fbSave(p);toast('Movido ✓');
+  closeCardCtx();renderDash();await fbSave(p);toast(L('Moved ✓','Movido ✓'));
 }
 ['_projCardHTML','getFolders','openFolder','backToFolders','openNewFolder','customizeFolder','_foldPickColor','saveFolder','deleteFolder','moveProjToFolder'
 ].forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
@@ -11617,11 +11631,11 @@ function openBeforeAfterCamera(beforeId){
       +'<div class="cam-quick" id="camQuick" style="display:none">'
         +'<img id="camQuickThumb" class="cam-quick-thumb" alt="" onclick="camQuickDraw()">'
         +'<div class="cam-quick-field">'
-          +'<input id="camQuickDesc" class="cam-quick-inp" placeholder="Descripción" oninput="camQuickDescInput(this.value)">'
-          +'<button type="button" class="cam-quick-btn" id="camQuickMic" onclick="camQuickMic()" title="Dictar">'+_CAM_MIC_SVG+'</button>'
-          +'<button type="button" class="cam-quick-btn" onclick="var e=document.getElementById(\'camQuickDesc\');if(e)e.focus()" title="Teclado">'+_CAM_KB_SVG+'</button>'
+          +'<input id="camQuickDesc" class="cam-quick-inp" placeholder="'+L('Description','Descripción')+'" oninput="camQuickDescInput(this.value)">'
+          +'<button type="button" class="cam-quick-btn" id="camQuickMic" onclick="camQuickMic()" title="'+L('Dictate','Dictar')+'">'+_CAM_MIC_SVG+'</button>'
+          +'<button type="button" class="cam-quick-btn" onclick="var e=document.getElementById(\'camQuickDesc\');if(e)e.focus()" title="'+L('Keyboard','Teclado')+'">'+_CAM_KB_SVG+'</button>'
         +'</div>'
-        +'<button type="button" class="cam-quick-draw" onclick="camQuickDraw()" title="Rayar la foto">'+(typeof _I!=='undefined'?_I('pencil'):'')+'</button>'
+        +'<button type="button" class="cam-quick-draw" onclick="camQuickDraw()" title="'+L('Mark up photo','Rayar la foto')+'">'+(typeof _I!=='undefined'?_I('pencil'):'')+'</button>'
       +'</div>'
       +'<div class="cam-bottombar">'
         +'<button class="cam-side" onclick="camPickBefore()" id="camBeforeBtn">Before</button>'
@@ -11744,7 +11758,7 @@ function camQuickMic(){
   var btn=document.getElementById('camQuickMic');var inp=document.getElementById('camQuickDesc');
   if(_camQuickRecog){_camStopQuickRec();if(btn)btn.classList.remove('rec');return;}
   var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){ /* iOS Safari: sin Web Speech — usar el micrófono del teclado */ if(inp)inp.focus();toast('Toca el micrófono del teclado para dictar','ok');return; }
+  if(!SR){ /* iOS Safari: sin Web Speech — usar el micrófono del teclado */ if(inp)inp.focus();toast(L('Tap the keyboard microphone to dictate','Toca el micrófono del teclado para dictar'),'ok');return; }
   var lang=(typeof LANG!=='undefined'&&LANG==='es')?'es-ES':'en-US';
   try{
     var r=new SR();r.lang=lang;r.continuous=true;r.interimResults=true;
@@ -11758,7 +11772,7 @@ function camQuickMic(){
 }
 function _camStopQuickRec(){if(_camQuickRecog){try{_camQuickRecog.stop();}catch(e){}_camQuickRecog=null;}var btn=document.getElementById('camQuickMic');if(btn)btn.classList.remove('rec');}
 function camQuickDraw(){
-  if(!_camLastPhotoId){toast('Toma una foto primero','err');return;}
+  if(!_camLastPhotoId){toast(L('Take a photo first','Toma una foto primero'),'err');return;}
   _camStopQuickRec();
   // Volcar la descripción pendiente (debounce) antes de abrir el editor para no perderla
   if(_camDescTimer){clearTimeout(_camDescTimer);_camDescTimer=null;}
@@ -11828,13 +11842,13 @@ window._I=_I;
 function _svg(name,cls){return '<span class="ui-ico'+(cls?' '+cls:'')+'">'+(_SVG[name]||'')+'</span>';}
 
 function applyUIIcons(){
-  var tabMap={leadproj:'house',leadsow:'filetext',dash:'grid',gen:'zap',tasks:'check',mats:'package',sched:'calendar',crew:'users',payroll:'wallet',expenses:'card',finance:'dollar',reports:'chart',files:'folder',photos:'camera',survey:'route',estimate:'filetext',portal:'globe',proj:'settings'};
+  var tabMap={leadproj:'house',leadsow:'filetext',leadest:'calc',dash:'grid',gen:'zap',tasks:'check',mats:'package',sched:'calendar',crew:'users',payroll:'wallet',expenses:'card',finance:'dollar',reports:'chart',files:'folder',photos:'camera',survey:'route',estimate:'filetext',portal:'globe',proj:'settings'};
   document.querySelectorAll('.t-item[data-tab]').forEach(function(el){
     if(el.querySelector('.t-ico'))return;
     var n=tabMap[el.dataset.tab];if(!n)return;
     el.insertAdjacentHTML('afterbegin',_svg(n,'t-ico'));
   });
-  var mbMap={leadproj:'house',leadsow:'filetext',dash:'grid',tasks:'check',expenses:'card',more:'dots'};
+  var mbMap={leadproj:'house',leadsow:'filetext',leadest:'calc',dash:'grid',tasks:'check',expenses:'card',more:'dots'};
   document.querySelectorAll('.mbn-item[data-mbtab]').forEach(function(el){
     var ic=el.querySelector('.mbn-ico');if(!ic)return;
     var n=mbMap[el.dataset.mbtab];if(n&&!ic.querySelector('svg'))ic.innerHTML=_SVG[n]||'';
@@ -12069,6 +12083,7 @@ function applyLeadGating(){
   var lead=isLeadStage(p);
   document.body.classList.toggle('lead-stage',!!lead);
   var hasSOW=!!(p&&p.sowDraft);
+  document.body.classList.toggle('has-sow',!!(lead&&hasSOW));
   document.querySelectorAll('.t-item[data-tab]').forEach(function(it){
     var tab=it.dataset.tab;var isLeadTab=(tab==='leadproj'||tab==='leadsow'||tab==='leadest');
     if(lead){
@@ -12085,32 +12100,35 @@ function _cssUrl(u){return '"'+String(u||'').replace(/["\\]/g,encodeURIComponent
 /* ── Proyecto / Fotos ── */
 function renderLeadProject(){
   var p=CP();var area=document.getElementById('leadProjArea');if(!area)return;
-  if(!p){area.innerHTML='<div class="lp-empty">Abre un proyecto para empezar.</div>';return;}
-  var cust=p.customer||{};var curK=projLabel(p);
+  if(!p){area.innerHTML='<div class="lp-empty">'+L('Open a project to begin.','Abre un proyecto para empezar.')+'</div>';return;}
+  var cust=p.customer||{};var curK=projLabel(p);var hasSOW=!!p.sowDraft;
   var h='';
   h+='<div class="lp-cover'+(p.photo?' has':'')+'">'
     +(p.photo?'<img class="lp-cover-img" src="'+X(p.photo)+'" alt="">':'')
-    +'<label class="lp-cover-btn">'+_I('camera')+'<span>'+(p.photo?'Cambiar portada':'Agregar portada')+'</span>'
+    +'<label class="lp-cover-btn">'+_I('camera')+'<span>'+(p.photo?L('Change cover','Cambiar portada'):L('Add cover','Agregar portada'))+'</span>'
     +'<input type="file" accept="image/*" style="display:none" onchange="leadCoverSelect(this.files)"></label></div>';
   h+='<div class="lp-head">'
-    +'<input class="lp-name" value="'+X(p.name)+'" onchange="leadEditName(this.value)" placeholder="Nombre del proyecto">'
-    +'<input class="lp-addr" value="'+X(p.address||'')+'" onchange="leadEditAddr(this.value)" placeholder="Dirección del sitio"></div>';
-  h+='<div class="lp-sec"><div class="lp-sec-t">Etapa</div><div class="lp-labels">'
+    +'<input class="lp-name" value="'+X(p.name)+'" onchange="leadEditName(this.value)" placeholder="'+L('Project name','Nombre del proyecto')+'">'
+    +'<input class="lp-addr" value="'+X(p.address||'')+'" onchange="leadEditAddr(this.value)" placeholder="'+L('Site address','Dirección del sitio')+'"></div>';
+  h+='<div class="lp-sec"><div class="lp-sec-t">'+L('Stage','Etapa')+'</div><div class="lp-labels">'
     +PROJECT_LABELS.map(function(l){return '<button type="button" class="lp-chip'+(curK===l.k?' on':'')+'" onclick="leadSetLabel(\''+l.k+'\')"><span class="lp-dot" style="background:'+l.c+'"></span>'+l.lbl+'</button>';}).join('')
-    +'</div><div class="lp-hint">Al pasar a Approved / In progress se desbloquean las pestañas completas de ejecución.</div></div>';
-  h+='<div class="lp-sec"><div class="lp-sec-t">Descripción</div>'
-    +'<textarea class="lp-desc" placeholder="Describe el alcance general del trabajo…" onchange="leadEditDesc(this.value)">'+X(p.description||'')+'</textarea></div>';
-  h+='<div class="lp-sec"><div class="lp-sec-t">Cliente</div><div class="lp-cust">'
-    +'<input class="lp-inp" id="lpCustName" value="'+X(cust.name||p.client||'')+'" placeholder="Nombre">'
-    +'<input class="lp-inp" id="lpCustPhone" value="'+X(cust.phone||'')+'" placeholder="Teléfono">'
-    +'<input class="lp-inp" id="lpCustEmail" value="'+X(cust.email||'')+'" placeholder="Email">'
-    +'<button class="btn btn-ghost btn-sm" style="align-self:flex-start;margin-top:2px" onclick="leadSaveCustomer()">Guardar cliente</button></div></div>';
-  h+='<div class="lp-sec lp-photos"><div class="lp-sec-t">Fotos<span class="lp-count" id="leadPhotoCount"></span></div>'
+    +'</div><div class="lp-hint">'+L('Moving to Approved / In progress unlocks the full execution tabs.','Al pasar a Approved / In progress se desbloquean las pestañas completas de ejecución.')+'</div></div>';
+  h+='<div class="lp-sec"><div class="lp-sec-t">'+L('Description','Descripción')+'</div>'
+    +'<textarea class="lp-desc" placeholder="'+L('Describe the general scope of work…','Describe el alcance general del trabajo…')+'" onchange="leadEditDesc(this.value)">'+X(p.description||'')+'</textarea></div>';
+  h+='<div class="lp-sec"><div class="lp-sec-t">'+L('Client','Cliente')+'</div><div class="lp-cust">'
+    +'<input class="lp-inp" id="lpCustName" value="'+X(cust.name||p.client||'')+'" placeholder="'+L('Name','Nombre')+'">'
+    +'<input class="lp-inp" id="lpCustPhone" value="'+X(cust.phone||'')+'" placeholder="'+L('Phone','Teléfono')+'">'
+    +'<input class="lp-inp" id="lpCustEmail" value="'+X(cust.email||'')+'" placeholder="'+L('Email','Email')+'">'
+    +'<button class="btn btn-ghost btn-sm" style="align-self:flex-start;margin-top:2px" onclick="leadSaveCustomer()">'+L('Save client','Guardar cliente')+'</button></div></div>';
+  h+='<div class="lp-sec lp-photos"><div class="lp-sec-t">'+L('Photos','Fotos')+'<span class="lp-count" id="leadPhotoCount"></span></div>'
     +'<div class="lp-cap-row">'
-    +'<button class="lp-cam" onclick="openBeforeAfterCamera()">'+_I('camera')+'<span>Tomar foto</span></button>'
-    +'<label class="lp-gal">'+_I('image')+'<span>Galería</span><input type="file" accept="image/*" multiple style="display:none" onchange="handlePhotoGallerySelect(this.files)"></label>'
+    +'<button class="lp-cam" onclick="openBeforeAfterCamera()">'+_I('camera')+'<span>'+L('Take photo','Tomar foto')+'</span></button>'
+    +'<label class="lp-gal">'+_I('image')+'<span>'+L('Gallery','Galería')+'</span><input type="file" accept="image/*" multiple style="display:none" onchange="handlePhotoGallerySelect(this.files)"></label>'
     +'</div><div class="lp-grid" id="leadGalleryGrid"></div></div>';
-  h+='<button class="btn btn-gold lead-nextbtn" onclick="switchTab(\'leadsow\')">'+_I('filetext')+' Generar SOW &#8594;</button>';
+  h+='<div class="lead-cta-row">';
+  h+='<button class="btn '+(hasSOW?'btn-ghost':'btn-gold')+' lead-nextbtn" onclick="switchTab(\'leadsow\')">'+_I('filetext')+' '+(hasSOW?L('View / Edit SOW','Ver / Editar SOW'):L('Generate SOW','Generar SOW'))+' &#8594;</button>';
+  if(hasSOW)h+='<button class="btn btn-gold lead-nextbtn" onclick="switchTab(\'leadest\')">'+_I('calc')+' '+L('Create Estimate','Realizar estimación')+' &#8594;</button>';
+  h+='</div>';
   area.innerHTML=h;
   _renderLeadGallery();
 }
@@ -12119,15 +12137,15 @@ function _renderLeadGallery(){
   var p=CP();var grid=document.getElementById('leadGalleryGrid');if(!grid||!p)return;
   var photos=p.photos||[];
   var cnt=document.getElementById('leadPhotoCount');if(cnt)cnt.textContent=photos.length?(' · '+photos.length):'';
-  if(!photos.length){grid.innerHTML='<div class="lp-ph-empty">Aún no hay fotos. Toca <b>Tomar foto</b> para capturar con descripción o nota de voz.</div>';return;}
+  if(!photos.length){grid.innerHTML='<div class="lp-ph-empty">'+L('No photos yet. Tap <b>Take photo</b> to capture with a description or voice note.','Aún no hay fotos. Toca <b>Tomar foto</b> para capturar con descripción o nota de voz.')+'</div>';return;}
   grid.innerHTML=photos.slice().reverse().map(function(ph){
     var cap=(ph.caption||ph.transcript||'').trim();var idj=JSON.stringify(ph.id).replace(/"/g,'&quot;');
     return '<div class="lp-item'+(p.photo&&p.photo===ph.url?' is-cover':'')+'" onclick="openPhotoEditor('+idj+')">'
-      +'<button class="lp-setcover" onclick="event.stopPropagation();leadSetCover('+idj+')" title="Usar como portada">'+_I('house')+'</button>'
-      +'<button class="lp-del" onclick="event.stopPropagation();photoDelete('+idj+')" title="Eliminar">'+_I('trash')+'</button>'
+      +'<button class="lp-setcover" onclick="event.stopPropagation();leadSetCover('+idj+')" title="'+L('Use as cover','Usar como portada')+'">'+_I('house')+'</button>'
+      +'<button class="lp-del" onclick="event.stopPropagation();photoDelete('+idj+')" title="'+L('Delete','Eliminar')+'">'+_I('trash')+'</button>'
       +'<div class="lp-imgwrap"><img src="'+X(ph.url)+'" alt="" loading="lazy">'+(typeof _marksSVG!=='undefined'?_marksSVG(ph.marks):'')+'</div>'
-      +'<div class="lp-badges">'+(ph.marks&&ph.marks.length?'<span class="lp-badge" title="Anotada">'+_I('pencil')+'</span>':'')+(ph.audioUrl?'<span class="lp-badge" title="Nota de voz">\u25B6</span>':'')+(ph.gps?'<span class="lp-badge gps" title="GPS"></span>':'')+'</div>'
-      +'<div class="lp-cap'+(cap?'':' lp-cap-empty')+'">'+(cap?X(cap):'+ descripción / rayar')+'</div>'
+      +'<div class="lp-badges">'+(ph.marks&&ph.marks.length?'<span class="lp-badge" title="'+L('Annotated','Anotada')+'">'+_I('pencil')+'</span>':'')+(ph.audioUrl?'<span class="lp-badge" title="'+L('Voice note','Nota de voz')+'">\u25B6</span>':'')+(ph.gps?'<span class="lp-badge gps" title="GPS"></span>':'')+'</div>'
+      +'<div class="lp-cap'+(cap?'':' lp-cap-empty')+'">'+(cap?X(cap):L('+ description / markup','+ descripción / rayar'))+'</div>'
       +'</div>';
   }).join('');
 }
@@ -12142,7 +12160,7 @@ async function leadSetCover(id){
   await fbSave(p);
   if(typeof renderLeadProject==='function')renderLeadProject();
   if(typeof renderDash==='function')renderDash();
-  toast('Portada actualizada ✓');
+  toast(L('Cover updated ✓','Portada actualizada ✓'));
 }
 
 /* ── Ediciones inline del proyecto en modo lead ── */
@@ -12157,7 +12175,7 @@ function leadSetLabel(k){
   fbSave(p);
   applyLeadGating();
   if(isLeadStage(p)){renderLeadProject();}
-  else{toast('Pestañas de ejecución desbloqueadas ✓');switchTab('dash');renderProject();}
+  else{toast(L('Execution tabs unlocked ✓','Pestañas de ejecución desbloqueadas ✓'));switchTab('dash');renderProject();}
 }
 
 async function leadSaveCustomer(){
@@ -12172,7 +12190,7 @@ async function leadSaveCustomer(){
       await setDoc(doc(db,'customers','cust_'+ckey),{id:'cust_'+ckey,name:name,phone:phone,email:email,address:p.address||'',projectIds:arrayUnion(p.id),updatedAt:Date.now()},{merge:true});
     }catch(e){console.warn('customer db',e);}
   }
-  toast('Cliente guardado ✓');
+  toast(L('Client saved ✓','Cliente guardado ✓'));
 }
 
 function leadCoverSelect(files){
@@ -12184,7 +12202,7 @@ function leadCoverSelect(files){
     cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);
     p.photo=cv.toDataURL('image/jpeg',0.75);
     try{await fbSave(p);}catch(err){}
-    renderLeadProject();toast('Portada actualizada ✓');
+    renderLeadProject();toast(L('Cover updated ✓','Portada actualizada ✓'));
   };img.src=e.target.result;};
   r.readAsDataURL(file);
 }
@@ -12192,21 +12210,21 @@ function leadCoverSelect(files){
 /* ── Generar SOW (borrador con IA — prompt base; §8.2 lo afina con las reglas del GPT de Dan) ── */
 function renderLeadSOW(){
   var p=CP();var area=document.getElementById('leadSowArea');if(!area)return;
-  if(!p){area.innerHTML='<div class="lp-empty">Abre un proyecto para empezar.</div>';return;}
+  if(!p){area.innerHTML='<div class="lp-empty">'+L('Open a project to begin.','Abre un proyecto para empezar.')+'</div>';return;}
   var photos=p.photos||[];
   var notes=photos.map(function(ph){return (ph.caption||ph.transcript||'').trim();}).filter(Boolean);
   var h='';
-  h+='<button class="home-back" style="margin-bottom:10px" onclick="switchTab(\'leadproj\')">&#8592; Proyecto / Fotos</button>';
-  h+='<div class="ls-hd"><h2 class="ls-title">Generar SOW</h2><div class="ls-sub">Junta la descripción del proyecto y las descripciones de todas las fotos (solo texto, sin imágenes) para redactar el borrador del Scope of Work.</div></div>';
-  h+='<div class="lp-sec"><div class="lp-sec-t">Material recabado</div>';
-  h+='<div class="ls-src"><div class="ls-src-lbl">Descripción del proyecto</div><div class="ls-src-val">'+(p.description?X(p.description):'<i>Sin descripción — agrégala en Proyecto/Fotos</i>')+'</div></div>';
-  h+='<div class="ls-src"><div class="ls-src-lbl">Notas de fotos ('+notes.length+')</div>'+(notes.length?('<ul class="ls-notes">'+notes.map(function(n){return '<li>'+X(n)+'</li>';}).join('')+'</ul>'):'<div class="ls-src-val"><i>Ninguna foto tiene descripción todavía</i></div>')+'</div>';
+  h+='<button class="home-back" style="margin-bottom:10px" onclick="switchTab(\'leadproj\')">&#8592; '+L('Project / Photos','Proyecto / Fotos')+'</button>';
+  h+='<div class="ls-hd"><h2 class="ls-title">'+L('Generate SOW','Generar SOW')+'</h2><div class="ls-sub">'+L('Combines the project description and all photo notes (text only, no images) to draft the Scope of Work.','Junta la descripción del proyecto y las descripciones de todas las fotos (solo texto, sin imágenes) para redactar el borrador del Scope of Work.')+'</div></div>';
+  h+='<div class="lp-sec"><div class="lp-sec-t">'+L('Collected material','Material recabado')+'</div>';
+  h+='<div class="ls-src"><div class="ls-src-lbl">'+L('Project description','Descripción del proyecto')+'</div><div class="ls-src-val">'+(p.description?X(p.description):'<i>'+L('No description — add it in Project / Photos','Sin descripción — agrégala en Proyecto/Fotos')+'</i>')+'</div></div>';
+  h+='<div class="ls-src"><div class="ls-src-lbl">'+L('Photo notes','Notas de fotos')+' ('+notes.length+')</div>'+(notes.length?('<ul class="ls-notes">'+notes.map(function(n){return '<li>'+X(n)+'</li>';}).join('')+'</ul>'):'<div class="ls-src-val"><i>'+L('No photo has a description yet','Ninguna foto tiene descripción todavía')+'</i></div>')+'</div>';
   h+='</div>';
-  h+='<button class="btn btn-gold ls-gen" onclick="leadGenSOW()">'+_I('bulb')+' Generar borrador de SOW</button>';
-  h+='<div class="ls-out-wrap" id="lsOutWrap" style="display:none"><div class="lp-sec-t" style="margin-top:0">Borrador (editable)</div>'
-    +'<textarea class="ls-out" id="lsOut" placeholder="El borrador aparecerá aquí…"></textarea>'
-    +'<div class="ls-actions"><button class="btn btn-ghost btn-sm" onclick="leadCopySOW()">Copiar</button><button class="btn btn-ghost btn-sm" onclick="leadSowPdf()">'+_I('download')+' PDF</button><button class="btn btn-gold btn-sm" onclick="leadSaveSOW()">Guardar SOW</button></div></div>';
-  if(p.sowDraft)h+='<button class="btn btn-gold lead-nextbtn" onclick="switchTab(\'leadest\')">'+_I('calc')+' Ir al Estimador &#8594;</button>';
+  h+='<button class="btn btn-gold ls-gen" onclick="leadGenSOW()">'+_I('bulb')+' '+L('Generate SOW draft','Generar borrador de SOW')+'</button>';
+  h+='<div class="ls-out-wrap" id="lsOutWrap" style="display:none"><div class="lp-sec-t" style="margin-top:0">'+L('Draft (editable)','Borrador (editable)')+'</div>'
+    +'<textarea class="ls-out" id="lsOut" placeholder="'+L('The draft will appear here…','El borrador aparecerá aquí…')+'"></textarea>'
+    +'<div class="ls-actions"><button class="btn btn-ghost btn-sm" onclick="leadCopySOW()">'+L('Copy','Copiar')+'</button><button class="btn btn-ghost btn-sm" onclick="leadSowPdf()">'+_I('download')+' PDF</button><button class="btn btn-gold btn-sm" onclick="leadSaveSOW()">'+L('Save SOW','Guardar SOW')+'</button></div></div>';
+  if(p.sowDraft)h+='<button class="btn btn-gold lead-nextbtn" onclick="switchTab(\'leadest\')">'+_I('calc')+' '+L('Create Estimate','Realizar estimación')+' &#8594;</button>';
   area.innerHTML=h;
   if(p.sowDraft){var w=document.getElementById('lsOutWrap');var o=document.getElementById('lsOut');if(w&&o){w.style.display='';o.value=p.sowDraft;}}
 }
@@ -12214,12 +12232,12 @@ function renderLeadSOW(){
 async function leadGenSOW(){
   var p=CP();if(!p)return;
   var k=localStorage.getItem('formo_api');
-  if(!k){toast('Agrega tu API key en Ajustes → API Key','err');if(typeof openAppSettings==='function'){openAppSettings();if(typeof stab==='function')stab('api');}return;}
+  if(!k){toast(L('Add your API key in Settings → API Key','Agrega tu API key en Ajustes → API Key'),'err');if(typeof openAppSettings==='function'){openAppSettings();if(typeof stab==='function')stab('api');}return;}
   var photos=p.photos||[];
   var notes=photos.map(function(ph){return (ph.caption||ph.transcript||'').trim();}).filter(Boolean);
-  if(!(p.description||'').trim()&&!notes.length){toast('Agrega una descripción o notas de fotos primero','err');return;}
+  if(!(p.description||'').trim()&&!notes.length){toast(L('Add a description or photo notes first','Agrega una descripción o notas de fotos primero'),'err');return;}
   var w=document.getElementById('lsOutWrap');var o=document.getElementById('lsOut');var btn=document.querySelector('.ls-gen');
-  if(w)w.style.display='';if(o)o.value='Generando borrador…';if(btn)btn.disabled=true;
+  if(w)w.style.display='';if(o)o.value=L('Generating draft…','Generando borrador…');if(btn)btn.disabled=true;
   var material='Project name: '+(p.name||'Not provided')+'\nAddress: '+(p.address||'To be confirmed before work begins.')
     +'\n\nProject description / client request:\n'+((p.description||'').trim()||'Not provided')
     +'\n\nNotes from site photos (text only):\n'+(notes.length?notes.map(function(n){return '- '+n;}).join('\n'):'None provided');
@@ -12378,19 +12396,19 @@ function _sowPdf(p,text){
 async function leadSowPdf(){
   var p=CP();if(!p)return;
   var o=document.getElementById('lsOut');var txt=(o&&o.value||p.sowDraft||'').trim();
-  if(!txt){toast('Genera o escribe el SOW primero','err');return;}
+  if(!txt){toast(L('Generate or write the SOW first','Genera o escribe el SOW primero'),'err');return;}
   try{
     await _loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
     var d=_sowPdf(p,txt);
     var fname='SOW - '+String(p.name||'Project').replace(/[^\w\- ]+/g,'').trim()+'.pdf';
     d.save(fname);
-    toast('PDF generado ✓');
-  }catch(err){console.error('sow pdf',err);toast('No se pudo crear el PDF: '+(err&&err.message||'error'),'err');}
+    toast(L('PDF generated ✓','PDF generado ✓'));
+  }catch(err){console.error('sow pdf',err);toast(L('Could not create the PDF: ','No se pudo crear el PDF: ')+(err&&err.message||'error'),'err');}
 }
 function leadCopySOW(){var o=document.getElementById('lsOut');if(!o)return;o.select();try{document.execCommand('copy');toast('Copiado ✓');}catch(e){}}
 async function leadSaveSOW(){
   var p=CP();if(!p)return;var o=document.getElementById('lsOut');if(!o)return;
-  var txt=(o.value||'').trim();if(!txt){toast('Nada que guardar','err');return;}
+  var txt=(o.value||'').trim();if(!txt){toast(L('Nothing to save','Nada que guardar'),'err');return;}
   p.sowDraft=txt;await fbSave(p);
   try{await setDoc(doc(db,'sow_projects','sow_'+p.id),{id:'sow_'+p.id,projectId:p.id,name:p.name,address:p.address||'',client:(p.customer&&p.customer.name)||p.client||'',phone:(p.customer&&p.customer.phone)||'',email:(p.customer&&p.customer.email)||'',status:'draft',sow:txt,updatedAt:Date.now()},{merge:true});
   }catch(e){console.warn('sow_projects',e);}
@@ -12398,7 +12416,7 @@ async function leadSaveSOW(){
   if(_EST&&_EST._pid===p.id)_EST.sow=txt;
   if(typeof applyLeadGating==='function')applyLeadGating();
   if(typeof renderLeadSOW==='function')renderLeadSOW();
-  toast('SOW guardado ✓ — pestaña Estimador desbloqueada');
+  toast(L('SOW saved ✓ — Estimator tab unlocked','SOW guardado ✓ — pestaña Estimador desbloqueada'));
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -12435,15 +12453,15 @@ function estSchedSave(){if(_estSaveTimer)clearTimeout(_estSaveTimer);_estSaveTim
 async function estSave(silent){
   if(!_EST)return;_EST.updatedAt=Date.now();
   var toSave=Object.assign({},_EST);delete toSave._pid;
-  try{await setDoc(doc(db,'sow_estimates',_EST.id),toSave);if(!silent)toast('Estimado guardado ✓');setSS&&setSS('ok','Live');}
-  catch(e){console.warn('est save',e);if(!silent)toast('Error al guardar el estimado','err');}
+  try{await setDoc(doc(db,'sow_estimates',_EST.id),toSave);if(!silent)toast(L('Estimate saved ✓','Estimado guardado ✓'));setSS&&setSS('ok','Live');}
+  catch(e){console.warn('est save',e);if(!silent)toast(L('Could not save the estimate','Error al guardar el estimado'),'err');}
 }
 
 async function renderLeadEst(){
   var area=document.getElementById('leadEstArea');if(!area)return;
-  var p=CP();if(!p){area.innerHTML='<div class="lp-empty">Abre un proyecto.</div>';return;}
-  if(!p.sowDraft){area.innerHTML='<div class="lp-empty">Primero genera y guarda el SOW en la pestaña "Generar SOW".</div>';return;}
-  area.innerHTML='<div class="lp-empty">Cargando estimado…</div>';
+  var p=CP();if(!p){area.innerHTML='<div class="lp-empty">'+L('Open a project.','Abre un proyecto.')+'</div>';return;}
+  if(!p.sowDraft){area.innerHTML='<div class="lp-empty">'+L('First generate and save the SOW in the "Generate SOW" tab.','Primero genera y guarda el SOW en la pestaña "Generar SOW".')+'</div>';return;}
+  area.innerHTML='<div class="lp-empty">'+L('Loading estimate…','Cargando estimado…')+'</div>';
   await estLoad();
   // Auto-correr IA la primera vez (sin partidas) para llenar el estimado desde el SOW
   if((!_EST.categories||!_EST.categories.length)&&_EST.sow&&!_estAIran[p.id]){_estAIran[p.id]=true;await estAI(true);return;}
@@ -12455,24 +12473,24 @@ function _estRender(){
   var cats=_EST.categories||[],adjs=_EST.adjustments||[],profRows=_EST.profitRows||[],misc=_EST.miscItems||[],phases=_EST.phases||[];
   var COST=estCostTotal(cats,adjs),PROF=estProfitTotal(cats,profRows),MISC=estMiscTotal(misc),GRAND=COST+PROF+MISC;
   var h='';
-  h+='<button class="home-back" style="margin-bottom:10px" onclick="switchTab(\'leadsow\')">&#8592; Generar SOW</button>';
-  h+='<div class="est-top"><div><div class="ls-sub" style="text-transform:uppercase;letter-spacing:.08em;font-size:10px;color:var(--tx4);font-weight:700">Estimado</div>'
+  h+='<button class="home-back" style="margin-bottom:10px" onclick="switchTab(\'leadsow\')">&#8592; '+L('Generate SOW','Generar SOW')+'</button>';
+  h+='<div class="est-top"><div><div class="ls-sub" style="text-transform:uppercase;letter-spacing:.08em;font-size:10px;color:var(--tx4);font-weight:700">'+L('Estimate','Estimado')+'</div>'
     +'<h2 class="ls-title">'+X(_EST.name||p_name())+'</h2></div>'
     +'<div class="est-top-act">'
     +'<select class="est-mini" onchange="estSetStatus(this.value)"><option value="draft"'+(_EST.status==='draft'?' selected':'')+'>Draft</option><option value="sent"'+(_EST.status==='sent'?' selected':'')+'>Sent</option><option value="won"'+(_EST.status==='won'?' selected':'')+'>Won</option><option value="lost"'+(_EST.status==='lost'?' selected':'')+'>Lost</option></select>'
-    +'<input class="est-mini" type="number" min="1" placeholder="Días" value="'+(_EST.estimatedDays||'')+'" onchange="estSetDays(this.value)" style="width:64px" title="Días estimados">'
-    +'<button class="btn btn-ghost btn-sm" onclick="estAI(false)">'+_I('bulb')+' IA</button>'
-    +'<button class="btn btn-ghost btn-sm" onclick="estSave(false)">Guardar</button>'
-    +'<button class="btn btn-gold btn-sm" onclick="estPdf()">'+_I('download')+' Cotización</button>'
+    +'<input class="est-mini" type="number" min="1" placeholder="'+L('Days','Días')+'" value="'+(_EST.estimatedDays||'')+'" onchange="estSetDays(this.value)" style="width:64px" title="'+L('Estimated days','Días estimados')+'">'
+    +'<button class="btn btn-ghost btn-sm" onclick="estAI(false)">'+_I('bulb')+' '+L('AI','IA')+'</button>'
+    +'<button class="btn btn-ghost btn-sm" onclick="estSave(false)">'+L('Save','Guardar')+'</button>'
+    +'<button class="btn btn-gold btn-sm" onclick="estPdf()">'+_I('download')+' '+L('Quote','Cotización')+'</button>'
     +'</div></div>';
-  if(_EST.summary)h+='<div class="est-summary">'+X(_EST.summary)+(_EST.estimatedDays?'  <span class="est-days">'+_EST.estimatedDays+' día'+(_EST.estimatedDays!=1?'s':'')+'</span>':'')+'</div>';
+  if(_EST.summary)h+='<div class="est-summary">'+X(_EST.summary)+(_EST.estimatedDays?'  <span class="est-days">'+_EST.estimatedDays+' '+L('day','día')+(_EST.estimatedDays!=1?'s':'')+'</span>':'')+'</div>';
   if(phases.length)h+='<div class="est-phases">'+phases.map(function(ph){return '<span class="est-phase-chip">'+X(ph.name||ph.id)+'</span>';}).join('')+'</div>';
   // Add category buttons
-  h+='<div class="est-addcats"><span class="est-add-lbl">AGREGAR:</span>'+EST_CATS.map(function(c){return '<button class="btn btn-xs btn-dim" onclick="estAddCat(\''+c.replace(/[^A-Za-z]/g,'')+'\')" data-cat="'+c+'">'+(c==='Debris/Dumpster'?'Debris':c==='Subcontractor'?'Sub':c)+'</button>';}).join('')+'</div>';
+  h+='<div class="est-addcats"><span class="est-add-lbl">'+L('ADD:','AGREGAR:')+'</span>'+EST_CATS.map(function(c){return '<button class="btn btn-xs btn-dim" onclick="estAddCat(\''+c.replace(/[^A-Za-z]/g,'')+'\')" data-cat="'+c+'">'+(c==='Debris/Dumpster'?'Debris':c==='Subcontractor'?'Sub':c)+'</button>';}).join('')+'</div>';
   // Categories
-  h+='<div id="estCats">'+cats.map(function(cat,ci){return _estCatHTML(cat,ci,phases);}).join('')+(cats.length?'':'<div class="est-empty-note">Sin partidas. Toca <b>IA</b> para extraerlas del SOW o agrega una categoría.</div>')+'</div>';
+  h+='<div id="estCats">'+cats.map(function(cat,ci){return _estCatHTML(cat,ci,phases);}).join('')+(cats.length?'':'<div class="est-empty-note">'+L('No line items. Tap <b>AI</b> to extract them from the SOW or add a category.','Sin partidas. Toca <b>IA</b> para extraerlas del SOW o agrega una categoría.')+'</div>')+'</div>';
   // Adjustments
-  h+='<div class="est-card"><div class="est-card-hd"><span>Ajustes y factores</span><button class="btn btn-xs btn-gold" onclick="estAddAdj()">+ Agregar</button></div><div id="estAdj">'+(adjs.length?adjs.map(function(a,ai){return _estAdjHTML(a,ai);}).join(''):'<div class="est-none">Sin ajustes</div>')+'</div></div>';
+  h+='<div class="est-card"><div class="est-card-hd"><span>'+L('Adjustments & factors','Ajustes y factores')+'</span><button class="btn btn-xs btn-gold" onclick="estAddAdj()">'+L('+ Add','+ Agregar')+'</button></div><div id="estAdj">'+(adjs.length?adjs.map(function(a,ai){return _estAdjHTML(a,ai);}).join(''):'<div class="est-none">'+L('No adjustments','Sin ajustes')+'</div>')+'</div></div>';
   // Summary bar
   h+='<div class="est-sumbar">'
     +_estSumItem('Labor','var(--gold)','sb-lab',estCatSum(cats,'Labor'))
@@ -12480,23 +12498,23 @@ function _estRender(){
     +_estSumItem('Supplies','var(--green)','sb-sup',estCatSum(cats,'Supplies'))
     +_estSumItem('Subs','#bf5af2','sb-sub',estCatSum(cats,'Subcontractor'))
     +_estSumItem('Debris','var(--amber)','sb-deb',estCatSum(cats,'Debris/Dumpster'))
-    +'<div class="est-sum-item est-sum-cost"><div class="est-sum-lbl">COSTO</div><div class="est-sum-val" style="color:var(--gold);font-size:20px" id="sb-cost">'+estFmt(COST)+'</div></div>'
+    +'<div class="est-sum-item est-sum-cost"><div class="est-sum-lbl">'+L('COST','COSTO')+'</div><div class="est-sum-val" style="color:var(--gold);font-size:20px" id="sb-cost">'+estFmt(COST)+'</div></div>'
     +'</div>';
   // Profit
-  h+='<div class="est-card"><div class="est-card-hd est-hd-green"><span>Ganancia (markup)</span><button class="btn btn-xs btn-green" onclick="estAddProf()">+ Fila</button></div>'
-    +'<div id="estProf">'+(profRows.length?profRows.map(function(r,ri){return _estProfHTML(r,ri,cats);}).join(''):'<div class="est-none">Sin ganancia — agrega una fila y define tu % por categoría</div>')+'</div></div>';
+  h+='<div class="est-card"><div class="est-card-hd est-hd-green"><span>'+L('Profit (markup)','Ganancia (markup)')+'</span><button class="btn btn-xs btn-green" onclick="estAddProf()">'+L('+ Row','+ Fila')+'</button></div>'
+    +'<div id="estProf">'+(profRows.length?profRows.map(function(r,ri){return _estProfHTML(r,ri,cats);}).join(''):'<div class="est-none">'+L('No profit yet — add a row and set your % by category','Sin ganancia — agrega una fila y define tu % por categoría')+'</div>')+'</div></div>';
   // Misc
-  h+='<div class="est-card"><div class="est-card-hd est-hd-amber"><span>Misceláneos</span><button class="btn btn-xs btn-dim" onclick="estAddMisc()">+ Agregar</button></div>'
-    +'<div id="estMisc">'+(misc.length?misc.map(function(m,mi){return _estMiscHTML(m,mi);}).join(''):'<div class="est-none">Sin gastos misceláneos</div>')+'</div></div>';
+  h+='<div class="est-card"><div class="est-card-hd est-hd-amber"><span>'+L('Miscellaneous','Misceláneos')+'</span><button class="btn btn-xs btn-dim" onclick="estAddMisc()">'+L('+ Add','+ Agregar')+'</button></div>'
+    +'<div id="estMisc">'+(misc.length?misc.map(function(m,mi){return _estMiscHTML(m,mi);}).join(''):'<div class="est-none">'+L('No misc expenses','Sin gastos misceláneos')+'</div>')+'</div></div>';
   // Grand total
-  h+='<div class="est-grand"><div class="est-grand-break"><div class="est-grand-lbl">DESGLOSE</div><div class="est-grand-nums">'
-    +'<div><div class="est-gn-l">COSTO</div><div class="est-gn-v" style="color:var(--gold)" id="gt-cost">'+estFmt(COST)+'</div></div><div class="est-plus">+</div>'
-    +'<div><div class="est-gn-l">GANANCIA</div><div class="est-gn-v" style="color:var(--green)" id="gt-prof">'+estFmt(PROF)+'</div></div><div class="est-plus">+</div>'
+  h+='<div class="est-grand"><div class="est-grand-break"><div class="est-grand-lbl">'+L('BREAKDOWN','DESGLOSE')+'</div><div class="est-grand-nums">'
+    +'<div><div class="est-gn-l">'+L('COST','COSTO')+'</div><div class="est-gn-v" style="color:var(--gold)" id="gt-cost">'+estFmt(COST)+'</div></div><div class="est-plus">+</div>'
+    +'<div><div class="est-gn-l">'+L('PROFIT','GANANCIA')+'</div><div class="est-gn-v" style="color:var(--green)" id="gt-prof">'+estFmt(PROF)+'</div></div><div class="est-plus">+</div>'
     +'<div><div class="est-gn-l">MISC</div><div class="est-gn-v" style="color:var(--amber)" id="gt-misc">'+estFmt(MISC)+'</div></div>'
-    +'</div></div><div class="est-grand-total"><div class="est-grand-lbl" style="color:var(--green)">TOTAL</div><div class="est-grand-v" id="gt-grand">'+estFmt(GRAND)+'</div></div></div>';
+    +'</div></div><div class="est-grand-total"><div class="est-grand-lbl" style="color:var(--green)">'+L('TOTAL','TOTAL')+'</div><div class="est-grand-v" id="gt-grand">'+estFmt(GRAND)+'</div></div></div>';
   // Notes + SOW
-  h+='<div class="est-card"><div class="est-card-hd"><span>Notas internas</span></div><div style="padding:12px 14px"><textarea class="lp-desc" placeholder="Notas internas, objetivos de margen…" onchange="estSetNotes(this.value)">'+X(_EST.notes||'')+'</textarea></div></div>';
-  h+='<div class="est-card"><div class="est-card-hd"><span>Scope of Work</span><button class="btn btn-xs btn-ghost" onclick="var e=document.getElementById(\'estSowPrev\');if(e)e.style.display=e.style.display===\'none\'?\'block\':\'none\'">Ver / ocultar</button></div><div id="estSowPrev" style="display:none;padding:12px 14px"><div class="est-sowbox">'+X(_EST.sow||'')+'</div></div></div>';
+  h+='<div class="est-card"><div class="est-card-hd"><span>'+L('Internal notes','Notas internas')+'</span></div><div style="padding:12px 14px"><textarea class="lp-desc" placeholder="'+L('Internal notes, margin targets…','Notas internas, objetivos de margen…')+'" onchange="estSetNotes(this.value)">'+X(_EST.notes||'')+'</textarea></div></div>';
+  h+='<div class="est-card"><div class="est-card-hd"><span>Scope of Work</span><button class="btn btn-xs btn-ghost" onclick="var e=document.getElementById(\'estSowPrev\');if(e)e.style.display=e.style.display===\'none\'?\'block\':\'none\'">'+L('Show / hide','Ver / ocultar')+'</button></div><div id="estSowPrev" style="display:none;padding:12px 14px"><div class="est-sowbox">'+X(_EST.sow||'')+'</div></div></div>';
   area.innerHTML=h;
 }
 function p_name(){var p=CP();return p?p.name:'';}
@@ -12506,9 +12524,9 @@ function _estCatHTML(cat,ci,phases){
   var lines=(cat.lines||[]).map(function(ln,li){
     var lt=(+(ln.qty||0))*(+(ln.unitPrice||0));
     return '<div class="est-li">'
-      +'<input class="est-in est-in-desc" placeholder="Descripción" value="'+X(ln.desc||'')+'" oninput="estOnLI('+ci+','+li+',\'desc\',this.value)">'
-      +'<input class="est-in est-in-unit" placeholder="Unidad" value="'+X(ln.unit||'')+'" oninput="estOnLI('+ci+','+li+',\'unit\',this.value)">'
-      +'<input class="est-in est-in-num" type="number" placeholder="Cant." value="'+(ln.qty||'')+'" oninput="estOnLI('+ci+','+li+',\'qty\',this.value)">'
+      +'<input class="est-in est-in-desc" placeholder="'+L('Description','Descripción')+'" value="'+X(ln.desc||'')+'" oninput="estOnLI('+ci+','+li+',\'desc\',this.value)">'
+      +'<input class="est-in est-in-unit" placeholder="'+L('Unit','Unidad')+'" value="'+X(ln.unit||'')+'" oninput="estOnLI('+ci+','+li+',\'unit\',this.value)">'
+      +'<input class="est-in est-in-num" type="number" placeholder="'+L('Qty','Cant.')+'" value="'+(ln.qty||'')+'" oninput="estOnLI('+ci+','+li+',\'qty\',this.value)">'
       +'<input class="est-in est-in-num" type="number" placeholder="$/u" value="'+(ln.unitPrice||'')+'" oninput="estOnLI('+ci+','+li+',\'unitPrice\',this.value)">'
       +'<div class="est-li-tot" id="lt-'+ci+'-'+li+'">'+estFmt(lt)+'</div>'
       +'<button class="est-li-del" onclick="estDelLine('+ci+','+li+')">&#10005;</button>'
@@ -12516,8 +12534,8 @@ function _estCatHTML(cat,ci,phases){
   }).join('');
   return '<div class="est-cat">'
     +'<div class="est-cat-hd"><span class="est-cat-name" style="color:'+col+'">'+X(cat.cat)+'</span><span class="est-cat-tot" id="ct-'+ci+'">'+estFmt(estCatTot(cat.lines))+'</span>'
-    +'<button class="btn btn-xs btn-ghost" onclick="estAddLine('+ci+')">+ Partida</button><button class="btn btn-xs btn-danger" onclick="estDelCat('+ci+')">&#10005;</button></div>'
-    +'<div class="est-li est-li-hd"><span>Descripción</span><span>Unidad</span><span>Cant.</span><span>$/u</span><span>Total</span><span></span></div>'
+    +'<button class="btn btn-xs btn-ghost" onclick="estAddLine('+ci+')">'+L('+ Line','+ Partida')+'</button><button class="btn btn-xs btn-danger" onclick="estDelCat('+ci+')">&#10005;</button></div>'
+    +'<div class="est-li est-li-hd"><span>'+L('Description','Descripción')+'</span><span>'+L('Unit','Unidad')+'</span><span>'+L('Qty','Cant.')+'</span><span>$/u</span><span>'+L('Total','Total')+'</span><span></span></div>'
     +lines+'</div>';
 }
 function _estAdjHTML(a,ai){return '<div class="est-adj"><span class="est-adj-name">'+X(a.name||'')+'</span><span class="est-adj-apply">'+(a.apply==='labor'?'→Labor':a.apply==='materials'?'→Materials':'→Total')+'</span><span class="est-adj-val">'+(a.type==='pct'?'+'+a.value+'%':estFmt(a.value))+'</span><button class="est-li-del" onclick="estDelAdj('+ai+')">&#10005;</button></div>';}
@@ -12527,7 +12545,7 @@ function _estProfHTML(r,ri,cats){
     +'<div class="est-prof-pct"><input class="est-in est-in-num" type="number" min="0" placeholder="%" value="'+(r.pct||'')+'" oninput="estOnProf('+ri+',\'pct\',this.value)"><span>%</span></div>'
     +'<div class="est-prof-v" id="pr-'+ri+'">'+estFmt(pa)+'</div><button class="est-li-del" onclick="estDelProf('+ri+')">&#10005;</button></div>';
 }
-function _estMiscHTML(m,mi){return '<div class="est-misc"><input class="est-in" placeholder="Descripción (gas, snacks, regalo…)" value="'+X(m.desc||'')+'" oninput="estOnMisc('+mi+',\'desc\',this.value)"><input class="est-in est-in-num" type="number" placeholder="Monto" value="'+(m.amount||'')+'" oninput="estOnMisc('+mi+',\'amount\',this.value)"><button class="est-li-del" onclick="estDelMisc('+mi+')">&#10005;</button></div>';}
+function _estMiscHTML(m,mi){return '<div class="est-misc"><input class="est-in" placeholder="'+L('Description (gas, snacks, gift…)','Descripción (gas, snacks, regalo…)')+'" value="'+X(m.desc||'')+'" oninput="estOnMisc('+mi+',\'desc\',this.value)"><input class="est-in est-in-num" type="number" placeholder="'+L('Amount','Monto')+'" value="'+(m.amount||'')+'" oninput="estOnMisc('+mi+',\'amount\',this.value)"><button class="est-li-del" onclick="estDelMisc('+mi+')">&#10005;</button></div>';}
 
 function estRecalc(){
   if(!_EST)return;var cats=_EST.categories||[],adjs=_EST.adjustments||[],prof=_EST.profitRows||[],misc=_EST.miscItems||[];
@@ -12549,7 +12567,7 @@ function estOnProf(ri,f,v){_EST.profitRows[ri][f]=f==='pct'?(parseFloat(v)||0):v
 function estAddMisc(){_EST.miscItems=_EST.miscItems||[];_EST.miscItems.push({desc:'',amount:0});estSchedSave();_estRender();}
 function estDelMisc(mi){_EST.miscItems.splice(mi,1);estSchedSave();_estRender();}
 function estOnMisc(mi,f,v){_EST.miscItems[mi][f]=f==='amount'?(parseFloat(v)||0):v;estRecalc();estSchedSave();}
-function estAddAdj(){showPrompt2('Nuevo ajuste',function(name,val,type,apply){if(!name||!val)return;_EST.adjustments=_EST.adjustments||[];_EST.adjustments.push({name:name,value:+val||0,type:type,apply:apply});estSchedSave();_estRender();});}
+function estAddAdj(){showPrompt2(L('New adjustment','Nuevo ajuste'),function(name,val,type,apply){if(!name||!val)return;_EST.adjustments=_EST.adjustments||[];_EST.adjustments.push({name:name,value:+val||0,type:type,apply:apply});estSchedSave();_estRender();});}
 function estDelAdj(ai){_EST.adjustments.splice(ai,1);estSchedSave();_estRender();}
 function estSetStatus(v){if(!_EST)return;_EST.status=v;estSchedSave();}
 function estSetDays(v){if(!_EST)return;_EST.estimatedDays=parseInt(v)||null;estSchedSave();}
@@ -12560,11 +12578,11 @@ function showPrompt2(title,cb){
   var ov=document.getElementById('estAdjModal');
   if(!ov){ov=document.createElement('div');ov.id='estAdjModal';ov.className='ov';document.body.appendChild(ov);}
   ov.innerHTML='<div class="modal sm" onclick="event.stopPropagation()"><div class="mhd"><h3>'+X(title)+'</h3><button class="mcls" onclick="cm(\'estAdjModal\')">&#10005;</button></div><div class="mbody">'
-    +'<div class="f"><label>Nombre</label><input id="adjN" placeholder="Ej. Prima por altura"></div>'
-    +'<div class="f"><label>Valor</label><input id="adjV" type="number" placeholder="15"></div>'
-    +'<div class="f"><label>Tipo</label><select id="adjT"><option value="pct">Porcentaje (%)</option><option value="flat">Monto fijo ($)</option></select></div>'
-    +'<div class="f"><label>Aplicar a</label><select id="adjA"><option value="total">Total</option><option value="labor">Labor</option><option value="materials">Materials</option></select></div>'
-    +'<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button class="btn btn-ghost btn-sm" onclick="cm(\'estAdjModal\')">Cancelar</button><button class="btn btn-gold btn-sm" id="adjOk">Agregar</button></div>'
+    +'<div class="f"><label>'+L('Name','Nombre')+'</label><input id="adjN" placeholder="'+L('e.g. Height premium','Ej. Prima por altura')+'"></div>'
+    +'<div class="f"><label>'+L('Value','Valor')+'</label><input id="adjV" type="number" placeholder="15"></div>'
+    +'<div class="f"><label>'+L('Type','Tipo')+'</label><select id="adjT"><option value="pct">'+L('Percentage (%)','Porcentaje (%)')+'</option><option value="flat">'+L('Flat amount ($)','Monto fijo ($)')+'</option></select></div>'
+    +'<div class="f"><label>'+L('Apply to','Aplicar a')+'</label><select id="adjA"><option value="total">'+L('Total','Total')+'</option><option value="labor">Labor</option><option value="materials">Materials</option></select></div>'
+    +'<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button class="btn btn-ghost btn-sm" onclick="cm(\'estAdjModal\')">'+L('Cancel','Cancelar')+'</button><button class="btn btn-gold btn-sm" id="adjOk">'+L('Add','Agregar')+'</button></div>'
     +'</div></div>';
   ov.onclick=function(e){if(e.target===ov)cm('estAdjModal');};
   om('estAdjModal');
@@ -12574,10 +12592,10 @@ function showPrompt2(title,cb){
 async function estAI(silent){
   if(!_EST)await estLoad();if(!_EST)return;
   var k=localStorage.getItem('formo_api');
-  if(!k){toast('Agrega tu API key en Ajustes → API Key','err');if(!silent&&typeof openAppSettings==='function'){openAppSettings();if(typeof stab==='function')stab('api');}_estRender();return;}
+  if(!k){toast(L('Add your API key in Settings → API Key','Agrega tu API key en Ajustes → API Key'),'err');if(!silent&&typeof openAppSettings==='function'){openAppSettings();if(typeof stab==='function')stab('api');}_estRender();return;}
   var sow=(_EST.sow||(CP()&&CP().sowDraft)||'').trim();
-  if(!sow){toast('Genera el SOW primero','err');_estRender();return;}
-  var area=document.getElementById('leadEstArea');if(area)area.innerHTML='<div class="lp-empty">La IA está analizando el SOW y armando el estimado…</div>';
+  if(!sow){toast(L('Generate the SOW first','Genera el SOW primero'),'err');_estRender();return;}
+  var area=document.getElementById('leadEstArea');if(area)area.innerHTML='<div class="lp-empty">'+L('AI is analyzing the SOW and building the estimate…','La IA está analizando el SOW y armando el estimado…')+'</div>';
   // Librería de precios (best-effort) para consistencia con el estimador
   var pLib='';try{if(!_estPrices){var ps=await getDocs(collection(db,'sow_prices'));_estPrices=[];ps.forEach(function(dd){_estPrices.push(dd.data());});}pLib=(_estPrices||[]).slice(0,50).map(function(x){return x.desc+' ('+x.unit+'): $'+x.avgPrice;}).join('\n');}catch(e){}
   var prompt='You are a construction estimating expert for Formo Renovation in Nashville, TN.\n'
@@ -12600,8 +12618,8 @@ async function estAI(silent){
     if(parsed.estimatedDays)_EST.estimatedDays=parsed.estimatedDays;
     if(parsed.summary)_EST.summary=parsed.summary;
     if(parsed.phases&&parsed.phases.length)_EST.phases=parsed.phases;
-    await estSave(true);_estRender();if(!silent)toast('Estimado generado ✓');
-  }catch(err){console.error('est ai',err);toast('Error IA: '+(err&&err.message||'error'),'err');_estRender();}
+    await estSave(true);_estRender();if(!silent)toast(L('Estimate generated ✓','Estimado generado ✓'));
+  }catch(err){console.error('est ai',err);toast('Error: '+(err&&err.message||'error'),'err');_estRender();}
 }
 
 function estPdf(){
@@ -12641,9 +12659,9 @@ function estPdf(){
       d.setFont('helvetica','normal');d.setFontSize(10);d.setTextColor(90);
       d.text('Dan Lares  ·  615-608-1220  ·  dan@formorenovation.com',M,y);d.text('Formo Renovation  ·  Insured & W9 Ready',M,y+14);
       d.save('Quote - '+String(p.name||'Project').replace(/[^\w\- ]+/g,'').trim()+'.pdf');
-      toast('Cotización PDF generada ✓');
-    }catch(err){console.error('quote pdf',err);toast('No se pudo crear el PDF: '+(err&&err.message||'error'),'err');}
-  }).catch(function(err){toast('No se pudo cargar el motor PDF','err');});
+      toast(L('Quote PDF generated ✓','Cotización PDF generada ✓'));
+    }catch(err){console.error('quote pdf',err);toast(L('Could not create the PDF: ','No se pudo crear el PDF: ')+(err&&err.message||'error'),'err');}
+  }).catch(function(err){toast(L('Could not load the PDF engine','No se pudo cargar el motor PDF'),'err');});
 }
 ['renderLeadEst','estAI','estSave','estPdf','estAddCat','estDelCat','estAddLine','estDelLine','estOnLI','estAddProf','estDelProf','estOnProf','estAddMisc','estDelMisc','estOnMisc','estAddAdj','estDelAdj','estSetStatus','estSetDays','estSetNotes','showPrompt2'
 ].forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
@@ -12846,6 +12864,9 @@ function estPdf(){
   </button>
   <button class="mbn-item mbn-lead" data-mbtab="leadsow" onclick="mbNav('leadsow')">
     <span class="mbn-ico"></span><span class="mbn-lbl">SOW</span>
+  </button>
+  <button class="mbn-item mbn-lead mbn-lead-est" data-mbtab="leadest" onclick="mbNav('leadest')">
+    <span class="mbn-ico"></span><span class="mbn-lbl">Estimate</span>
   </button>
   <button class="mbn-item" data-mbtab="more" onclick="openMoreSheet()">
     <span class="mbn-ico">&#8943;</span><span class="mbn-lbl">More</span>
