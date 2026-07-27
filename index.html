@@ -11349,21 +11349,15 @@ if(document.readyState!=='loading')applyUIIcons();else document.addEventListener
 /* ===== EMBEDDED HUB APPS (Survey + Estimate inside the PM) ===== */
 function _embedCfg(kind){
   return ({
-    survey:{key:'formo_survey_url',label:'Site Survey',ph:'https://formo-survey.onrender.com'},
-    estimate:{key:'formo_estimate_url',label:'Estimate / Quote',ph:'https://formo-quotes.onrender.com'}
+    survey:{key:'formo_survey_url',label:'Site Survey',def:'survey.html',ph:'survey.html or full URL'},
+    estimate:{key:'formo_estimate_url',label:'Estimate / Quote',def:'estimator.html',ph:'estimator.html or full URL'}
   })[kind];
 }
 function renderEmbed(kind){
   var c=_embedCfg(kind);if(!c)return;
   var area=document.getElementById(kind==='survey'?'surveyEmbedArea':'estimateEmbedArea');if(!area)return;
   var url='';try{url=localStorage.getItem(c.key)||'';}catch(e){}
-  if(!url){
-    area.innerHTML='<div class="embed-config"><div class="embed-config-title">'+(typeof _I!=='undefined'?_I('globe'):'')+' Connect your '+c.label+' app</div>'
-      +'<div class="embed-config-sub">Paste the web address of your '+c.label+' tool. It runs on the same account and database, so it opens right here inside the Project Manager.</div>'
-      +'<input id="embedUrl_'+kind+'" class="cp-input" placeholder="'+c.ph+'" style="max-width:520px">'
-      +'<button class="btn btn-gold btn-sm" onclick="setEmbedUrl(\''+kind+'\')">Connect</button></div>';
-    return;
-  }
+  if(!url)url=c.def;   // same-origin file by default (shared login, fast, no re-auth)
   area.innerHTML='<div class="embed-bar"><span class="embed-bar-title">'+(typeof _I!=='undefined'?_I('globe'):'')+' '+c.label+'</span>'
     +'<div class="embed-bar-actions"><button class="btn btn-ghost btn-xs" onclick="openEmbedExternal(\''+kind+'\')">Open in new tab</button>'
     +'<button class="btn btn-ghost btn-xs" onclick="changeEmbedUrl(\''+kind+'\')">Change link</button></div></div>'

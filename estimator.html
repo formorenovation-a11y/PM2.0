@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formo — SOW Estimator v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#050505;--s0:#090909;--s1:#0f0f0f;--s2:#161616;--s3:#1e1e1e;--s4:#272727;--s5:#313131;
+--bd:rgba(255,255,255,.06);--bd2:rgba(255,255,255,.10);--bd3:rgba(255,255,255,.16);
+--gold:#c9a84c;--gold-l:#dfc068;--gold-bg:rgba(201,168,76,.06);--gold-bg2:rgba(201,168,76,.13);
+--tx:rgba(255,255,255,.92);--tx2:rgba(255,255,255,.55);--tx3:rgba(255,255,255,.28);--tx4:rgba(255,255,255,.10);
+--green:#30d158;--green-bg:rgba(48,209,88,.08);
+--amber:#ffd60a;--amber-bg:rgba(255,214,10,.08);
+--red:#ff453a;--red-bg:rgba(255,69,58,.07);
+--blue:#0a84ff;--purple:#bf5af2;
+--ff-bc:"Barlow Condensed",sans-serif;--r:12px;--r2:16px;--r3:22px;
+--sh:0 12px 40px rgba(0,0,0,.7),0 2px 8px rgba(0,0,0,.5);
+}
+html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"Inter",sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--s5);border-radius:4px}
+#authWrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.auth-box{background:var(--s1);border:1px solid var(--bd2);border-radius:var(--r3);padding:40px 36px;width:100%;max-width:400px;box-shadow:0 48px 140px rgba(0,0,0,.85)}
+.auth-title{font-family:var(--ff-bc);font-size:28px;font-weight:800;margin-bottom:6px}
+.auth-sub{font-size:13px;color:var(--tx3);margin-bottom:28px}
+.auth-err{background:var(--red-bg);border:1px solid rgba(255,69,58,.2);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:16px;display:none}
+.topbar{height:54px;display:flex;align-items:center;padding:0 16px;gap:10px;background:rgba(5,5,5,.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:400}
+.topbar-spacer{flex:1}
+.user-chip{display:flex;align-items:center;gap:7px;padding:5px 12px;background:var(--s2);border:1px solid var(--bd);border-radius:999px;font-size:12px;font-weight:600;color:var(--tx2);cursor:pointer;transition:all .15s}
+.user-chip:hover{border-color:var(--bd3);color:var(--tx)}
+.user-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+.tab-nav{display:flex;padding:0 16px;background:var(--s0);border-bottom:1px solid var(--bd);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tab-nav::-webkit-scrollbar{display:none}
+.t-item{display:flex;align-items:center;gap:5px;padding:12px 14px;font-size:13px;font-weight:500;cursor:pointer;color:var(--tx3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s;white-space:nowrap;flex-shrink:0;letter-spacing:-.01em}
+.t-item:hover{color:var(--tx2)}.t-item.on{color:var(--tx);border-bottom-color:var(--gold);font-weight:600}
+.page-wrap{max-width:1140px;margin:0 auto;padding:24px 16px 80px}
+.tab-pane{display:none}.tab-pane.on{display:block}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;font-family:"Inter",sans-serif;white-space:nowrap;line-height:1;letter-spacing:-.01em}
+.btn-gold{background:var(--gold);color:#000;box-shadow:0 2px 14px rgba(201,168,76,.3)}.btn-gold:hover{background:var(--gold-l)}
+.btn-ghost{background:transparent;color:var(--tx2);border:1px solid var(--bd2)}.btn-ghost:hover{border-color:var(--bd3);color:var(--tx);background:var(--s3)}
+.btn-dim{background:var(--s3);color:var(--tx3);border:1px solid var(--bd)}.btn-dim:hover{background:var(--s4);color:var(--tx2)}
+.btn-danger{background:transparent;color:var(--red);border:1px solid rgba(255,69,58,.2)}.btn-danger:hover{background:var(--red-bg)}
+.btn-green{background:var(--green-bg);color:var(--green);border:1px solid rgba(48,209,88,.2)}
+.btn-sm{padding:6px 12px;font-size:12px;border-radius:8px}.btn-xs{padding:4px 9px;font-size:11px;border-radius:7px}.btn:disabled{opacity:.35;cursor:not-allowed}
+.f{margin-bottom:14px}.f label{display:block;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--tx3);margin-bottom:6px}
+.f input,.f textarea,.f select{width:100%;border:1.5px solid var(--bd2);border-radius:10px;padding:10px 13px;font-size:14px;font-family:"Inter",sans-serif;color:var(--tx);outline:none;transition:border-color .2s;background:var(--s2);letter-spacing:-.01em}
+.f textarea{resize:vertical;min-height:80px;line-height:1.6}.f input:focus,.f textarea:focus,.f select:focus{border-color:var(--gold)}
+.f input::placeholder,.f textarea::placeholder{color:var(--tx4)}.f select option{background:var(--s2)}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden}
+.card-hd{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--bd)}
+.card-hd h3{flex:1;font-size:13px;font-weight:600;color:var(--tx2)}
+.proj-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r2);padding:18px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden}
+.proj-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-l));opacity:0;transition:opacity .2s}
+.proj-card:hover{border-color:var(--bd2);transform:translateY(-2px);box-shadow:var(--sh);background:var(--s2)}.proj-card:hover::before{opacity:1}
+.stat-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r2);padding:18px 20px}
+.stat-lbl{font-size:10px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
+.stat-val{font-family:var(--ff-bc);font-size:38px;font-weight:800;line-height:1}.stat-val.gold{color:var(--gold)}.stat-val.green{color:var(--green)}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:800;align-items:center;justify-content:center;padding:12px;backdrop-filter:blur(10px)}
+.ov.on{display:flex}
+.modal{background:var(--s1);border:1px solid var(--bd2);border-radius:var(--r3);width:100%;max-width:520px;max-height:96vh;overflow-y:auto;overflow-x:hidden;box-shadow:0 48px 140px rgba(0,0,0,.85)}
+.modal.lg{max-width:740px}.modal.xl{max-width:980px}
+.mhd{padding:18px 20px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;position:sticky;top:0;background:var(--s1);z-index:1}
+.mhd h3{flex:1;font-size:16px;font-weight:700;letter-spacing:-.02em}
+.mcls{width:28px;height:28px;border:none;background:var(--s3);border-radius:8px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--tx3);transition:all .15s;flex-shrink:0}
+.mcls:hover{color:var(--tx);background:var(--s4)}.mbody{padding:18px 20px}
+.mfoot{padding:12px 20px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:rgba(18,18,18,.96);border:1px solid var(--bd2);border-radius:12px;padding:10px 20px;font-size:13px;font-weight:500;color:var(--tx);box-shadow:var(--sh);z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .25s;opacity:0;white-space:nowrap;backdrop-filter:blur(20px);pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}.toast.ok{border-color:rgba(48,209,88,.25);color:var(--green)}.toast.err{border-color:rgba(255,69,58,.25);color:var(--red)}
+.confirm-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9000;align-items:center;justify-content:center;backdrop-filter:blur(8px)}.confirm-ov.on{display:flex}
+.confirm-box{background:var(--s1);border:1px solid var(--bd2);border-radius:var(--r2);padding:24px;max-width:340px;width:calc(100% - 32px);box-shadow:0 40px 80px rgba(0,0,0,.8)}
+.confirm-msg{font-size:15px;font-weight:500;color:var(--tx);margin-bottom:20px;line-height:1.5}.confirm-btns{display:flex;gap:8px;justify-content:flex-end}
+.badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px;letter-spacing:.3px;white-space:nowrap}
+.badge-gold{background:var(--gold-bg2);color:var(--gold)}.badge-green{background:var(--green-bg);color:var(--green)}.badge-red{background:var(--red-bg);color:var(--red)}.badge-amber{background:var(--amber-bg);color:var(--amber)}.badge-neutral{background:var(--s3);color:var(--tx3)}
+.line-table{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden}
+.line-row{display:grid;align-items:center;padding:10px 14px;gap:8px;border-bottom:1px solid var(--bd);font-size:13px}.line-row:last-child{border-bottom:0}.line-row:hover:not(.line-hdr){background:rgba(255,255,255,.012)}
+.line-hdr{background:var(--s2);padding-top:9px;padding-bottom:9px}.line-hdr span{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.9px;color:var(--tx4)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.two-equal{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chip-group{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:5px 12px;border-radius:999px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--bd2);background:transparent;color:var(--tx3);transition:all .15s;font-family:"Inter",sans-serif}
+.chip:hover{border-color:var(--bd3);color:var(--tx2)}.chip.on{background:var(--gold);color:#000;border-color:var(--gold)}
+.empty-state{text-align:center;padding:48px 20px;color:var(--tx3)}.empty-state-ico{font-size:36px;margin-bottom:12px;opacity:.35}
+.empty-state h3{font-size:15px;font-weight:600;color:var(--tx2);margin-bottom:7px;letter-spacing:-.02em}.empty-state p{font-size:12px;line-height:1.65;max-width:280px;margin:0 auto}
+.info-box{padding:10px 13px;background:var(--gold-bg);border:1px solid rgba(201,168,76,.14);border-radius:10px;font-size:12px;color:var(--tx3);line-height:1.6}.info-box b{color:var(--gold)}
+.spin-ico{width:14px;height:14px;border:2px solid rgba(255,255,255,.12);border-top-color:var(--tx2);border-radius:50%;animation:spi .65s linear infinite;display:inline-block;vertical-align:middle}
+.spin-ico.dark{border-color:rgba(0,0,0,.15);border-top-color:#000}@keyframes spi{to{transform:rotate(360deg)}}
+.pg-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;gap:12px;flex-wrap:wrap}
+.pg-hdr h1{font-family:var(--ff-bc);font-size:30px;font-weight:800;letter-spacing:-.3px}.pg-hdr p{font-size:12px;color:var(--tx3);margin-top:2px}
+.perm-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.perm-item{display:flex;align-items:center;gap:8px;padding:9px 11px;background:var(--s2);border:1px solid var(--bd);border-radius:10px;cursor:pointer;transition:all .15s}
+.perm-item.on{border-color:var(--gold);background:var(--gold-bg)}.perm-cb{width:15px;height:15px;border-radius:4px;border:1.5px solid var(--bd3);background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;transition:all .15s}
+.perm-item.on .perm-cb{background:var(--gold);border-color:var(--gold);color:#000}.perm-lbl{font-size:11px;font-weight:500;color:var(--tx2)}.perm-item.on .perm-lbl{color:var(--tx)}
+.cat-section{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r2);margin-bottom:14px;overflow:hidden}
+.cat-hd{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--bd);background:var(--s2)}
+.cat-hd-title{flex:1;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px}.cat-total{font-family:var(--ff-bc);font-size:17px;font-weight:800;color:var(--gold)}
+.li-row{display:grid;grid-template-columns:minmax(0,2fr) 70px 70px 80px 80px 72px 28px;align-items:center;gap:6px;padding:8px 14px;border-bottom:1px solid var(--bd);font-size:12px}
+.li-row:last-child{border-bottom:0}.li-row.sub-ext{grid-template-columns:minmax(0,2fr) 70px 70px 80px 80px 80px 72px 28px}
+.li-hdr{background:var(--s2);padding:7px 14px}.li-hdr span{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--tx4)}
+.li-input{background:var(--s2);border:1px solid var(--bd);border-radius:7px;padding:5px 8px;font-size:12px;font-family:"Inter",sans-serif;color:var(--tx);outline:none;width:100%;transition:border-color .15s;min-width:0}.li-input:focus{border-color:var(--gold)}
+.li-del{width:26px;height:26px;background:transparent;border:none;color:var(--tx4);cursor:pointer;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:13px;flex-shrink:0}.li-del:hover{background:var(--red-bg);color:var(--red)}
+.summary-bar{background:var(--s0);border:1px solid var(--bd2);border-radius:var(--r2);padding:16px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:14px}
+.sum-item{text-align:center;min-width:72px}.sum-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--tx3);margin-bottom:3px}.sum-val{font-family:var(--ff-bc);font-size:20px;font-weight:800}
+.sum-div{width:1px;height:32px;background:var(--bd2);flex-shrink:0}
+.profit-section{background:var(--s1);border:1px solid rgba(48,209,88,.15);border-radius:var(--r2);margin-top:14px;overflow:hidden}
+.profit-hd{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(48,209,88,.1);background:rgba(48,209,88,.04)}
+.profit-row{display:grid;grid-template-columns:minmax(0,2fr) 110px 110px 28px;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--bd);font-size:13px}.profit-row:last-child{border-bottom:0}
+.misc-section{background:var(--s1);border:1px solid rgba(255,214,10,.12);border-radius:var(--r2);margin-top:14px;overflow:hidden}
+.misc-hd{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(255,214,10,.1);background:rgba(255,214,10,.04)}
+.grand-bar{background:linear-gradient(135deg,rgba(48,209,88,.07),rgba(201,168,76,.05));border:1px solid rgba(48,209,88,.18);border-radius:var(--r2);padding:18px 22px;margin-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.phase-section{background:var(--s1);border:1px solid rgba(10,132,255,.18);border-radius:var(--r2);margin-top:14px;overflow:hidden}
+.phase-hd{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(10,132,255,.1);background:rgba(10,132,255,.04)}
+.phase-row{display:grid;grid-template-columns:32px minmax(0,2fr) 110px 110px 60px 80px;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--bd);font-size:13px;transition:background .15s}
+.phase-row:last-child{border-bottom:0}
+.phase-row.inactive{opacity:.38}
+.phase-toggle{width:30px;height:18px;border-radius:999px;border:none;cursor:pointer;position:relative;flex-shrink:0;transition:background .2s}
+.phase-toggle.on{background:var(--blue)}
+.phase-toggle.off{background:var(--s5)}
+.phase-toggle::after{content:'';position:absolute;top:3px;width:12px;height:12px;border-radius:50%;background:#fff;transition:left .2s}
+.phase-toggle.on::after{left:15px}
+.phase-toggle.off::after{left:3px}
+.phase-pct-bar{height:4px;border-radius:2px;background:rgba(10,132,255,.18);overflow:hidden;margin-top:3px}
+.phase-pct-fill{height:100%;border-radius:2px;background:var(--blue);transition:width .3s}
+.li-phase-tag{font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(10,132,255,.12);color:var(--blue);border:1px solid rgba(10,132,255,.2);white-space:nowrap;cursor:pointer;font-weight:600;transition:all .15s;font-family:'Inter',sans-serif}
+.li-phase-tag:hover{background:rgba(10,132,255,.22)}
+.li-phase-tag.unassigned{background:var(--s3);color:var(--tx4);border-color:var(--bd)}
+
+.sow-tab-bar{display:flex;gap:0;margin-bottom:10px;background:var(--s2);border-radius:10px;padding:3px;border:1px solid var(--bd)}
+.sow-tab{flex:1;text-align:center;padding:7px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:var(--tx3);transition:all .15s}.sow-tab.on{background:var(--s4);color:var(--tx)}
+.doc-zone{border:2px dashed var(--bd2);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all .15s;color:var(--tx3)}.doc-zone:hover,.doc-zone.drag{border-color:var(--gold);color:var(--gold);background:var(--gold-bg)}
+.doc-name-row{display:flex;align-items:center;gap:8px;padding:10px 13px;background:var(--s2);border:1px solid var(--bd);border-radius:10px;font-size:12px;color:var(--tx2);margin-top:8px}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-top:8px}
+.ph-thumb{position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;border:1px solid var(--bd2);background:var(--s2);cursor:pointer}
+.ph-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.ph-del{position:absolute;top:3px;right:3px;width:18px;height:18px;background:rgba(0,0,0,.75);border:none;border-radius:50%;color:#fff;font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s}.ph-thumb:hover .ph-del{opacity:1}
+.ph-add{aspect-ratio:1;border-radius:9px;border:1.5px dashed var(--bd2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:var(--tx4);font-size:10px;transition:all .15s}.ph-add:hover{border-color:var(--gold);color:var(--gold)}
+.days-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.18);border-radius:999px;font-size:11px;font-weight:600;color:var(--blue)}
+.autosave-dot{width:6px;height:6px;border-radius:50%;background:var(--tx4);display:inline-block;transition:background .3s;flex-shrink:0}
+.autosave-dot.saving{background:var(--amber);animation:pulse .8s ease-in-out infinite}.autosave-dot.saved{background:var(--green)}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.pl-row{display:grid;grid-template-columns:minmax(0,2fr) 90px 70px 90px 70px 64px;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--bd);font-size:13px}.pl-row:last-child{border-bottom:0}
+.sub-row{display:grid;grid-template-columns:minmax(0,2fr) 90px 90px minmax(0,1fr) 60px;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--bd);font-size:13px}.sub-row:last-child{border-bottom:0}
+.usr-row{display:grid;grid-template-columns:minmax(0,2fr) 80px 90px 60px;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--bd);font-size:13px}.usr-row:last-child{border-bottom:0}
+.proj-group{transition:box-shadow .2s}.proj-group:hover{box-shadow:0 4px 24px rgba(0,0,0,.5)}
+.quote-row:last-child{border-bottom:0!important}
+.subtab{color:var(--tx3)}.subtab.on{background:var(--s4);color:var(--tx);box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.assign-btn{font-size:10px;padding:3px 8px;border-radius:6px;background:transparent;border:1px solid var(--bd2);color:var(--tx3);cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;transition:all .15s;white-space:nowrap}
+.assign-btn:hover{border-color:var(--gold);color:var(--gold)}
+@media(max-width:860px){.stats-grid{grid-template-columns:1fr 1fr}.page-wrap{padding:16px 12px 80px}.li-row{grid-template-columns:minmax(0,1fr) 65px 72px 72px 28px}.li-row .hide-md{display:none}.li-row.sub-ext{grid-template-columns:minmax(0,1fr) 65px 72px 72px 28px}.pl-row{grid-template-columns:minmax(0,1fr) 80px 56px}.pl-row .hide-md{display:none}.sub-row{grid-template-columns:minmax(0,1fr) 80px 60px}.sub-row .hide-md{display:none}.summary-bar{gap:8px}.sum-val{font-size:17px}}
+@media(max-width:540px){.stats-grid{grid-template-columns:1fr 1fr}.two-equal{grid-template-columns:1fr}.topbar{padding:0 10px}.t-item{padding:11px 10px;font-size:12px}.modal{border-radius:16px}.li-row{grid-template-columns:minmax(0,1fr) 70px 75px 28px}.li-row .hide-sm{display:none}.profit-row{grid-template-columns:minmax(0,1fr) 95px 95px 28px}.perm-grid{grid-template-columns:1fr}.usr-row{grid-template-columns:minmax(0,1fr) 70px 60px}.usr-row .hide-md{display:none}}
+
+/* uniform polish (matches Project Manager) */
+*{-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button{transition:transform .16s ease-out}
+button:active{transform:scale(.97)}
+@media (hover:none){a:hover,button:hover{}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="authWrap">
+  <div class="auth-box">
+    <div style="margin-bottom:28px"><svg viewBox="0 0 200 36" fill="none" style="height:26px;width:auto;display:block"><path d="M4 17L17 4L30 17" stroke="#c9a84c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 17V33H27V17" stroke="#c9a84c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="11" y="20" width="10" height="2.2" rx="1.1" fill="#c9a84c"/><rect x="11" y="25" width="8" height="2.2" rx="1.1" fill="#c9a84c"/><rect x="11" y="20" width="2.2" height="9" rx="1.1" fill="#c9a84c"/><text x="38" y="22" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="18" fill="white" letter-spacing="1.2">FORMO</text><line x1="38" y1="29" x2="48" y2="29" stroke="#c9a84c" stroke-width="1" stroke-linecap="round"/><text x="50" y="31" font-family="Arial,sans-serif" font-weight="700" font-size="7.5" fill="#c9a84c" letter-spacing="2.5">RENOVATION</text></svg></div>
+    <div class="auth-title">SOW Estimator</div>
+    <div class="auth-sub">Sign in to continue</div>
+    <div id="authDebug" style="display:none;background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.2);border-radius:10px;padding:10px 13px;font-size:11px;color:var(--blue);margin-bottom:12px;line-height:1.7;word-break:break-all;font-family:monospace"></div>
+    <div class="auth-err" id="authErr"></div>
+    <div class="f"><label>Email</label><input type="email" id="authEmail" placeholder="you@formoren.com" autocomplete="email"></div>
+    <div class="f"><label>Password</label><input type="password" id="authPass" placeholder="••••••••" autocomplete="current-password"></div>
+    <button class="btn btn-gold" style="width:100%;justify-content:center;padding:12px;font-size:14px" id="authBtn" onclick="doLogin()">Sign In</button>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="appWrap" style="display:none">
+  <div class="topbar">
+    <svg viewBox="0 0 200 36" fill="none" style="height:22px;width:auto;flex-shrink:0"><path d="M4 17L17 4L30 17" stroke="#c9a84c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 17V33H27V17" stroke="#c9a84c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="11" y="20" width="10" height="2.2" rx="1.1" fill="#c9a84c"/><rect x="11" y="25" width="8" height="2.2" rx="1.1" fill="#c9a84c"/><rect x="11" y="20" width="2.2" height="9" rx="1.1" fill="#c9a84c"/><text x="38" y="22" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="18" fill="white" letter-spacing="1.2">FORMO</text></svg>
+    <div class="topbar-spacer"></div>
+    <span class="autosave-dot" id="asDot"></span>
+    <span id="asLbl" style="font-size:10px;color:var(--tx4);margin-left:4px"></span>
+    <div class="user-chip" id="userChipBtn" onclick="showUserMenu()">
+      <span class="user-dot"></span><span id="userChipName" style="max-width:120px;overflow:hidden;text-overflow:ellipsis">—</span><span style="color:var(--tx4);font-size:10px">▾</span>
+    </div>
+  </div>
+  <div class="tab-nav">
+    <div class="t-item on" data-tab="projects" onclick="switchTab('projects')">Projects</div>
+    <div class="t-item" data-tab="estimate" onclick="switchTab('estimate')" id="tabEst" style="display:none">Estimate</div>
+    <div class="t-item" data-perm="viewPriceLibrary" data-tab="pricelibrary" onclick="switchTab('pricelibrary')">Price Library</div>
+    <div class="t-item" data-perm="viewPriceLibrary" data-tab="sublibrary" onclick="switchTab('sublibrary')">Subcontractors</div>
+    <div class="t-item" data-perm="admin" data-tab="users" onclick="switchTab('users')">Users</div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="tab-pane on page-wrap" id="tab-projects">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+      <div><h1 style="font-family:var(--ff-bc);font-size:30px;font-weight:800;letter-spacing:-.3px">Projects</h1><p id="projCount" style="font-size:12px;color:var(--tx3);margin-top:2px">—</p></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap" id="projActions">
+        <button class="btn btn-ghost" id="btnNewQuoteDirect" onclick="openNewQuoteDirect()">+ New Quote</button>
+        <button class="btn btn-gold" onclick="openNewProject()">+ New Group</button>
+      </div>
+    </div>
+
+    <!-- Sub-tab bar -->
+    <div style="display:flex;gap:2px;background:var(--s2);border-radius:12px;padding:3px;border:1px solid var(--bd);margin-bottom:18px;width:fit-content">
+      <div class="subtab on" id="st-groups" onclick="switchSubTab('groups')" style="padding:7px 18px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;color:var(--tx3)">Groups</div>
+      <div class="subtab" id="st-quotes" onclick="switchSubTab('quotes')" style="padding:7px 18px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;color:var(--tx3)">All Quotes</div>
+    </div>
+
+    <div class="stats-grid" style="margin-bottom:18px">
+      <div class="stat-card"><div class="stat-lbl">Groups</div><div class="stat-val gold" id="stTotal">—</div></div>
+      <div class="stat-card"><div class="stat-lbl">Draft</div><div class="stat-val" id="stDraft">—</div></div>
+      <div class="stat-card"><div class="stat-lbl">Sent</div><div class="stat-val" id="stSent">—</div></div>
+      <div class="stat-card"><div class="stat-lbl">Won</div><div class="stat-val green" id="stWon">—</div></div>
+    </div>
+
+    <div style="margin-bottom:16px"><div class="f" style="margin:0"><input id="projSearch" oninput="renderAll()" placeholder="Search quotes, clients, addresses…" style="background:var(--s1);border-color:var(--bd)"></div></div>
+
+    <!-- Groups pane -->
+    <div id="pane-groups" style="display:block">
+      <div id="groupsGrid"></div>
+    </div>
+
+    <!-- All Quotes pane -->
+    <div id="pane-quotes" style="display:none">
+      <div class="card-grid" id="quotesGrid"></div>
+    </div>
+  </div>
+
+    <!-- ESTIMATE -->
+  <div class="tab-pane page-wrap" id="tab-estimate"><div id="estContent"></div></div>
+
+  <!-- PRICE LIBRARY -->
+  <div class="tab-pane page-wrap" id="tab-pricelibrary">
+    <div class="pg-hdr"><div><h1>Price Library</h1><p>Unit prices from estimates</p></div><button class="btn btn-gold" onclick="openAddPrice()">+ Add Price</button></div>
+    <div class="chip-group" style="margin-bottom:16px" id="plChips"></div>
+    <div class="line-table" id="plTable"><div class="pl-row line-hdr"><span>Description</span><span>Category</span><span class="hide-md">Unit</span><span>Avg Price</span><span class="hide-md">Samples</span><span></span></div></div>
+  </div>
+
+  <!-- SUBS -->
+  <div class="tab-pane page-wrap" id="tab-sublibrary">
+    <div class="pg-hdr"><div><h1>Subcontractor Library</h1><p>Reference database</p></div><button class="btn btn-gold" onclick="openAddSub()">+ Add Sub</button></div>
+    <div class="line-table" id="subTable"><div class="sub-row line-hdr"><span>Sub / Company</span><span>Trade</span><span>Last Quote</span><span class="hide-md">Includes</span><span>Actions</span></div></div>
+  </div>
+
+  <!-- USERS -->
+  <div class="tab-pane page-wrap" id="tab-users">
+    <div class="pg-hdr"><div><h1>Users & Permissions</h1><p>Manage team access</p></div><button class="btn btn-gold" onclick="openAddUser()">+ Add User</button></div>
+    <div class="line-table" id="usersTable"><div class="usr-row line-hdr"><span>User</span><span>Role</span><span class="hide-md">Created</span><span>Actions</span></div></div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<!-- New Project -->
+<div class="ov" id="ovNewProj">
+  <div class="modal lg">
+    <div class="mhd"><h3 id="newProjModalTitle">New Project</h3><button class="mcls" onclick="closeModal('ovNewProj')">✕</button></div>
+    <div class="mbody">
+      <div class="two-equal">
+        <div class="f"><label>Project Name</label><input id="np_name" placeholder="e.g. Johnson Exterior Repaint"></div>
+        <div class="f"><label>Status</label><select id="np_status"><option value="draft">Draft</option><option value="sent">Sent</option><option value="won">Won</option><option value="lost">Lost</option></select></div>
+      </div>
+      <div class="f"><label>Property Address</label><input id="np_address" placeholder="1234 Main St, Nashville, TN 37201"></div>
+      <div class="two-equal">
+        <div class="f"><label>Client Name</label><input id="np_client" placeholder="Full name"></div>
+        <div class="f"><label>Client Phone</label><input id="np_phone" placeholder="+1 (615) 555-0100" type="tel"></div>
+      </div>
+      <div class="two-equal">
+        <div class="f"><label>Client Email</label><input id="np_email" type="email" placeholder="client@email.com"></div>
+        <div class="f"><label>Project Type</label>
+          <select id="np_type"><option>Exterior Painting</option><option>Interior Painting</option><option>Full Remodel</option><option>Kitchen Remodel</option><option>Bathroom Remodel</option><option>Built-in / Carpentry</option><option>Hardie / Siding Replacement</option><option>Flooring</option><option>Drywall</option><option>Deck / Porch</option><option>Other</option></select>
+        </div>
+      </div>
+      
+    </div>
+    <div class="mfoot"><button class="btn btn-ghost" onclick="closeModal('ovNewProj')">Cancel</button><button class="btn btn-gold" id="newProjBtn" onclick="createProjectOnly()">Create Project</button></div>
+  </div>
+</div>
+
+<!-- New Quote -->
+<div class="ov" id="ovNewQuote">
+  <div class="modal lg">
+    <div class="mhd"><h3>New Quote</h3><button class="mcls" onclick="closeModal('ovNewQuote')">✕</button></div>
+    <div class="mbody">
+      <div class="info-box" style="margin-bottom:14px">
+        <b id="nqProjInfo" style="color:var(--gold)">—</b>
+      </div>
+      <div class="two-equal">
+        <div class="f"><label>Quote Name</label><input id="nq_name" placeholder="e.g. Johnson Bath — Quote #1"></div>
+        <div class="f"><label>Status</label><select id="nq_status"><option value="draft">Draft</option><option value="sent">Sent</option><option value="won">Won</option><option value="lost">Lost</option></select></div>
+      </div>
+      <div class="two-equal">
+        <div class="f"><label>Estimated Duration (days)</label><input id="nq_days" type="number" min="1" placeholder="e.g. 5"></div>
+        <div></div>
+      </div>
+      <div class="f">
+        <label>Scope of Work</label>
+        <div class="sow-tab-bar">
+          <div class="sow-tab on" id="stWrite" onclick="setSowTab('write')">Write / Paste</div>
+          <div class="sow-tab" id="stUpload" onclick="setSowTab('upload')">Upload PDF / Doc</div>
+        </div>
+        <div id="sowWrite"><textarea id="nq_sow" placeholder="Paste the full SOW here. AI will extract line items automatically…" style="min-height:120px"></textarea></div>
+        <div id="sowUpload" style="display:none">
+          <div class="doc-zone" id="dropZone" onclick="document.getElementById('sowFile').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="onSOWDrop(event)">
+            <div style="font-size:28px;margin-bottom:8px"></div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">Drop PDF or document here</div>
+            <div style="font-size:11px">or click to browse — PDF, DOC, DOCX, TXT</div>
+          </div>
+          <div id="sowDocRow" style="display:none" class="doc-name-row"><span style="font-size:18px"></span><span id="sowDocText" style="flex:1"></span><button class="btn btn-xs btn-danger" onclick="clearSOWDoc()">Remove</button></div>
+          <input type="file" id="sowFile" accept=".pdf,.doc,.docx,.txt" style="display:none" onchange="onSOWFile(this)">
+        </div>
+      </div>
+      <div class="info-box">AI will extract all tasks, quantities, and suggest prices from your library automatically.</div>
+    </div>
+    <div class="mfoot">
+      <button class="btn btn-ghost" onclick="closeModal('ovNewQuote')">Cancel</button>
+      <button class="btn btn-gold" onclick="createQuote()">Create Quote →</button>
+    </div>
+  </div>
+</div>
+
+<!-- AI Extract -->
+<div class="ov" id="ovAI">
+  <div class="modal lg">
+    <div class="mhd"><h3>AI — Analyzing SOW</h3><button class="mcls" onclick="closeModal('ovAI')">✕</button></div>
+    <div class="mbody">
+      <div id="aiStatus" style="text-align:center;padding:40px 20px"><span class="spin-ico"></span><span style="color:var(--tx2);font-size:14px;margin-left:8px">Analyzing with Claude…</span></div>
+      <div id="aiResult" style="display:none"></div>
+    </div>
+    <div class="mfoot" id="aiFoot" style="display:none"><button class="btn btn-ghost" onclick="closeModal('ovAI')">Cancel</button><button class="btn btn-gold" onclick="applyAI()">Apply to Estimate ✓</button></div>
+  </div>
+</div>
+
+<!-- Price Suggest -->
+<div class="ov" id="ovPriceSuggest">
+  <div class="modal lg">
+    <div class="mhd"><h3>Update Price Library?</h3><button class="mcls" onclick="closeModal('ovPriceSuggest')">✕</button></div>
+    <div class="mbody"><p style="font-size:13px;color:var(--tx2);margin-bottom:14px">Select which unit prices to save to the library:</p><div id="psItems"></div></div>
+    <div class="mfoot"><button class="btn btn-ghost" onclick="closeModal('ovPriceSuggest')">Skip</button><button class="btn btn-gold" onclick="applyPriceSugg()">Save Selected ✓</button></div>
+  </div>
+</div>
+
+<!-- Add Price -->
+<div class="ov" id="ovAddPrice">
+  <div class="modal">
+    <div class="mhd"><h3 id="addPriceTitle">Add Price Item</h3><button class="mcls" onclick="closeModal('ovAddPrice')">✕</button></div>
+    <div class="mbody">
+      <div class="f"><label>Description</label><input id="ap_desc" placeholder="e.g. Exterior Siding — Spray Paint"></div>
+      <div class="two-equal">
+        <div class="f"><label>Category</label><select id="ap_cat"><option>Labor</option><option>Materials</option><option>Supplies</option><option>Debris/Dumpster</option><option>Subcontractor</option></select></div>
+        <div class="f"><label>Trade</label><input id="ap_trade" placeholder="Painting Exterior"></div>
+      </div>
+      <div class="two-equal">
+        <div class="f"><label>Unit</label><select id="ap_unit"><option>sqft</option><option>lnft</option><option>unit</option><option>hr</option><option>day</option><option>gallon</option><option>bag</option><option>sheet</option><option>lot</option></select></div>
+        <div class="f"><label>Price per Unit ($)</label><input id="ap_price" type="number" step="0.01" placeholder="0.00"></div>
+      </div>
+      <div class="f"><label>Notes</label><input id="ap_notes" placeholder="e.g. Smooth vinyl, single color"></div>
+      <input type="hidden" id="ap_id">
+    </div>
+    <div class="mfoot"><button class="btn btn-ghost" onclick="closeModal('ovAddPrice')">Cancel</button><button class="btn btn-gold" onclick="savePrice()">Save</button></div>
+  </div>
+</div>
+
+<!-- Add Sub -->
+<div class="ov" id="ovAddSub">
+  <div class="modal lg">
+    <div class="mhd"><h3 id="addSubTitle">Add Subcontractor</h3><button class="mcls" onclick="closeModal('ovAddSub')">✕</button></div>
+    <div class="mbody">
+      <div class="two-equal"><div class="f"><label>Company / Name</label><input id="sub_name" placeholder="ABC Roofing LLC"></div><div class="f"><label>Trade</label><input id="sub_trade" placeholder="Roofing, HVAC…"></div></div>
+      <div class="two-equal"><div class="f"><label>Contact</label><input id="sub_contact" placeholder="John Smith"></div><div class="f"><label>Phone</label><input id="sub_phone" type="tel" placeholder="+1 (615) 555-0000"></div></div>
+      <div class="two-equal"><div class="f"><label>Email</label><input id="sub_email" type="email" placeholder="sub@co.com"></div><div class="f"><label>Last Quote ($)</label><input id="sub_quote" type="number" placeholder="0.00"></div></div>
+      <div class="f"><label>Quote Includes</label>
+        <div class="chip-group" style="margin-top:7px" id="subChips">
+          <span class="chip" data-val="materials" onclick="toggleChip(this)">Materials</span><span class="chip" data-val="labor" onclick="toggleChip(this)">Labor</span><span class="chip" data-val="debris" onclick="toggleChip(this)">Debris/Dumpster</span><span class="chip" data-val="permits" onclick="toggleChip(this)">Permits</span><span class="chip" data-val="equipment" onclick="toggleChip(this)">Equipment</span>
+        </div>
+      </div>
+      <div class="f"><label>Notes</label><textarea id="sub_notes" style="min-height:60px" placeholder="Quality, reliability, references…"></textarea></div>
+      <input type="hidden" id="sub_id">
+    </div>
+    <div class="mfoot"><button class="btn btn-ghost" onclick="closeModal('ovAddSub')">Cancel</button><button class="btn btn-gold" onclick="saveSub()">Save</button></div>
+  </div>
+</div>
+
+<!-- Add Factor -->
+<div class="ov" id="ovFactor">
+  <div class="modal">
+    <div class="mhd"><h3>Add Adjustment / Factor</h3><button class="mcls" onclick="closeModal('ovFactor')">✕</button></div>
+    <div class="mbody">
+      <div class="f"><label>Factor Name</label><input id="fac_name" placeholder="e.g. Height Premium >25ft, Risk Premium…"></div>
+      <div class="two-equal">
+        <div class="f"><label>Type</label><select id="fac_type"><option value="pct">Percentage (%)</option><option value="flat">Flat Amount ($)</option></select></div>
+        <div class="f"><label>Value</label><input id="fac_value" type="number" step="0.1" placeholder="e.g. 15"></div>
+      </div>
+      <div class="f"><label>Apply to</label><select id="fac_apply"><option value="total">Total Estimate</option><option value="labor">Labor Only</option><option value="materials">Materials Only</option></select></div>
+      <div class="f"><label>Notes</label><input id="fac_notes" placeholder="Reason or condition"></div>
+    </div>
+    <div class="mfoot"><button class="btn btn-ghost" onclick="closeModal('ovFactor')">Cancel</button><button class="btn btn-gold" onclick="saveFactor()">Add Factor</button></div>
+  </div>
+</div>
+<!-- Assign Phase Modal -->
+<div class="ov" id="ovPhase">
+  <div class="modal">
+    <div class="mhd"><h3>Assign Phase</h3><button class="mcls" onclick="closeModal('ovPhase')">✕</button></div>
+    <div class="mbody">
+      <p style="font-size:12px;color:var(--tx3);margin-bottom:12px">Assign this line item to a phase:</p>
+      <div id="phasePickList"></div>
+      <div style="margin-top:12px;border-top:1px solid var(--bd);padding-top:12px">
+        <div class="f"><label>Or create new phase</label><input id="newPhaseName" placeholder="e.g. Master Bath, Built-in, Countertop…"></div>
+        <button class="btn btn-gold btn-sm" onclick="createPhaseFromModal()">+ Create & Assign</button>
+      </div>
+    </div>
+    <div class="mfoot"><button class="btn btn-ghost" onclick="closeModal('ovPhase')">Cancel</button></div>
+  </div>
+</div>
+
+
+<!-- Add User -->
+<div class="ov" id="ovAddUser">
+  <div class="modal">
+    <div class="mhd"><h3 id="addUserTitle">Add User</h3><button class="mcls" onclick="closeModal('ovAddUser')">✕</button></div>
+    <div class="mbody">
+      <div class="f"><label>Full Name</label><input id="u_name" placeholder="Jane Smith"></div>
+      <div class="two-equal"><div class="f"><label>Email</label><input id="u_email" type="email" placeholder="jane@formoren.com"></div><div class="f"><label>Password</label><input id="u_pass" type="password" placeholder="••••••••"></div></div>
+      <div class="f"><label>Role</label><select id="u_role" onchange="onRoleChange()"><option value="estimator">Estimator</option><option value="manager">Manager</option><option value="admin">Admin</option></select></div>
+      <div style="font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:1.5px;margin-top:14px;margin-bottom:8px">Permissions</div>
+      <div class="perm-grid" id="permGrid">
+        <div class="perm-item on" data-p="createEstimates" onclick="togglePerm(this)"><div class="perm-cb">✓</div><div><div class="perm-lbl">Create Estimates</div></div></div>
+        <div class="perm-item" data-p="viewPriceLibrary" onclick="togglePerm(this)"><div class="perm-cb"></div><div><div class="perm-lbl">View Price Library</div></div></div>
+        <div class="perm-item" data-p="editPriceLibrary" onclick="togglePerm(this)"><div class="perm-cb"></div><div><div class="perm-lbl">Edit Price Library</div></div></div>
+        <div class="perm-item on" data-p="exportPDF" onclick="togglePerm(this)"><div class="perm-cb">✓</div><div><div class="perm-lbl">Export PDF</div></div></div>
+        <div class="perm-item" data-p="deleteEstimates" onclick="togglePerm(this)"><div class="perm-cb"></div><div><div class="perm-lbl">Delete Estimates</div></div></div>
+        <div class="perm-item on" data-p="viewAllProjects" onclick="togglePerm(this)"><div class="perm-cb">✓</div><div><div class="perm-lbl">View All Projects</div></div></div>
+      </div>
+      <input type="hidden" id="u_id">
+    </div>
+    <div class="mfoot"><button class="btn btn-ghost" onclick="closeModal('ovAddUser')">Cancel</button><button class="btn btn-gold" id="userSaveBtn" onclick="saveUser()">Create User</button></div>
+  </div>
+</div>
+
+<!-- User Menu -->
+<div id="userMenu" style="position:fixed;background:rgba(18,18,18,.97);border:1px solid var(--bd2);border-radius:12px;box-shadow:var(--sh);z-index:3000;min-width:175px;overflow:hidden;display:none;backdrop-filter:blur(24px)">
+  <div style="padding:10px 14px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:9px;color:var(--tx2)" onmouseover="this.style.background='rgba(255,255,255,.05)'" onmouseout="this.style.background=''" onclick="openApiKey()">Company API Key</div>
+  <div style="height:1px;background:var(--bd);margin:3px 0"></div>
+  <div style="padding:10px 14px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:9px;color:var(--red)" onmouseover="this.style.background='var(--red-bg)'" onmouseout="this.style.background=''" onclick="doLogout()">Sign Out</div>
+</div>
+
+<!-- API Key -->
+<div class="ov" id="ovApiKey">
+  <div class="modal">
+    <div class="mhd"><h3>Anthropic API Key</h3><button class="mcls" onclick="closeModal('ovApiKey')">✕</button></div>
+    <div class="mbody">
+      <div class="info-box" style="margin-bottom:14px"><b>Shared company key.</b> Saved securely and used automatically on every device and by every team member — set it once.</div>
+      <div class="f"><label>API Key</label><input id="apiKeyInput" type="password" placeholder="sk-ant-api03-…"></div>
+    </div>
+    <div class="mfoot"><button class="btn btn-ghost" onclick="closeModal('ovApiKey')">Cancel</button><button class="btn btn-gold" onclick="saveApiKey()">Save Key</button></div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="ov" id="ovLightbox" onclick="closeModal('ovLightbox')">
+  <div style="max-width:92vw;max-height:92vh;position:relative" onclick="event.stopPropagation()">
+    <img id="lbImg" style="max-width:92vw;max-height:88vh;border-radius:12px;display:block;object-fit:contain">
+    <button class="mcls" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.75)" onclick="closeModal('ovLightbox')">✕</button>
+  </div>
+</div>
+
+<!-- Confirm -->
+<div class="confirm-ov" id="confirmOv">
+  <div class="confirm-box"><div class="confirm-msg" id="confirmMsg">Are you sure?</div><div class="confirm-btns"><button class="btn btn-ghost" id="confirmNo">Cancel</button><button class="btn btn-danger" id="confirmYes">Delete</button></div></div>
+</div>
+<div class="toast" id="toast"></div>
+
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js';
+import{getFirestore,doc,collection,onSnapshot,setDoc,deleteDoc,addDoc,getDoc,updateDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js';
+import{getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged,createUserWithEmailAndPassword}from'https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js';
+const FB={apiKey:"AIzaSyDJ4okYFrXQdvl7ofCUJWJYqsNQxk7exBA",authDomain:"formo-project-manager.firebaseapp.com",projectId:"formo-project-manager",storageBucket:"formo-project-manager.firebasestorage.app",appId:"1:163966850393:web:7066d031711cc68c112848"};
+const app=initializeApp(FB),db=getFirestore(app),auth=getAuth(app);
+let CU=null,CUD=null,PROJECTS=[],PROJS=[],PRICES=[],SUBS=[],USERS=[],EST=null,AI_DATA=null,PS=[],SOW_FILE=null,AS_TIMER=null;
+let EXPANDED_PROJECTS=new Set(),CURRENT_PROJECT_ID=null;
+let GLOBAL_API_KEY=null; // shared company API key from Firestore
+function toggleProjectGroup(pid){if(EXPANDED_PROJECTS.has(pid))EXPANDED_PROJECTS.delete(pid);else EXPANDED_PROJECTS.add(pid);renderProjects();}
+let PHASE_PENDING={ci:null,li:null}; // for phase assignment modal
+const $=id=>document.getElementById(id);
+const fmt=n=>'$'+(+n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const dstr=ts=>{if(!ts)return'—';const d=ts.toDate?ts.toDate():new Date(ts);return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});};
+window.toast=(msg,t='ok')=>{const el=$('toast');el.textContent=msg;el.className='toast '+t;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2800);};
+window.closeModal=id=>$(id).classList.remove('on');
+const openModal=id=>$(id).classList.add('on');
+window.showConfirm=(msg,cb)=>{const ov=$('confirmOv');$('confirmMsg').textContent=msg;$('confirmYes').onclick=()=>{ov.classList.remove('on');cb();};$('confirmNo').onclick=()=>ov.classList.remove('on');ov.classList.add('on');};
+window.toggleChip=el=>el.classList.toggle('on');
+window.togglePerm=el=>{el.classList.toggle('on');el.querySelector('.perm-cb').textContent=el.classList.contains('on')?'✓':'';};
+
+// AUTOSAVE
+function schedAS(){
+  if(!EST)return;const dot=$('asDot'),lbl=$('asLbl');
+  dot.className='autosave-dot saving';lbl.textContent='Saving…';
+  clearTimeout(AS_TIMER);
+  AS_TIMER=setTimeout(async()=>{
+    try{await setDoc(doc(db,'sow_estimates',EST.id),{...EST,updatedAt:serverTimestamp()});if(EST.projectId)updateDoc(doc(db,'sow_projects',EST.projectId),{updatedAt:serverTimestamp()}).catch(()=>{});dot.className='autosave-dot saved';lbl.textContent='Saved';setTimeout(()=>{dot.className='autosave-dot';lbl.textContent='';},3000);}
+    catch(e){dot.className='autosave-dot';lbl.textContent='';toast('Autosave failed','err');}
+  },1500);
+}
+
+// AUTH
+onAuthStateChanged(auth,async u=>{
+  if(u){
+    CU=u;
+    console.log('[SOW] onAuthStateChanged fired, uid:',u.uid);
+    // Show app immediately — don't block on Firestore
+    $('authWrap').style.display='none';
+    $('appWrap').style.display='block';
+    $('userChipName').textContent=u.email;
+    // Load user data in background with timeout
+    loadUD(u.uid).then(()=>{
+      $('userChipName').textContent=CUD?.name||u.email;
+      applyPerms();
+      initListeners();
+    }).catch(()=>{
+      // Firestore blocked — still let them in with admin defaults
+      CUD={name:u.email,role:'admin',permissions:{admin:true,createEstimates:true,viewPriceLibrary:true,editPriceLibrary:true,exportPDF:true,deleteEstimates:true,viewAllProjects:true}};
+      applyPerms();
+      initListeners();
+      toast('Running in offline mode','err');
+    });
+  } else {
+    $('authWrap').style.display='flex';
+    $('appWrap').style.display='none';
+    CU=null;CUD=null;
+  }
+});
+
+async function loadUD(uid){
+  // Race Firestore against a 6s timeout
+  const timeoutP=new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),6000));
+  const firestoreP=(async()=>{
+    try{
+      const sn=await getDoc(doc(db,'sow_users',uid));
+      if(sn.exists()){
+        CUD=sn.data();
+      } else {
+        // First time — create with admin role (use merge:true to avoid overwrite errors)
+        CUD={name:CU.email,role:'admin',permissions:{admin:true,createEstimates:true,viewPriceLibrary:true,editPriceLibrary:true,exportPDF:true,deleteEstimates:true,viewAllProjects:true}};
+        try{
+          await setDoc(doc(db,'sow_users',uid),{...CUD,email:CU.email,createdAt:serverTimestamp()},{merge:true});
+        }catch(e){
+          // Can't write — still use default admin in memory
+          console.warn('Could not write sow_users:',e.code);
+        }
+      }
+    }catch(e){
+      console.warn('loadUD error:',e.code||e.message);
+      CUD={name:CU.email,role:'admin',permissions:{admin:true,createEstimates:true,viewPriceLibrary:true,editPriceLibrary:true,exportPDF:true,deleteEstimates:true,viewAllProjects:true}};
+      throw e; // re-throw so caller knows
+    }
+  })();
+  await Promise.race([firestoreP,timeoutP]);
+}
+function applyPerms(){const p=CUD?.permissions||{},isA=CUD?.role==='admin';document.querySelectorAll('[data-perm]').forEach(el=>{const pn=el.dataset.perm;if(pn==='admin'){if(!isA)el.style.display='none';}else{if(!p[pn]&&!isA)el.style.display='none';}});}
+const hasPerm=p=>{if(!CUD)return false;if(CUD.role==='admin')return true;return!!(CUD.permissions||{})[p];};
+window.doLogin=async()=>{
+  const e=$('authEmail').value.trim(),p=$('authPass').value,btn=$('authBtn'),err=$('authErr');
+  const dbg=$('authDebug');
+  const log=msg=>{dbg.style.display='block';dbg.innerHTML+=(dbg.innerHTML?'<br>':'')+msg;console.log('[SOW]',msg);};
+  dbg.innerHTML='';
+  if(!e||!p){err.textContent='Enter email and password.';err.style.display='block';return;}
+  err.style.display='none';
+  btn.innerHTML='<span class="spin-ico dark"></span> Signing in…';
+  btn.disabled=true;
+  log('① Attempting Firebase Auth…');
+
+  // Timeout safety — reset after 12s if no response
+  const reset=()=>{btn.innerHTML='Sign In';btn.disabled=false;};
+  const tOut=setTimeout(()=>{
+    reset();
+    err.textContent='Connection timeout — check your internet and try again.';
+    err.style.display='block';
+  },12000);
+
+  try{
+    await signInWithEmailAndPassword(auth,e,p);
+    clearTimeout(tOut);
+    log('② Auth OK — loading app…');
+    // onAuthStateChanged will take it from here
+  }catch(er){
+    clearTimeout(tOut);
+    const msg={
+      'auth/invalid-credential':'Wrong email or password.',
+      'auth/invalid-email':'Invalid email address.',
+      'auth/user-disabled':'This account has been disabled.',
+      'auth/user-not-found':'No account found with this email.',
+      'auth/wrong-password':'Wrong password.',
+      'auth/too-many-requests':'Too many attempts — wait a moment and try again.',
+      'auth/network-request-failed':'Network error — check your connection.',
+    };
+    err.textContent=msg[er.code]||('Error: '+er.message);
+    err.style.display='block';
+    reset();
+  }
+};
+
+// Also allow Enter key to submit
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&$('authWrap')&&$('authWrap').style.display!=='none'){
+    const focused=document.activeElement?.id;
+    if(focused==='authEmail'||focused==='authPass')doLogin();
+  }
+});
+window.doLogout=async()=>{$('userMenu').style.display='none';await signOut(auth);toast('Signed out');};
+
+// LISTENERS
+function initListeners(){
+  // Load shared company API key (global, all users all devices)
+  onSnapshot(doc(db,'sow_config','apikey'),sn=>{if(sn.exists()){GLOBAL_API_KEY=sn.data().key||null;}});
+  onSnapshot(collection(db,'sow_projects'),sn=>{PROJECTS=sn.docs.map(d=>({id:d.id,...d.data()}));renderAll();renderStats();});
+  onSnapshot(collection(db,'sow_estimates'),sn=>{PROJS=sn.docs.map(d=>({id:d.id,...d.data()}));renderAll();renderStats();});
+  onSnapshot(collection(db,'sow_prices'),sn=>{PRICES=sn.docs.map(d=>({id:d.id,...d.data()}));renderPriceLib();});
+  onSnapshot(collection(db,'sow_subs'),sn=>{SUBS=sn.docs.map(d=>({id:d.id,...d.data()}));renderSubLib();});
+  if(CUD?.role==='admin')onSnapshot(collection(db,'sow_users'),sn=>{USERS=sn.docs.map(d=>({id:d.id,...d.data()}));renderUsers();});
+}
+
+// TABS
+window.switchTab=tab=>{document.querySelectorAll('.t-item').forEach(el=>el.classList.toggle('on',el.dataset.tab===tab));document.querySelectorAll('.tab-pane').forEach(el=>el.classList.toggle('on',el.id==='tab-'+tab));};
+
+// STATS
+window.renderStats=()=>{
+  $('stTotal').textContent=PROJECTS.length;
+  $('stDraft').textContent=PROJS.filter(p=>p.status==='draft').length;
+  $('stSent').textContent=PROJS.filter(p=>p.status==='sent').length;
+  $('stWon').textContent=PROJS.filter(p=>p.status==='won').length;
+  const pc=$('projCount');if(pc)pc.textContent=PROJECTS.length+' group'+(PROJECTS.length!==1?'s':'')+' · '+PROJS.length+' quote'+(PROJS.length!==1?'s':'');
+};
+
+// CALC HELPERS
+function catTot(lines){return(lines||[]).reduce((s,l)=>s+(+(l.qty||0))*(+(l.unitPrice||0)),0);}
+function costTotal(cats,adjs){let base=(cats||[]).reduce((s,c)=>s+catTot(c.lines),0);let lab=(cats||[]).filter(c=>c.cat==='Labor').reduce((s,c)=>s+catTot(c.lines),0);let mat=(cats||[]).filter(c=>c.cat==='Materials').reduce((s,c)=>s+catTot(c.lines),0);let adj=0;(adjs||[]).forEach(a=>{const b2=a.apply==='labor'?lab:a.apply==='materials'?mat:base;adj+=a.type==='pct'?b2*(+a.value/100):(+a.value);});return base+adj;}
+function profitTotal(cats,rows){return(rows||[]).reduce((s,r)=>{const b=(cats||[]).filter(c=>c.cat===r.cat).reduce((ss,c)=>ss+catTot(c.lines),0);return s+b*(+(r.pct||0)/100);},0);}
+function miscTotal(items){return(items||[]).reduce((s,i)=>s+(+(i.amount||0)),0);}
+
+// PROJECTS LIST
+window.ACTIVE_SUBTAB='groups';
+
+window.switchSubTab=tab=>{
+  ACTIVE_SUBTAB=tab;
+  document.querySelectorAll('.subtab').forEach(el=>el.classList.toggle('on',el.id==='st-'+tab));
+  $('pane-groups').style.display=tab==='groups'?'block':'none';
+  $('pane-quotes').style.display=tab==='quotes'?'block':'none';
+  const actBtn=$('btnNewQuoteDirect');
+  if(actBtn)actBtn.style.display=tab==='quotes'?'inline-flex':'none';
+};
+
+window.renderAll=()=>{renderProjects();renderQuotesGrid();};
+window.renderProjects=()=>{renderGroups();};
+
+window.renderGroups=()=>{
+  const q=($('projSearch')?.value||'').toLowerCase();
+  const grid=$('groupsGrid');if(!grid)return;
+  const sb={draft:'badge-neutral',sent:'badge-amber',won:'badge-green',lost:'badge-red'};
+
+  let projList=PROJECTS.filter(p=>!q||(p.name+p.client+p.address||'').toLowerCase().includes(q));
+  const projLastUpdate=pid=>{const qs=PROJS.filter(q=>q.projectId===pid);if(!qs.length)return 0;return Math.max(...qs.map(q=>q.updatedAt?.seconds||q.createdAt?.seconds||0));};
+  projList.sort((a,b)=>projLastUpdate(b.id)-projLastUpdate(a.id));
+
+  if(!projList.length){
+    grid.innerHTML=`<div class="empty-state"><div class="empty-state-ico"></div><h3>No groups yet</h3><p>Create a group to organize quotes by project, then assign quotes to it from the <b>All Quotes</b> tab.</p><div style="margin-top:16px;display:flex;gap:8px;justify-content:center"><button class="btn btn-gold btn-sm" onclick="openNewProject()">+ New Group</button><button class="btn btn-ghost btn-sm" onclick="switchSubTab('quotes')">View All Quotes →</button></div></div>`;
+    return;
+  }
+
+  grid.innerHTML=projList.map(proj=>{
+    const quotes=PROJS.filter(q=>q.projectId===proj.id)
+      .sort((a,b)=>(b.updatedAt?.seconds||b.createdAt?.seconds||0)-(a.updatedAt?.seconds||a.createdAt?.seconds||0));
+    const totalValue=quotes.reduce((s,qt)=>{const c=costTotal(qt.categories||[],qt.adjustments||[]);const p=profitTotal(qt.categories||[],qt.profitRows||[]);return s+c+p+miscTotal(qt.miscItems||[]);},0);
+    const latestStatus=quotes[0]?.status||'draft';
+    const isExp=EXPANDED_PROJECTS.has(proj.id);
+
+    const quotesHTML=quotes.map((qt,qi)=>{
+      const cost=costTotal(qt.categories||[],qt.adjustments||[]);
+      const prof=profitTotal(qt.categories||[],qt.profitRows||[]);
+      const grand=cost+prof+miscTotal(qt.miscItems||[]);
+      return`<div style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--bd);cursor:pointer;transition:background .15s" onclick="openEst('${qt.id}')" onmouseover="this.style.background='rgba(255,255,255,.025)'" onmouseout="this.style.background=''">
+        <div style="flex-shrink:0;width:22px;height:22px;border-radius:6px;background:var(--s3);border:1px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--tx3)">#${qi+1}</div>
+        <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(qt.name||'Untitled Quote')}</div><div style="font-size:10px;color:var(--tx4)">${dstr(qt.updatedAt||qt.createdAt)}${qt.estimatedDays?' · '+qt.estimatedDays+'d':''}</div></div>
+        <span class="badge ${sb[qt.status]||'badge-neutral'}" style="flex-shrink:0">${(qt.status||'draft').toUpperCase()}</span>
+        <div style="text-align:right;flex-shrink:0"><div style="font-family:var(--ff-bc);font-size:17px;font-weight:800;color:var(--green)">${fmt(grand)}</div>${prof>0?`<div style="font-size:9px;color:var(--tx4)">${fmt(cost)} cost</div>`:''}</div>
+        <div style="display:flex;gap:4px;flex-shrink:0" onclick="event.stopPropagation()">
+          <button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();genPDF('${qt.id}')" title="PDF">PDF</button>
+          <button class="btn btn-xs btn-danger" onclick="event.stopPropagation();deleteQuote('${qt.id}')">✕</button>
+        </div>
+      </div>`;
+    }).join('');
+
+    return`<div class="proj-group" style="background:var(--s1);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;margin-bottom:10px">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;background:var(--s2);border-bottom:${isExp&&quotes.length?'1px solid var(--bd)':'none'}" data-pid="${proj.id}" data-act="toggle">
+        <div style="width:28px;height:28px;border-radius:8px;background:var(--gold-bg2);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0"></div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:15px;font-weight:700;letter-spacing:-.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(proj.name||'Unnamed Group')}</div>
+          <div style="font-size:11px;color:var(--tx3);margin-top:1px">${proj.client?`${esc(proj.client)}&nbsp;&nbsp;`:''}${proj.address?`${esc(proj.address)}`:'No address'}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;margin-right:4px">
+          <div style="font-size:10px;color:var(--tx3)">${quotes.length} quote${quotes.length!==1?'s':''}</div>
+          ${quotes.length?`<div style="font-family:var(--ff-bc);font-size:18px;font-weight:800;color:var(--gold)">${fmt(totalValue)}</div>`:'<div style="font-size:11px;color:var(--tx4)">No quotes yet</div>'}
+        </div>
+        <span class="badge ${sb[latestStatus]||'badge-neutral'}" style="flex-shrink:0">${latestStatus.toUpperCase()}</span>
+        <div style="display:flex;gap:4px;flex-shrink:0" onclick="event.stopPropagation()">
+          <button class="btn btn-xs btn-gold" onclick="event.stopPropagation();openNewQuote('${proj.id}')">+ Quote</button>
+          <button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();openEditProject('${proj.id}')"></button>
+          <button class="btn btn-xs btn-danger" onclick="event.stopPropagation();deleteGroup('${proj.id}')">✕</button>
+        </div>
+        <span style="color:var(--tx4);font-size:14px;flex-shrink:0;transition:transform .2s;${isExp?'transform:rotate(180deg)':''}">▾</span>
+      </div>
+      <div style="display:${isExp?'block':'none'}">
+        ${quotes.length?quotesHTML:`<div style="padding:16px 20px;font-size:12px;color:var(--tx4)">No quotes yet — click <b style="color:var(--gold)">+ Quote</b> above, or assign existing quotes from <span style="color:var(--blue);cursor:pointer" onclick="switchSubTab('quotes')">All Quotes</span></div>`}
+      </div>
+    </div>`;
+  }).join('');
+
+  grid.onclick=e=>{
+    const btn=e.target.closest('[data-act]');if(!btn)return;
+    const act=btn.dataset.act,id=btn.dataset.id,pid=btn.dataset.pid||btn.closest('[data-pid]')?.dataset.pid;
+    if(act==='toggle')toggleProjectGroup(pid);
+    if(act==='openq')openEst(id||btn.closest('[data-id]')?.dataset.id);
+    if(act==='pdfq')genPDF(id);
+    if(act==='newq')openNewQuote(pid);
+    if(act==='editp')openEditProject(pid);
+    if(act==='delp'){
+      if(!hasPerm('deleteEstimates')){toast('No permission','err');return;}
+      const qs=PROJS.filter(q=>q.projectId===pid);
+      showConfirm(`Delete group "${PROJECTS.find(p=>p.id===pid)?.name}"? Its ${qs.length} quote${qs.length!==1?'s':''} will become unassigned.`,async()=>{
+        for(const qt of qs)await updateDoc(doc(db,'sow_estimates',qt.id),{projectId:null});
+        await deleteDoc(doc(db,'sow_projects',pid));
+        toast('Group deleted');
+      });
+    }
+    if(act==='delq'){if(!hasPerm('deleteEstimates')){toast('No permission','err');return;}showConfirm('Delete this quote?',()=>deleteDoc(doc(db,'sow_estimates',id)).then(()=>toast('Deleted')));}
+  };
+};
+
+window.renderQuotesGrid=()=>{
+  const q=($('projSearch')?.value||'').toLowerCase();
+  const grid=$('quotesGrid');if(!grid)return;
+  const sb={draft:'badge-neutral',sent:'badge-amber',won:'badge-green',lost:'badge-red'};
+  let list=[...PROJS].filter(p=>!q||(p.name+p.client+p.address+p.type||'').toLowerCase().includes(q));
+  list.sort((a,b)=>(b.updatedAt?.seconds||b.createdAt?.seconds||0)-(a.updatedAt?.seconds||a.createdAt?.seconds||0));
+  if(!list.length){grid.innerHTML='<div class="empty-state"><div class="empty-state-ico"></div><h3>No quotes yet</h3><p>Create your first quote.</p></div>';return;}
+  grid.innerHTML=list.map(p=>{
+    const cost=costTotal(p.categories||[],p.adjustments||[]),prof=profitTotal(p.categories||[],p.profitRows||[]),misc=miscTotal(p.miscItems||[]),grand=cost+prof+misc;
+    const grp=PROJECTS.find(g=>g.id===p.projectId);
+    return`<div class="proj-card" style="position:relative">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px" onclick="openEst('${p.id}')">
+        <div style="flex:1;min-width:0;cursor:pointer">
+          <div style="font-size:15px;font-weight:700;letter-spacing:-.02em;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(p.name||'Unnamed')}</div>
+          <div style="font-size:11px;color:var(--tx4)">${esc(p.type||'—')}</div>
+        </div>
+        <span class="badge ${sb[p.status]||'badge-neutral'}" style="flex-shrink:0;margin-left:8px">${(p.status||'draft').toUpperCase()}</span>
+      </div>
+      ${grp?`<div style="display:flex;align-items:center;gap:5px;margin-bottom:8px;cursor:pointer" onclick="openEst('${p.id}')"><span style="font-size:11px"></span><span style="font-size:11px;color:var(--gold);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(grp.name)}</span></div>`:''}
+      <div style="font-size:11px;color:var(--tx3);margin-bottom:2px;cursor:pointer" onclick="openEst('${p.id}')">${esc(p.client||'—')}</div>
+      <div style="font-size:11px;color:var(--tx3);margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer" onclick="openEst('${p.id}')">${esc(p.address||'No address')}</div>
+      ${p.estimatedDays?`<div class="days-badge" style="margin-bottom:10px">${p.estimatedDays} day${p.estimatedDays!=1?'s':''}</div>`:''}
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="cursor:pointer" onclick="openEst('${p.id}')">
+          <div style="font-size:10px;color:var(--tx3)">Grand Total</div>
+          <div style="font-family:var(--ff-bc);font-size:20px;font-weight:800;color:var(--green)">${fmt(grand)}</div>
+          ${prof>0?`<div style="font-size:10px;color:var(--tx4)">${fmt(cost)} cost</div>`:''}
+        </div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;align-items:center">
+          <button class="assign-btn" onclick="openAssignGroup('${p.id}')" title="Assign to group">${grp?'Move':'Assign'}</button>
+          <button class="btn btn-xs btn-ghost" onclick="genPDF('${p.id}')"></button>
+          <button class="btn btn-xs btn-danger" onclick="event.stopPropagation();deleteQuote('${p.id}')">✕</button>
+        </div>
+      </div>
+      <div style="font-size:10px;color:var(--tx4);margin-top:8px">${dstr(p.updatedAt||p.createdAt)}</div>
+    </div>`;
+  }).join('');
+};
+
+
+window.openNewQuoteDirect=()=>{
+  if(!hasPerm('createEstimates')){toast('No permission','err');return;}
+  CURRENT_PROJECT_ID=null;
+  $('nq_name').value='';$('nq_days').value='';$('nq_sow').value='';$('nq_status').value='draft';
+  SOW_FILE=null;clearSOWDoc();setSowTab('write');
+  $('nqProjInfo').textContent='No group — quote will appear in All Quotes';
+  openModal('ovNewQuote');
+};
+
+window.openNewProject=()=>{
+  if(!hasPerm('createEstimates')){toast('No permission','err');return;}
+  // New project modal: only project-level fields (no SOW here)
+  ['np_name','np_address','np_client','np_phone','np_email'].forEach(id=>{const el=$(id);if(el)el.value='';});
+  $('np_status').value='draft';$('np_type').value='Exterior Painting';
+  $('newProjModalTitle').textContent='New Project';
+  $('newProjBtn').textContent='Create Project';
+  $('newProjBtn').onclick=createProjectOnly;
+  openModal('ovNewProj');
+};
+
+window.openEditProject=(pid)=>{
+  const proj=PROJECTS.find(p=>p.id===pid);if(!proj)return;
+  ['np_name','np_address','np_client','np_phone','np_email'].forEach(id=>{const el=$(id);if(el)el.value=proj[id.replace('np_','')]||'';});
+  $('np_name').value=proj.name||'';
+  $('np_address').value=proj.address||'';
+  $('np_client').value=proj.client||'';
+  $('np_phone').value=proj.phone||'';
+  $('np_email').value=proj.email||'';
+  $('np_type').value=proj.type||'Exterior Painting';
+  $('np_status').value=proj.status||'draft';
+  $('newProjModalTitle').textContent='Edit Project';
+  $('newProjBtn').textContent='Save Changes';
+  $('newProjBtn').onclick=()=>saveEditProject(pid);
+  openModal('ovNewProj');
+};
+
+window.saveEditProject=async(pid)=>{
+  const name=$('np_name').value.trim();if(!name){toast('Name required','err');return;}
+  await updateDoc(doc(db,'sow_projects',pid),{name,address:$('np_address').value.trim(),client:$('np_client').value.trim(),phone:$('np_phone').value.trim(),email:$('np_email').value.trim(),type:$('np_type').value,status:$('np_status').value,updatedAt:serverTimestamp()});
+  closeModal('ovNewProj');toast('Project updated ✓');
+};
+
+window.createProjectOnly=async()=>{
+  const name=$('np_name').value.trim();if(!name){toast('Project name required','err');return;}
+  const ref=await addDoc(collection(db,'sow_projects'),{name,address:$('np_address').value.trim(),client:$('np_client').value.trim(),phone:$('np_phone').value.trim(),email:$('np_email').value.trim(),type:$('np_type').value,status:$('np_status').value,createdAt:serverTimestamp(),updatedAt:serverTimestamp(),createdBy:CU.uid});
+  closeModal('ovNewProj');
+  EXPANDED_PROJECTS.add(ref.id);
+  toast('Project created — add a quote to get started');
+};
+
+// Open "New Quote" inside a project
+window.openNewQuote=(pid)=>{
+  if(!hasPerm('createEstimates')){toast('No permission','err');return;}
+  const proj=PROJECTS.find(p=>p.id===pid);if(!proj)return;
+  CURRENT_PROJECT_ID=pid;
+  // Pre-fill quote name with project name + quote number
+  const qCount=PROJS.filter(q=>q.projectId===pid).length;
+  $('nq_name').value=proj.name+(qCount>0?' — Quote #'+(qCount+1):'');
+  $('nq_days').value='';$('nq_sow').value='';
+  $('nq_status').value='draft';
+  SOW_FILE=null;clearSOWDoc();setSowTab('write');
+  // Show project info in modal
+  $('nqProjInfo').textContent=proj.name+(proj.client?' · '+proj.client:'')+(proj.address?' — '+proj.address:'');
+  openModal('ovNewQuote');
+};
+
+
+window.setSowTab=tab=>{
+  const wBtn=$('stWrite'),uBtn=$('stUpload');
+  if(wBtn)wBtn.classList.toggle('on',tab==='write');
+  if(uBtn)uBtn.classList.toggle('on',tab==='upload');
+  const wr=$('sowWrite'),up=$('sowUpload');
+  if(wr)wr.style.display=tab==='write'?'block':'none';
+  if(up)up.style.display=tab==='upload'?'block':'none';
+};
+window.onSOWFile=async inp=>{const f=inp.files[0];if(f)await procSOWFile(f);};
+window.onSOWDrop=async e=>{e.preventDefault();$('dropZone').classList.remove('drag');const f=e.dataTransfer.files[0];if(f)await procSOWFile(f);};
+async function procSOWFile(file){
+  $('dropZone').style.display='none';$('sowDocRow').style.display='flex';$('sowDocText').textContent=file.name+' ('+Math.round(file.size/1024)+'KB)';
+  if(file.type==='text/plain'){const txt=await file.text();$('np_sow').value=txt;SOW_FILE={type:'text',name:file.name};}
+  else{const b64=await f2b64(file);SOW_FILE={type:'pdf',name:file.name,data:b64,mime:file.type||'application/pdf'};}
+}
+function f2b64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(file);});}
+window.clearSOWDoc=()=>{SOW_FILE=null;$('dropZone').style.display='';$('sowDocRow').style.display='none';if($('sowFile'))$('sowFile').value='';};
+
+window.createProject=window.createProjectOnly; // alias kept for safety
+
+window.createQuote=async()=>{
+  const name=$('nq_name').value.trim();if(!name){toast('Quote name required','err');return;}
+  // CURRENT_PROJECT_ID can be null (quote without group)
+  const proj=PROJECTS.find(p=>p.id===CURRENT_PROJECT_ID);
+  const sowEl=$('nq_sow');const sow=sowEl?sowEl.value.trim():'';
+  const data={
+    name,projectId:CURRENT_PROJECT_ID||null,
+    client:proj?.client||'',phone:proj?.phone||'',email:proj?.email||'',
+    address:proj?.address||'',type:proj?.type||'',
+    status:$('nq_status').value,
+    estimatedDays:parseInt($('nq_days').value)||null,
+    sow,sowFileName:SOW_FILE?.name||'',
+    categories:[],adjustments:[],profitRows:[],miscItems:[],photos:[],phases:[],notes:'',
+    createdAt:serverTimestamp(),updatedAt:serverTimestamp(),createdBy:CU.uid
+  };
+  const ref=await addDoc(collection(db,'sow_estimates'),data);
+  // update project status & updatedAt
+  if(CURRENT_PROJECT_ID)await updateDoc(doc(db,'sow_projects',CURRENT_PROJECT_ID),{status:$('nq_status').value,updatedAt:serverTimestamp()}).catch(()=>{});
+  closeModal('ovNewQuote');toast('Quote created');
+  EXPANDED_PROJECTS.add(CURRENT_PROJECT_ID);
+  openEst(ref.id);
+  if(sow||SOW_FILE)setTimeout(()=>runAI(ref.id,sow,SOW_FILE),400);
+};
+
+// ESTIMATE EDITOR
+window.openEst=function(id){
+  const p=PROJS.find(x=>x.id===id);if(!p){toast('Not found','err');return;}
+  EST=JSON.parse(JSON.stringify(p));
+  if(p.projectId)EXPANDED_PROJECTS.add(p.projectId);
+  $('tabEst').style.display='flex';switchTab('estimate');renderEst();
+}
+
+function renderEst(){
+  const p=EST;if(!p){$('estContent').innerHTML='';return;}
+  const cats=p.categories||[],adjs=p.adjustments||[],profRows=p.profitRows||[],miscItems=p.miscItems||[],photos=p.photos||[],phases=p.phases||[];
+  const COST=costTotal(cats,adjs),PROF=profitTotal(cats,profRows),MISC=miscTotal(miscItems),GRAND=COST+PROF+MISC;
+  const labT=cats.filter(c=>c.cat==='Labor').reduce((s,c)=>s+catTot(c.lines),0);
+  const matT=cats.filter(c=>c.cat==='Materials').reduce((s,c)=>s+catTot(c.lines),0);
+  const subT=cats.filter(c=>c.cat==='Subcontractor').reduce((s,c)=>s+catTot(c.lines),0);
+  const supT=cats.filter(c=>c.cat==='Supplies').reduce((s,c)=>s+catTot(c.lines),0);
+  const debT=cats.filter(c=>c.cat==='Debris/Dumpster').reduce((s,c)=>s+catTot(c.lines),0);
+  const CC={Labor:'var(--gold)',Materials:'var(--blue)',Supplies:'var(--green)',Subcontractor:'var(--purple)','Debris/Dumpster':'var(--amber)'};
+  const CI={Labor:'',Materials:'',Supplies:'',Subcontractor:'','Debris/Dumpster':''};
+
+  const catsHTML=cats.map((cat,ci)=>{
+    const isSub=cat.cat==='Subcontractor',col=CC[cat.cat]||'var(--tx2)',ico=CI[cat.cat]||'',ct=catTot(cat.lines||[]);
+    const lines=(cat.lines||[]).map((ln,li)=>{
+      const lt=(+(ln.qty||0))*(+(ln.unitPrice||0));
+      return`<div class="li-row${isSub?' sub-ext':''}" data-ci="${ci}" data-li="${li}">
+        <input class="li-input" placeholder="Description" value="${esc(ln.desc||'')}" data-ci="${ci}" data-li="${li}" data-f="desc" oninput="onLI(this)">
+        <input class="li-input hide-sm" placeholder="Unit" value="${esc(ln.unit||'')}" data-ci="${ci}" data-li="${li}" data-f="unit" oninput="onLI(this)">
+        <input class="li-input" type="number" placeholder="Qty" value="${ln.qty||''}" data-ci="${ci}" data-li="${li}" data-f="qty" oninput="onLI(this)" style="text-align:right">
+        <input class="li-input" type="number" placeholder="$/unit" value="${ln.unitPrice||''}" data-ci="${ci}" data-li="${li}" data-f="unitPrice" oninput="onLI(this)" style="text-align:right">
+        <div style="font-family:var(--ff-bc);font-size:14px;font-weight:700;text-align:right;padding-right:2px;white-space:nowrap" id="lt-${ci}-${li}">${fmt(lt)}</div>
+        ${isSub?`<select class="li-input hide-sm" data-ci="${ci}" data-li="${li}" data-f="subIncludes" onchange="onLI(this)" style="font-size:11px"><option value="">Includes…</option><option ${ln.subIncludes==='materials'?'selected':''} value="materials">+Materials</option><option ${ln.subIncludes==='all'?'selected':''} value="all">All-in</option></select>`:''}
+        <button class="li-phase-tag ${getPhaseTag(ln,phases)}" data-ci="${ci}" data-li="${li}" data-act="pt" title="Assign phase">${getPhaseLabel(ln,phases)}</button>
+        <button class="li-del" data-ci="${ci}" data-li="${li}" data-act="dl">✕</button>
+      </div>`;
+    }).join('');
+    return`<div class="cat-section" id="cat-${ci}">
+      <div class="cat-hd">
+        <span style="font-size:16px">${ico}</span>
+        <span class="cat-hd-title" style="color:${col}">${cat.cat}</span>
+        <span class="cat-total" id="ct-${ci}">${fmt(ct)}</span>
+        <button class="btn btn-xs btn-ghost" data-ci="${ci}" data-act="al" style="margin-left:6px">+ Line</button>
+        <button class="btn btn-xs btn-danger" data-ci="${ci}" data-act="dc">✕ Cat</button>
+      </div>
+      <div class="li-hdr li-row${isSub?' sub-ext':''}"><span>Description</span><span class="hide-sm">Unit</span><span style="text-align:right">Qty</span><span style="text-align:right">$/Unit</span><span style="text-align:right">Total</span>${isSub?'<span class="hide-sm">Includes</span>':''}<span style="font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:rgba(10,132,255,.5)">Phase</span><span></span></div>
+      ${lines}
+    </div>`;
+  }).join('');
+
+  const adjHTML=adjs.map((a,ai)=>`<div style="display:flex;align-items:center;gap:8px;padding:9px 16px;border-bottom:1px solid var(--bd);font-size:13px">
+    <span style="color:var(--gold);font-weight:600;flex:1">${esc(a.name)}</span>
+    <span style="font-size:11px;color:var(--tx3)">${a.apply==='labor'?'→Labor':a.apply==='materials'?'→Materials':'→Total'}</span>
+    <span style="font-family:var(--ff-bc);font-size:15px;font-weight:700;color:var(--gold)">${a.type==='pct'?'+'+a.value+'%':fmt(a.value)}</span>
+    <button class="li-del" data-ai="${ai}" data-act="da">✕</button>
+  </div>`).join('');
+
+  const profHTML=profRows.map((r,ri)=>{
+    const b=cats.filter(c=>c.cat===r.cat).reduce((s,c)=>s+catTot(c.lines),0);
+    const pa=b*(+(r.pct||0)/100);
+    return`<div class="profit-row">
+      <select class="li-input" data-ri="${ri}" data-f="cat" onchange="onProfit(this)">
+        ${['Labor','Materials','Supplies','Subcontractor','Debris/Dumpster'].map(c=>`<option ${r.cat===c?'selected':''}>${c}</option>`).join('')}
+      </select>
+      <div style="display:flex;align-items:center;gap:4px">
+        <input class="li-input" type="number" min="0" max="999" placeholder="%" value="${r.pct||''}" data-ri="${ri}" data-f="pct" oninput="onProfit(this)" style="text-align:right">
+        <span style="color:var(--tx3);font-size:12px;flex-shrink:0">%</span>
+      </div>
+      <div style="font-family:var(--ff-bc);font-size:15px;font-weight:700;color:var(--green);text-align:right;white-space:nowrap" id="pr-${ri}">${fmt(pa)}</div>
+      <button class="li-del" data-ri="${ri}" data-act="dp">✕</button>
+    </div>`;
+  }).join('');
+
+  const miscHTML=miscItems.map((m,mi)=>`<div style="display:grid;grid-template-columns:minmax(0,2fr) 120px 28px;gap:6px;align-items:center;padding:8px 16px;border-bottom:1px solid var(--bd);font-size:13px">
+    <input class="li-input" placeholder="Description (snacks, gas, gift…)" value="${esc(m.desc||'')}" data-mi="${mi}" data-f="desc" oninput="onMisc(this)">
+    <input class="li-input" type="number" placeholder="Amount" value="${m.amount||''}" data-mi="${mi}" data-f="amount" oninput="onMisc(this)" style="text-align:right">
+    <button class="li-del" data-mi="${mi}" data-act="dm">✕</button>
+  </div>`).join('');
+
+  const photosHTML=photos.map((ph,pi)=>`<div class="ph-thumb" onclick="openLB('${ph.data}')">
+    <img src="${ph.data}" loading="lazy">
+    <button class="ph-del" data-pi="${pi}" data-act="dph" onclick="event.stopPropagation()">✕</button>
+  </div>`).join('')+`<div class="ph-add" onclick="document.getElementById('photoIn').click()"><span style="font-size:22px">+</span><span>Add photo</span></div>`;
+
+  $('estContent').innerHTML=`
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;gap:12px;flex-wrap:wrap">
+      <div style="min-width:0">
+        <div style="font-size:10px;color:var(--tx4);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px">ESTIMATE</div>
+        <div style="font-family:var(--ff-bc);font-size:28px;font-weight:800;letter-spacing:-.3px">${esc(p.name)}</div>
+        <div style="font-size:12px;color:var(--tx3);margin-top:4px;line-height:1.7">
+          ${(()=>{const proj=PROJECTS.find(x=>x.id===p.projectId);return proj?`<span style="color:var(--gold);font-weight:600">${esc(proj.name)}</span><br>`:'';})()}
+          ${p.client?`${esc(p.client)}&nbsp;&nbsp;`:''}${p.phone?`${esc(p.phone)}`:''}${p.address?`<br>${esc(p.address)}`:''}
+          ${p.estimatedDays?`&nbsp;<span class="days-badge">${p.estimatedDays} day${p.estimatedDays!=1?'s':''}</span>`:''}
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex-shrink:0">
+        <select id="estStatus" onchange="updStatus()" style="background:var(--s2);border:1px solid var(--bd2);color:var(--tx2);border-radius:10px;padding:7px 11px;font-size:12px;font-family:'Inter',sans-serif;outline:none">
+          <option ${p.status==='draft'?'selected':''} value="draft">Draft</option><option ${p.status==='sent'?'selected':''} value="sent">Sent</option><option ${p.status==='won'?'selected':''} value="won">Won</option><option ${p.status==='lost'?'selected':''} value="lost">Lost</option>
+        </select>
+        <input type="number" id="estDays" min="1" value="${p.estimatedDays||''}" placeholder="Days" oninput="updDays()" style="width:68px;background:var(--s2);border:1px solid var(--bd2);color:var(--tx2);border-radius:10px;padding:7px 10px;font-size:12px;font-family:'Inter',sans-serif;outline:none;text-align:center" title="Estimated days">
+        <button class="btn btn-ghost btn-sm" onclick="runAIcurrent()">AI</button>
+        <button class="btn btn-ghost btn-sm" onclick="manualSave()">Save & Library</button>
+        <button class="btn btn-gold btn-sm" onclick="genPDF('${p.id}')">PDF</button>
+        <button class="btn btn-ghost btn-sm" onclick="switchTab('projects')">← Projects</button>
+      </div>
+    </div>
+
+    ${p.sow?`<div class="card" style="margin-bottom:16px">
+      <div class="card-hd"><h3>Scope of Work${p.sowFileName?' — '+esc(p.sowFileName):''}</h3><button class="btn btn-xs btn-ghost" onclick="toggleSOW()">Show/Hide</button></div>
+      <div id="sowPrev" style="display:none;padding:14px 16px">
+        <div style="background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:14px;font-size:13px;color:var(--tx2);line-height:1.75;white-space:pre-wrap;word-break:break-word;max-height:360px;overflow-y:auto">${esc(p.sow)}</div>
+      </div>
+    </div>`:''}
+
+    <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;align-items:center">
+      <span style="font-size:10px;color:var(--tx3);font-weight:600;white-space:nowrap">ADD:</span>
+      <button class="btn btn-xs btn-dim" data-cat="Labor" onclick="addCat(this)">Labor</button>
+      <button class="btn btn-xs btn-dim" data-cat="Materials" onclick="addCat(this)">Materials</button>
+      <button class="btn btn-xs btn-dim" data-cat="Supplies" onclick="addCat(this)">Supplies</button>
+      <button class="btn btn-xs btn-dim" data-cat="Debris/Dumpster" onclick="addCat(this)">Debris</button>
+      <button class="btn btn-xs btn-dim" data-cat="Subcontractor" onclick="addCat(this)">Sub</button>
+    </div>
+
+    <div id="catsWrap">${catsHTML}</div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="card-hd"><h3>Adjustments & Factors</h3><button class="btn btn-xs btn-gold" onclick="openFactor()">+ Add</button></div>
+      <div id="adjWrap">${adjs.length?adjHTML:'<div style="padding:12px 16px;font-size:12px;color:var(--tx4)">No adjustments</div>'}</div>
+    </div>
+
+    <div class="summary-bar">
+      <div class="sum-item"><div class="sum-lbl">Labor</div><div class="sum-val" style="color:var(--gold)" id="sb-lab">${fmt(labT)}</div></div>
+      <div class="sum-div"></div>
+      <div class="sum-item"><div class="sum-lbl">Materials</div><div class="sum-val" style="color:var(--blue)" id="sb-mat">${fmt(matT)}</div></div>
+      <div class="sum-div"></div>
+      <div class="sum-item"><div class="sum-lbl">Supplies</div><div class="sum-val" style="color:var(--green)" id="sb-sup">${fmt(supT)}</div></div>
+      <div class="sum-div"></div>
+      <div class="sum-item"><div class="sum-lbl">Subs</div><div class="sum-val" style="color:var(--purple)" id="sb-sub">${fmt(subT)}</div></div>
+      <div class="sum-div"></div>
+      <div class="sum-item"><div class="sum-lbl">Debris</div><div class="sum-val" style="color:var(--amber)" id="sb-deb">${fmt(debT)}</div></div>
+      <div class="sum-div"></div>
+      <div class="sum-item" style="margin-left:auto"><div class="sum-lbl">COST TOTAL</div><div class="sum-val" style="color:var(--gold);font-size:24px" id="sb-cost">${fmt(COST)}</div></div>
+    </div>
+
+    <div class="profit-section">
+      <div class="profit-hd">
+        <span style="font-size:16px"></span>
+        <span style="flex:1;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--green)">Profit Markup</span>
+        <button class="btn btn-xs btn-green" onclick="addProfRow()">+ Add Row</button>
+      </div>
+      <div class="li-hdr profit-row" style="background:var(--s2);padding:8px 16px">
+        <span style="font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--tx4)">Category</span>
+        <span style="font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--tx4)">Profit %</span>
+        <span style="font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--tx4);text-align:right">Profit $</span>
+        <span></span>
+      </div>
+      <div id="profWrap">${profRows.length?profHTML:'<div style="padding:12px 16px;font-size:12px;color:var(--tx4)">No profit rows yet — click "+ Add Row" to set your markup by category</div>'}</div>
+    </div>
+
+    <div class="misc-section">
+      <div class="misc-hd">
+        <span style="font-size:16px"></span>
+        <span style="flex:1;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--amber)">Miscellaneous</span>
+        <span style="font-size:11px;color:var(--tx3);margin-right:8px">Snacks, gas, client gifts…</span>
+        <button class="btn btn-xs btn-dim" onclick="addMisc()">+ Add</button>
+      </div>
+      <div id="miscWrap">${miscItems.length?miscHTML:'<div style="padding:12px 16px;font-size:12px;color:var(--tx4)">No misc expenses</div>'}</div>
+    </div>
+
+    <div class="grand-bar">
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--tx3);margin-bottom:8px">BREAKDOWN</div>
+        <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end">
+          <div><div style="font-size:9px;color:var(--tx3);margin-bottom:2px">COST</div><div style="font-family:var(--ff-bc);font-size:22px;font-weight:800;color:var(--gold)" id="gt-cost">${fmt(COST)}</div></div>
+          <div style="color:var(--tx4);font-size:16px;margin-bottom:4px">+</div>
+          <div><div style="font-size:9px;color:var(--tx3);margin-bottom:2px">PROFIT</div><div style="font-family:var(--ff-bc);font-size:22px;font-weight:800;color:var(--green)" id="gt-prof">${fmt(PROF)}</div></div>
+          <div style="color:var(--tx4);font-size:16px;margin-bottom:4px">+</div>
+          <div><div style="font-size:9px;color:var(--tx3);margin-bottom:2px">MISC</div><div style="font-family:var(--ff-bc);font-size:22px;font-weight:800;color:var(--amber)" id="gt-misc">${fmt(MISC)}</div></div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--green);margin-bottom:3px">GRAND TOTAL</div>
+        <div style="font-family:var(--ff-bc);font-size:46px;font-weight:800;color:var(--green);line-height:1" id="gt-grand">${fmt(GRAND)}</div>
+      </div>
+    </div>
+
+    ${renderPhasesPanel(cats,adjs,profRows,phases,COST,GRAND)}
+
+    <div class="card" style="margin-top:14px">
+      <div class="card-hd"><h3>Photos & Reference Images</h3><button class="btn btn-xs btn-ghost" onclick="document.getElementById('photoIn').click()">+ Add Photos</button></div>
+      <div style="padding:14px 16px"><div class="photo-grid" id="photoGrid">${photosHTML}</div></div>
+    </div>
+    <input type="file" id="photoIn" accept="image/*" multiple style="display:none" onchange="onPhotos(this)">
+
+    <div class="f" style="margin-top:16px">
+      <label>Internal Notes</label>
+      <textarea id="estNotes" oninput="onNotes()" placeholder="Internal notes, reminders, margin targets…" style="min-height:80px;background:var(--s1)">${esc(p.notes||'')}</textarea>
+    </div>`;
+
+  $('catsWrap').onclick=e=>{
+    const b=e.target.closest('[data-act]');if(!b)return;
+    const ci=parseInt(b.dataset.ci),li=parseInt(b.dataset.li);
+    if(b.dataset.act==='al')addLine(ci);
+    if(b.dataset.act==='dl')delLine(ci,li);
+    if(b.dataset.act==='dc')delCat(ci);
+    if(b.dataset.act==='pt')openPhaseModal(ci,li);
+  };
+  $('adjWrap').onclick=e=>{const b=e.target.closest('[data-act]');if(b?.dataset.act==='da')delAdj(parseInt(b.dataset.ai));};
+  $('profWrap').onclick=e=>{const b=e.target.closest('[data-act]');if(b?.dataset.act==='dp')delProfRow(parseInt(b.dataset.ri));};
+  $('miscWrap').onclick=e=>{const b=e.target.closest('[data-act]');if(b?.dataset.act==='dm')delMisc(parseInt(b.dataset.mi));};
+  $('photoGrid').onclick=e=>{const b=e.target.closest('[data-act]');if(b?.dataset.act==='dph')delPhoto(parseInt(b.dataset.pi));};
+}
+
+window.toggleSOW=()=>{const el=$('sowPrev');if(el)el.style.display=el.style.display==='none'?'block':'none';};
+window.updStatus=()=>{if(!EST)return;EST.status=$('estStatus').value;schedAS();};
+window.updDays=()=>{if(!EST)return;EST.estimatedDays=parseInt($('estDays').value)||null;schedAS();};
+window.onNotes=()=>{if(!EST)return;EST.notes=$('estNotes').value;schedAS();};
+window.addCat=btn=>{if(!EST)return;EST.categories.push({cat:btn.dataset.cat,lines:[]});schedAS();renderEst();};
+function delCat(ci){EST.categories.splice(ci,1);schedAS();renderEst();}
+function addLine(ci){EST.categories[ci].lines.push({desc:'',unit:'',qty:0,unitPrice:0});schedAS();renderEst();}
+function delLine(ci,li){EST.categories[ci].lines.splice(li,1);schedAS();renderEst();}
+
+window.onLI=el=>{
+  const ci=parseInt(el.dataset.ci),li=parseInt(el.dataset.li),f=el.dataset.f;
+  EST.categories[ci].lines[li][f]=el.type==='number'?(parseFloat(el.value)||0):el.value;
+  const lt=(+(EST.categories[ci].lines[li].qty||0))*(+(EST.categories[ci].lines[li].unitPrice||0));
+  const le=$(`lt-${ci}-${li}`);if(le)le.textContent=fmt(lt);
+  const ce=$(`ct-${ci}`);if(ce)ce.textContent=fmt(catTot(EST.categories[ci].lines));
+  schedAS();updTotals();
+};
+
+window.addProfRow=()=>{
+  EST.profitRows=EST.profitRows||[];
+  const used=EST.profitRows.map(r=>r.cat);
+  const all=['Labor','Materials','Supplies','Subcontractor','Debris/Dumpster'];
+  const next=all.find(c=>!used.includes(c))||'Labor';
+  EST.profitRows.push({cat:next,pct:0});schedAS();renderEst();
+};
+function delProfRow(ri){EST.profitRows.splice(ri,1);schedAS();renderEst();}
+window.onProfit=el=>{
+  const ri=parseInt(el.dataset.ri),f=el.dataset.f;
+  EST.profitRows[ri][f]=f==='pct'?(parseFloat(el.value)||0):el.value;
+  const b=(EST.categories||[]).filter(c=>c.cat===EST.profitRows[ri].cat).reduce((s,c)=>s+catTot(c.lines),0);
+  const pa=b*(+(EST.profitRows[ri].pct||0)/100);
+  const pe=$(`pr-${ri}`);if(pe)pe.textContent=fmt(pa);
+  schedAS();updTotals();
+};
+
+window.addMisc=()=>{EST.miscItems=EST.miscItems||[];EST.miscItems.push({desc:'',amount:0});schedAS();renderEst();};
+function delMisc(mi){EST.miscItems.splice(mi,1);schedAS();renderEst();}
+window.onMisc=el=>{
+  const mi=parseInt(el.dataset.mi),f=el.dataset.f;
+  EST.miscItems[mi][f]=f==='amount'?(parseFloat(el.value)||0):el.value;
+  schedAS();updTotals();
+};
+
+function updTotals(){
+  const cats=EST.categories||[],adjs=EST.adjustments||[],profRows=EST.profitRows||[],miscItems=EST.miscItems||[];
+  const COST=costTotal(cats,adjs),PROF=profitTotal(cats,profRows),MISC=miscTotal(miscItems),GRAND=COST+PROF+MISC;
+  const upd=(id,v)=>{const el=$(id);if(el)el.textContent=v;};
+  upd('sb-lab',fmt(cats.filter(c=>c.cat==='Labor').reduce((s,c)=>s+catTot(c.lines),0)));
+  upd('sb-mat',fmt(cats.filter(c=>c.cat==='Materials').reduce((s,c)=>s+catTot(c.lines),0)));
+  upd('sb-sup',fmt(cats.filter(c=>c.cat==='Supplies').reduce((s,c)=>s+catTot(c.lines),0)));
+  upd('sb-sub',fmt(cats.filter(c=>c.cat==='Subcontractor').reduce((s,c)=>s+catTot(c.lines),0)));
+  upd('sb-deb',fmt(cats.filter(c=>c.cat==='Debris/Dumpster').reduce((s,c)=>s+catTot(c.lines),0)));
+  upd('sb-cost',fmt(COST));upd('gt-cost',fmt(COST));upd('gt-prof',fmt(PROF));upd('gt-misc',fmt(MISC));upd('gt-grand',fmt(GRAND));
+}
+
+window.openFactor=()=>{['fac_name','fac_value','fac_notes'].forEach(id=>{const el=$(id);if(el)el.value='';});$('fac_type').value='pct';$('fac_apply').value='total';openModal('ovFactor');};
+window.saveFactor=()=>{const name=$('fac_name').value.trim(),val=parseFloat($('fac_value').value)||0;if(!name||!val){toast('Name and value required','err');return;}EST.adjustments=EST.adjustments||[];EST.adjustments.push({name,type:$('fac_type').value,value:val,apply:$('fac_apply').value,notes:$('fac_notes').value.trim()});closeModal('ovFactor');schedAS();renderEst();};
+function delAdj(ai){EST.adjustments.splice(ai,1);schedAS();renderEst();}
+
+window.onPhotos=async inp=>{
+  const files=[...inp.files];if(!files.length)return;
+  EST.photos=EST.photos||[];
+  for(const file of files){const b64=await f2b64(file);const comp=await compImg(b64,file.type);EST.photos.push({data:comp,name:file.name,ts:Date.now()});}
+  inp.value='';schedAS();renderEst();
+};
+function compImg(b64,type){return new Promise(res=>{const img=new Image();img.onload=()=>{const M=900;let w=img.width,h=img.height;if(w>M){h=Math.round(h*(M/w));w=M;}const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);res(cv.toDataURL('image/jpeg',0.78));};img.src='data:'+type+';base64,'+b64;});}
+function delPhoto(pi){EST.photos.splice(pi,1);schedAS();renderEst();}
+window.openLB=src=>{$('lbImg').src=src;openModal('ovLightbox');};
+
+window.manualSave=async()=>{
+  if(!EST)return;clearTimeout(AS_TIMER);AS_TIMER=null;
+  await setDoc(doc(db,'sow_estimates',EST.id),{...EST,updatedAt:serverTimestamp()});
+  if(EST.projectId)await updateDoc(doc(db,'sow_projects',EST.projectId),{updatedAt:serverTimestamp()}).catch(()=>{});
+  toast('Saved ✓');
+  if(hasPerm('editPriceLibrary'))checkPriceSugg();
+};
+
+function checkPriceSugg(){
+  const s=[];(EST.categories||[]).forEach(cat=>{(cat.lines||[]).forEach(ln=>{if(ln.desc&&ln.unit&&ln.unitPrice>0&&ln.qty>0)s.push({desc:ln.desc,cat:cat.cat,unit:ln.unit,unitPrice:ln.unitPrice});});});
+  if(!s.length)return;PS=s;
+  $('psItems').innerHTML=s.map((x,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd)">
+    <input type="checkbox" id="ps_${i}" checked style="accent-color:var(--gold);width:15px;height:15px;flex-shrink:0">
+    <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(x.desc)}</div><div style="font-size:11px;color:var(--tx3)">${x.cat} · ${x.unit}</div></div>
+    <div style="font-family:var(--ff-bc);font-size:16px;color:var(--gold);flex-shrink:0">${fmt(x.unitPrice)}<span style="font-size:10px;font-family:'Inter',sans-serif;color:var(--tx3)">/${x.unit}</span></div>
+  </div>`).join('');
+  openModal('ovPriceSuggest');
+}
+window.applyPriceSugg=async()=>{
+  for(let i=0;i<PS.length;i++){if(!$(`ps_${i}`)?.checked)continue;const s=PS[i];const ex=PRICES.find(p=>p.desc?.toLowerCase()===s.desc.toLowerCase()&&p.unit===s.unit);if(ex){await updateDoc(doc(db,'sow_prices',ex.id),{avgPrice:((+ex.avgPrice||0)+s.unitPrice)/2,samples:(ex.samples||1)+1,updatedAt:serverTimestamp()});}else{await addDoc(collection(db,'sow_prices'),{desc:s.desc,cat:s.cat,trade:'',unit:s.unit,avgPrice:s.unitPrice,samples:1,notes:'',createdAt:serverTimestamp(),updatedAt:serverTimestamp()});}}
+  closeModal('ovPriceSuggest');toast('Price library updated ✓');
+};
+
+// AI EXTRACT
+function getApiKey(){
+  // Prefer shared company key from Firestore, fall back to any local key
+  return GLOBAL_API_KEY||localStorage.getItem('formo_api_'+(CU?.uid||''))||localStorage.getItem('formo_api_shared')||null;
+}
+window.runAIcurrent=()=>{if(!EST){toast('No estimate open','err');return;}runAI(EST.id,EST.sow||'',null);};
+window.runAI=async(projId,sow,fileData)=>{
+  const key=getApiKey();if(!key){toast('Set the company API key first','err');openApiKey();return;}
+  if(!sow&&!fileData){toast('No SOW content','err');return;}
+  openModal('ovAI');$('aiStatus').style.display='block';$('aiResult').style.display='none';$('aiFoot').style.display='none';
+  const pLib=PRICES.slice(0,50).map(p=>`${p.desc} (${p.unit}): $${p.avgPrice}`).join('\n');
+  const prompt=`You are a construction estimating expert for Formo Renovation in Nashville, TN.
+Analyze this Scope of Work and extract all line items into a structured cost breakdown.
+${sow?'SCOPE OF WORK:\n'+sow:'(SOW provided as document attachment)'}
+PRICE LIBRARY (use these when applicable):\n${pLib||'Empty.'}
+Return ONLY valid JSON, no markdown:
+{"summary":"brief overview","estimatedDays":5,"phases":[{"id":"ph1","name":"Master Bath"},{"id":"ph2","name":"Built-in Millwork"}],"categories":[{"cat":"Labor","lines":[{"desc":"Exterior spray paint","unit":"sqft","qty":3000,"unitPrice":1.50,"notes":"","phaseId":"ph1"}]}],"adjustmentSuggestions":[{"name":"Height Premium","type":"pct","value":15,"apply":"labor","notes":""}],"profitSuggestions":[{"cat":"Labor","pct":100},{"cat":"Subcontractor","pct":30}],"miscSuggestions":[{"desc":"Fuel runs","amount":150}]}
+Categories: Labor,Materials,Supplies,Debris/Dumpster,Subcontractor. Be thorough.
+IMPORTANT: Extract phases from section headers/titles in the SOW (e.g. "Master Bath Paint", "Built-in Millwork", "Countertop Install"). Create a phases array with unique ids and names. Assign each line item a phaseId matching its phase. If no clear phases, create one phase per major scope area.`;
+  try{
+    const body={model:'claude-sonnet-4-6',max_tokens:8000};
+    if(fileData?.type==='pdf'){body.messages=[{role:'user',content:[{type:'document',source:{type:'base64',media_type:fileData.mime,data:fileData.data}},{type:'text',text:prompt}]}];}
+    else{body.messages=[{role:'user',content:prompt}];}
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify(body)});
+    const d=await res.json();if(d.error){toast('API: '+d.error.message,'err');closeModal('ovAI');return;}
+    const txt=(d.content.find(c=>c.type==='text')||{}).text||'';
+    let parsed;try{parsed=JSON.parse(txt.replace(/```json|```/g,'').trim());}catch(e){toast('Parse error','err');closeModal('ovAI');return;}
+    AI_DATA={projId,parsed};
+    const CC2={Labor:'var(--gold)',Materials:'var(--blue)',Supplies:'var(--green)',Subcontractor:'var(--purple)','Debris/Dumpster':'var(--amber)'};
+    let html=`<div style="padding:10px 12px;background:var(--gold-bg);border:1px solid rgba(201,168,76,.15);border-radius:9px;margin-bottom:14px;font-size:13px;color:var(--tx2);line-height:1.6">${esc(parsed.summary||'')}</div>`;
+    if(parsed.estimatedDays)html+=`<div class="days-badge" style="margin-bottom:12px;display:inline-flex">Estimated ${parsed.estimatedDays} days</div>`;
+    (parsed.categories||[]).forEach(cat=>{const col=CC2[cat.cat]||'var(--tx2)';html+=`<div style="margin-bottom:12px"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:${col};margin-bottom:5px">${cat.cat}</div>`;(cat.lines||[]).forEach(ln=>{html+=`<div style="display:grid;grid-template-columns:1fr 80px 80px 80px;gap:6px;padding:7px 9px;background:var(--s2);border-radius:7px;margin-bottom:3px;font-size:12px;align-items:center"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(ln.desc)}</span><span style="color:var(--tx3);text-align:right">${ln.qty} ${ln.unit}</span><span style="color:var(--tx3);text-align:right">$${ln.unitPrice}</span><span style="font-family:var(--ff-bc);font-size:15px;font-weight:700;color:${col};text-align:right">${fmt((+ln.qty)*(+ln.unitPrice))}</span></div>`;});html+='</div>';});
+    if((parsed.profitSuggestions||[]).length){html+=`<div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--green);margin:10px 0 5px">Suggested Profit Markup</div>`;parsed.profitSuggestions.forEach(r=>{html+=`<div style="display:flex;gap:8px;padding:7px 9px;background:var(--green-bg);border-radius:7px;margin-bottom:3px;font-size:12px;align-items:center"><span style="color:var(--green);flex:1">${esc(r.cat)}</span><span>${r.pct}% markup</span></div>`;});}
+    if((parsed.adjustmentSuggestions||[]).length){html+=`<div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--amber);margin:10px 0 5px">Suggested Adjustments</div>`;parsed.adjustmentSuggestions.forEach(a=>{html+=`<div style="display:flex;gap:8px;padding:7px 9px;background:var(--amber-bg);border-radius:7px;margin-bottom:3px;font-size:12px;align-items:center"><span style="color:var(--amber);flex:1">${esc(a.name)}</span><span>${a.type==='pct'?'+'+a.value+'%':fmt(a.value)}</span></div>`;});}
+    $('aiStatus').style.display='none';$('aiResult').innerHTML=html;$('aiResult').style.display='block';$('aiFoot').style.display='flex';
+  }catch(e){toast('Error: '+e.message,'err');closeModal('ovAI');}
+};
+window.applyAI=()=>{
+  if(!AI_DATA||!EST)return;const{parsed}=AI_DATA;
+  EST.categories=parsed.categories||[];EST.adjustments=parsed.adjustmentSuggestions||[];
+  if(parsed.profitSuggestions?.length)EST.profitRows=parsed.profitSuggestions;
+  if(parsed.miscSuggestions?.length)EST.miscItems=parsed.miscSuggestions;
+  if(parsed.estimatedDays)EST.estimatedDays=parsed.estimatedDays;
+  if(parsed.phases?.length)EST.phases=parsed.phases.map(ph=>({...ph,active:true}));
+  closeModal('ovAI');schedAS();renderEst();toast('SOW applied ✓');
+};
+
+// PRICE LIBRARY
+window.renderPriceLib=()=>{
+  const chipsEl=$('plChips'),tbl=$('plTable');if(!chipsEl||!tbl)return;
+  const cats=[...new Set(PRICES.map(p=>p.cat).filter(Boolean))];
+  const active=document.querySelector('#plChips .chip.on')?.dataset.val||'all';
+  chipsEl.innerHTML=`<span class="chip ${active==='all'?'on':''}" data-val="all" onclick="filterPL('all',this)">All</span>`+cats.map(c=>`<span class="chip ${active===c?'on':''}" data-val="${c}" onclick="filterPL('${c}',this)">${c}</span>`).join('');
+  const list=(active==='all'?PRICES:PRICES.filter(p=>p.cat===active))
+    .sort((a,b)=>(a.cat||'').localeCompare(b.cat||'')||(a.desc||'').localeCompare(b.desc||''));
+  let rows=`<div class="pl-row line-hdr"><span>Description</span><span>Category</span><span class="hide-md">Unit</span><span>Avg Price</span><span class="hide-md">Samples</span><span></span></div>`;
+  if(!list.length)rows+=`<div class="empty-state"><div class="empty-state-ico"></div><h3>No items yet</h3><p>Prices are saved from estimates or added manually.</p></div>`;
+  else rows+=list.map(p=>`<div class="pl-row" id="plr-${p.id}">
+    <div style="min-width:0">
+      <div style="font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.desc)}</div>
+      ${p.trade?`<div style="font-size:10px;color:var(--tx4)">${esc(p.trade)}</div>`:''}
+      ${p.notes?`<div style="font-size:11px;color:var(--tx3)">${esc(p.notes)}</div>`:''}
+    </div>
+    <span class="badge badge-neutral">${p.cat||'—'}</span>
+    <span class="hide-md" style="color:var(--tx3)">${p.unit||'—'}</span>
+    <div>
+      <span style="font-family:var(--ff-bc);font-size:17px;font-weight:800;color:var(--gold)">$${(+p.avgPrice||0).toFixed(2)}</span>
+      <span style="font-size:10px;color:var(--tx3)">/${p.unit}</span>
+    </div>
+    <span class="hide-md" style="font-size:11px;color:var(--tx3)">${p.samples||1} use${(p.samples||1)!==1?'s':''}</span>
+    <div style="display:flex;gap:4px">
+      <button class="btn btn-xs btn-ghost" onclick="editPrice('${p.id}')" title="Edit">Edit</button>
+      <button class="btn btn-xs btn-danger" onclick="deletePrice('${p.id}','${esc(p.desc)}')" title="Delete">✕</button>
+    </div>
+  </div>`).join('');
+  tbl.innerHTML=rows;
+};
+
+window.editPrice=(id)=>{
+  const p=PRICES.find(x=>x.id===id);if(!p)return;
+  $('ap_desc').value=p.desc||'';
+  $('ap_cat').value=p.cat||'Labor';
+  $('ap_trade').value=p.trade||'';
+  $('ap_unit').value=p.unit||'sqft';
+  $('ap_price').value=p.avgPrice||'';
+  $('ap_notes').value=p.notes||'';
+  $('ap_id').value=id;
+  $('addPriceTitle').textContent='Edit Price Item';
+  openModal('ovAddPrice');
+};
+
+window.deletePrice=(id,desc)=>{
+  showConfirm(`Delete "${desc}" from price library?`,async()=>{
+    await deleteDoc(doc(db,'sow_prices',id));
+    toast('Deleted');
+  });
+};
+window.filterPL=(v,el)=>{document.querySelectorAll('#plChips .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');renderPriceLib();};
+window.openAddPrice=()=>{['ap_desc','ap_trade','ap_notes','ap_price'].forEach(id=>{const el=$(id);if(el)el.value='';});$('ap_cat').value='Labor';$('ap_unit').value='sqft';$('ap_id').value='';$('addPriceTitle').textContent='Add Price Item';openModal('ovAddPrice');};
+window.savePrice=async()=>{const desc=$('ap_desc').value.trim(),price=parseFloat($('ap_price').value)||0;if(!desc){toast('Description required','err');return;}const id=$('ap_id').value;const data={desc,cat:$('ap_cat').value,trade:$('ap_trade').value.trim(),unit:$('ap_unit').value,avgPrice:price,notes:$('ap_notes').value.trim(),updatedAt:serverTimestamp()};if(id){await updateDoc(doc(db,'sow_prices',id),data);toast('Updated ✓');}else{await addDoc(collection(db,'sow_prices'),{...data,samples:1,createdAt:serverTimestamp()});toast('Added ✓');}closeModal('ovAddPrice');};
+
+// SUB LIBRARY
+window.renderSubLib=()=>{
+  const tbl=$('subTable');if(!tbl)return;
+  let rows=`<div class="sub-row line-hdr"><span>Sub / Company</span><span>Trade</span><span>Last Quote</span><span class="hide-md">Includes</span><span>Actions</span></div>`;
+  if(!SUBS.length)rows+='<div class="empty-state"><div class="empty-state-ico"></div><h3>No subs yet</h3></div>';
+  else rows+=SUBS.map(s=>`<div class="sub-row"><div><div style="font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(s.name)}</div><div style="font-size:11px;color:var(--tx3)">${esc(s.contact||'')}${s.phone?' · '+esc(s.phone):''}</div></div><span class="badge badge-neutral">${esc(s.trade||'—')}</span><div style="font-family:var(--ff-bc);font-size:16px;font-weight:800;color:var(--gold)">${s.lastQuote?fmt(s.lastQuote):'—'}</div><span class="hide-md" style="font-size:11px;color:var(--tx3)">${(s.includes||[]).join(', ')||'—'}</span><div style="display:flex;gap:5px"><button class="btn btn-xs btn-ghost" data-id="${s.id}" data-act="es">Edit</button><button class="btn btn-xs btn-danger" data-id="${s.id}" data-act="ds">✕</button></div></div>`).join('');
+  tbl.innerHTML=rows;
+  tbl.onclick=e=>{const b=e.target.closest('[data-act]');if(!b)return;if(b.dataset.act==='es')editSub(b.dataset.id);if(b.dataset.act==='ds')showConfirm('Remove sub?',()=>deleteDoc(doc(db,'sow_subs',b.dataset.id)).then(()=>toast('Removed')));};
+};
+window.openAddSub=()=>{['sub_name','sub_trade','sub_contact','sub_phone','sub_email','sub_quote','sub_notes'].forEach(id=>{const el=$(id);if(el)el.value='';});document.querySelectorAll('#subChips .chip').forEach(c=>c.classList.remove('on'));$('sub_id').value='';$('addSubTitle').textContent='Add Subcontractor';openModal('ovAddSub');};
+function editSub(id){const s=SUBS.find(x=>x.id===id);if(!s)return;$('sub_name').value=s.name||'';$('sub_trade').value=s.trade||'';$('sub_contact').value=s.contact||'';$('sub_phone').value=s.phone||'';$('sub_email').value=s.email||'';$('sub_quote').value=s.lastQuote||'';$('sub_notes').value=s.notes||'';document.querySelectorAll('#subChips .chip').forEach(c=>c.classList.toggle('on',(s.includes||[]).includes(c.dataset.val)));$('sub_id').value=id;$('addSubTitle').textContent='Edit Subcontractor';openModal('ovAddSub');}
+window.saveSub=async()=>{const name=$('sub_name').value.trim();if(!name){toast('Name required','err');return;}const inc=[...document.querySelectorAll('#subChips .chip.on')].map(c=>c.dataset.val);const id=$('sub_id').value;const data={name,trade:$('sub_trade').value.trim(),contact:$('sub_contact').value.trim(),phone:$('sub_phone').value.trim(),email:$('sub_email').value.trim(),lastQuote:parseFloat($('sub_quote').value)||null,includes:inc,notes:$('sub_notes').value.trim(),updatedAt:serverTimestamp()};if(id){await updateDoc(doc(db,'sow_subs',id),data);toast('Updated ✓');}else{await addDoc(collection(db,'sow_subs'),{...data,createdAt:serverTimestamp()});toast('Added ✓');}closeModal('ovAddSub');};
+
+// USERS
+window.renderUsers=()=>{
+  const tbl=$('usersTable');if(!tbl)return;
+  let rows=`<div class="usr-row line-hdr"><span>User</span><span>Role</span><span class="hide-md">Created</span><span>Actions</span></div>`;
+  if(!USERS.length)rows+='<div class="empty-state"><div class="empty-state-ico"></div><h3>No users</h3></div>';
+  else rows+=USERS.map(u=>`<div class="usr-row"><div><div style="font-weight:600">${esc(u.name||u.email)}</div><div style="font-size:11px;color:var(--tx3)">${esc(u.email||'')}</div></div><span class="badge ${u.role==='admin'?'badge-gold':u.role==='manager'?'badge-amber':'badge-neutral'}">${(u.role||'estimator').toUpperCase()}</span><span class="hide-md" style="font-size:12px;color:var(--tx3)">${dstr(u.createdAt)}</span><button class="btn btn-xs btn-ghost" data-id="${u.id}" data-act="eu">Edit</button></div>`).join('');
+  tbl.innerHTML=rows;
+  tbl.onclick=e=>{const b=e.target.closest('[data-act]');if(b?.dataset.act==='eu')editUser(b.dataset.id);};
+};
+window.openAddUser=()=>{['u_name','u_email','u_pass'].forEach(id=>{const el=$(id);if(el)el.value='';});$('u_role').value='estimator';$('u_id').value='';$('addUserTitle').textContent='Add User';$('userSaveBtn').textContent='Create User';document.querySelectorAll('#permGrid .perm-item').forEach(el=>{const on=['createEstimates','exportPDF','viewAllProjects'].includes(el.dataset.p);el.classList.toggle('on',on);el.querySelector('.perm-cb').textContent=on?'✓':'';});openModal('ovAddUser');};
+function editUser(id){const u=USERS.find(x=>x.id===id);if(!u)return;$('u_name').value=u.name||'';$('u_email').value=u.email||'';$('u_pass').value='';$('u_role').value=u.role||'estimator';$('u_id').value=id;$('addUserTitle').textContent='Edit User';$('userSaveBtn').textContent='Save Changes';const p=u.permissions||{};document.querySelectorAll('#permGrid .perm-item').forEach(el=>{const on=!!p[el.dataset.p];el.classList.toggle('on',on);el.querySelector('.perm-cb').textContent=on?'✓':'';});openModal('ovAddUser');}
+window.onRoleChange=()=>{if($('u_role').value==='admin'){document.querySelectorAll('#permGrid .perm-item').forEach(el=>{el.classList.add('on');el.querySelector('.perm-cb').textContent='✓';});}};
+window.saveUser=async()=>{const name=$('u_name').value.trim(),email=$('u_email').value.trim(),pass=$('u_pass').value,role=$('u_role').value,id=$('u_id').value;if(!name||!email){toast('Name and email required','err');return;}const pObj={};document.querySelectorAll('#permGrid .perm-item').forEach(el=>{pObj[el.dataset.p]=el.classList.contains('on');});if(id){await updateDoc(doc(db,'sow_users',id),{name,role,permissions:pObj,updatedAt:serverTimestamp()});toast('Updated ✓');}else{if(!pass){toast('Password required','err');return;}try{const cred=await createUserWithEmailAndPassword(auth,email,pass);await setDoc(doc(db,'sow_users',cred.user.uid),{name,email,role,permissions:pObj,createdAt:serverTimestamp()});toast('User created ✓');}catch(e){toast(e.message,'err');return;}}closeModal('ovAddUser');};
+
+// API KEY & USER MENU
+window.openApiKey=()=>{$('userMenu').style.display='none';$('apiKeyInput').value=GLOBAL_API_KEY||'';openModal('ovApiKey');};
+window.saveApiKey=async()=>{
+  const k=$('apiKeyInput').value.trim();if(!k){toast('Enter a valid key','err');return;}
+  try{
+    await setDoc(doc(db,'sow_config','apikey'),{key:k,updatedBy:CU?.email||'',updatedAt:serverTimestamp()});
+    GLOBAL_API_KEY=k;
+    localStorage.setItem('formo_api_shared',k); // local backup
+    closeModal('ovApiKey');toast('Company API key saved for all devices ✓');
+  }catch(e){
+    // Firestore blocked — fall back to local only
+    localStorage.setItem('formo_api_'+(CU?.uid||''),k);
+    GLOBAL_API_KEY=k;
+    closeModal('ovApiKey');toast('Saved locally (Firestore unavailable)','err');
+  }
+};
+window.showUserMenu=()=>{const m=$('userMenu'),c=$('userChipBtn'),r=c.getBoundingClientRect();m.style.top=(r.bottom+6)+'px';m.style.right=(window.innerWidth-r.right)+'px';m.style.display=m.style.display==='none'?'block':'none';};
+document.addEventListener('click',e=>{if(!e.target.closest('#userMenu')&&!e.target.closest('#userChipBtn'))$('userMenu').style.display='none';});
+
+// PHASE HELPERS
+function getPhaseTag(ln,phases){const ph=phases.find(p=>p.id===ln.phaseId);return ph?'':'unassigned';}
+function getPhaseLabel(ln,phases){const ph=phases.find(p=>p.id===ln.phaseId);return ph?ph.name:'+ Phase';}
+
+function renderPhasesPanel(cats,adjs,profRows,phases,GRAND_COST,GRAND_ALL){
+  if(!phases||!phases.length)return`<div class="phase-section">
+    <div class="phase-hd">
+      <span style="font-size:16px"></span>
+      <span style="flex:1;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--blue)">Phase Breakdown</span>
+      <button class="btn btn-xs btn-ghost" onclick="addPhaseManual()" style="border-color:rgba(10,132,255,.3);color:var(--blue)">+ Add Phase</button>
+    </div>
+    <div style="padding:28px 20px;text-align:center">
+      <div style="font-size:28px;margin-bottom:10px;opacity:.3"></div>
+      <div style="font-size:13px;font-weight:600;color:var(--tx2);margin-bottom:6px">No phases yet</div>
+      <div style="font-size:12px;color:var(--tx4);margin-bottom:16px">Run AI to auto-detect phases from the SOW, or add them manually</div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="addPhaseManual()" style="border-color:rgba(10,132,255,.3);color:var(--blue)">+ Add Phase Manually</button>
+        <button class="btn btn-ghost btn-sm" onclick="openQuickPhases()" style="border-color:rgba(10,132,255,.2);color:var(--tx3)">Quick Add Multiple</button>
+      </div>
+    </div>
+  </div>`;
+  const profitRate=calcProfitRate(cats,profRows);
+  // totalBase = sum of ALL raw line costs (no adjustments) — used for % calculation
+  const totalBase=cats.reduce((s,c)=>s+catTot(c.lines),0);
+  const adjTotal=costTotal(cats,adjs)-totalBase;
+
+  let rows=phases.map(ph=>{
+    let pRaw=0,pLines=0;
+    cats.forEach(cat=>{(cat.lines||[]).forEach(ln=>{if(ln.phaseId===ph.id){pRaw+=(+(ln.qty||0))*(+(ln.unitPrice||0));pLines++;}});});
+    // % share of this phase based on raw cost
+    const pct=totalBase>0?((pRaw/totalBase)*100):0;
+    // Distribute GRAND proportionally — guarantees phases sum to exactly GRAND
+    const pShare=totalBase>0?(pRaw/totalBase):0;
+    const pCostAdj=GRAND_COST*pShare;   // share of cost total
+    const pTotal=GRAND_ALL*pShare;       // share of grand total (cost+profit+misc)
+    const pProfit=pTotal-pCostAdj;
+    const active=ph.active!==false;
+    return{ph,pCost:pCostAdj,pProfit,pTotal,pct,pRaw,pLines,active};
+  });
+
+  const activeRows=rows.filter(r=>r.active);
+  const activeCost=activeRows.reduce((s,r)=>s+r.pCost,0);
+  const activeProfit=activeRows.reduce((s,r)=>s+r.pProfit,0);
+  const activeTotal=activeCost+activeProfit;
+  const activeRaw=activeRows.reduce((s,r)=>s+(r.pRaw||0),0);
+  const inactiveRaw=rows.filter(r=>!r.active).reduce((s,r)=>s+(r.pRaw||0),0);
+
+  let html=`<div class="phase-section">
+    <div class="phase-hd">
+      <span style="font-size:16px"></span>
+      <span style="flex:1;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--blue)">Phase Breakdown</span>
+      <span style="font-size:11px;color:var(--tx3);margin-right:10px">${rows.filter(r=>r.active).length}/${rows.length} active</span>
+      <button class="btn btn-xs btn-ghost" onclick="addPhaseManual()" style="border-color:rgba(10,132,255,.3);color:var(--blue)">+ Add Phase</button>
+    </div>
+    <div style="display:grid;grid-template-columns:32px minmax(0,2fr) 110px 110px 60px 80px;gap:8px;padding:8px 16px;background:rgba(10,132,255,.04);border-bottom:1px solid rgba(10,132,255,.1)">
+      <span></span>
+      <span style="font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:rgba(10,132,255,.5)">Phase</span>
+      <span style="font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:rgba(10,132,255,.5);text-align:right">Cost</span>
+      <span style="font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:rgba(10,132,255,.5);text-align:right">Total w/Profit</span>
+      <span style="font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:rgba(10,132,255,.5);text-align:right">% of Job</span>
+      <span style="font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:rgba(10,132,255,.5)">Actions</span>
+    </div>`;
+
+  rows.forEach(r=>{
+    const barW=Math.round(r.pct);
+    html+=`<div class="phase-row${r.active?'':' inactive'}">
+      <button class="phase-toggle ${r.active?'on':'off'}" onclick="togglePhase('${r.ph.id}')" title="${r.active?'Deactivate':'Activate'} phase">${r.active?'Deactivate':'Activate'} phase</button>
+      <div style="min-width:0">
+        <div style="font-weight:600;font-size:13px;${r.active?'':'color:var(--tx3)'}overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.ph.name)}</div>
+        <div style="font-size:10px;color:var(--tx4)">${r.pLines} line item${r.pLines!==1?'s':''}</div>
+        <div class="phase-pct-bar"><div class="phase-pct-fill" style="width:${barW}%;opacity:${r.active?1:.3}"></div></div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-family:var(--ff-bc);font-size:15px;font-weight:700;${r.active?'color:var(--gold)':'color:var(--tx3)'}">${fmt(r.pCost)}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-family:var(--ff-bc);font-size:15px;font-weight:700;${r.active?'color:var(--green)':'color:var(--tx3)'}">${fmt(r.pTotal)}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:13px;font-weight:700;${r.active?'color:var(--blue)':'color:var(--tx3)'}">${r.pct.toFixed(1)}%</div>
+      </div>
+      <div style="display:flex;gap:4px">
+        <button class="btn btn-xs btn-ghost" data-phid="${r.ph.id}" onclick="editPhaseName(this)" style="font-size:10px;border-color:rgba(10,132,255,.2);color:var(--blue)"></button>
+        <button class="btn btn-xs btn-danger" data-phid="${r.ph.id}" onclick="deletePhase(this)" style="font-size:10px">✕</button>
+      </div>
+    </div>`;
+  });
+
+  html+=`<div style="background:rgba(10,132,255,.06);border-top:1px solid rgba(10,132,255,.15);padding:12px 16px;display:grid;grid-template-columns:32px minmax(0,2fr) 110px 110px 60px 80px;gap:8px;align-items:center">
+    <span></span>
+    <div style="font-size:11px;font-weight:700;color:var(--blue)">${activeRows.length===rows.length?'ALL PHASES ACTIVE':activeRows.length+' OF '+rows.length+' PHASES ACTIVE'}</div>
+    <div style="text-align:right;font-family:var(--ff-bc);font-size:16px;font-weight:800;color:var(--gold)">${fmt(totalBase>0?(activeRaw/totalBase*GRAND_COST):0)}</div>
+    <div style="text-align:right;font-family:var(--ff-bc);font-size:16px;font-weight:800;color:var(--green)">${fmt(totalBase>0?(activeRaw/totalBase*GRAND_ALL):0)}</div>
+    <div style="text-align:right;font-size:12px;font-weight:700;color:var(--blue)">${totalBase>0?(activeRaw/totalBase*100).toFixed(1)+'%':'—'}</div>
+    <span></span>
+  </div>`;
+
+  if(rows.some(r=>!r.active)){
+    const saved=totalBase>0?(inactiveRaw/totalBase*GRAND_ALL):0;
+    html+=`<div style="background:rgba(255,69,58,.05);border-top:1px solid rgba(255,69,58,.15);padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <span style="font-size:11px;color:var(--red);font-weight:600">Inactive phases reduce total by</span>
+      <span style="font-family:var(--ff-bc);font-size:18px;font-weight:800;color:var(--red)">${fmt(saved)}</span>
+      <span style="font-size:11px;color:var(--tx3)">(${totalBase>0?(inactiveRaw/totalBase*100).toFixed(1):'0'}% of cost scope)</span>
+    </div>`;
+  }
+
+  html+='</div>';
+  return html;
+}
+
+function calcProfitRate(cats,profRows){
+  const totalBase=cats.reduce((s,c)=>s+catTot(c.lines),0);
+  if(totalBase===0)return 0;
+  const totalProfit=(profRows||[]).reduce((s,r)=>{const b=cats.filter(c=>c.cat===r.cat).reduce((ss,c)=>ss+catTot(c.lines),0);return s+b*(+(r.pct||0)/100);},0);
+  return totalProfit/totalBase;
+}
+
+// Phase management
+window.togglePhase=id=>{
+  if(!EST)return;EST.phases=EST.phases||[];
+  const ph=EST.phases.find(p=>p.id===id);if(!ph)return;
+  ph.active=!ph.active;schedAS();renderEst();
+};
+
+window.addPhaseManual=()=>{
+  // Open the phase modal in "add from scratch" mode (no line item pending)
+  PHASE_PENDING={ci:null,li:null};
+  const phases=EST.phases||[];
+  $('phasePickList').innerHTML=phases.length
+    ?phases.map(ph=>`<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;border:1px solid var(--bd);background:var(--s2);margin-bottom:5px"><span style="font-size:16px"></span><span style="flex:1;font-weight:600">${esc(ph.name)}</span><span style="font-size:10px;color:var(--tx4)">${ph.active!==false?'Active':'Inactive'}</span></div>`).join('')
+    :'<div style="font-size:12px;color:var(--tx4);padding:8px 0">No phases yet</div>';
+  $('newPhaseName').value='';
+  openModal('ovPhase');
+};
+
+window.openQuickPhases=()=>{
+  // Show a textarea to type multiple phases at once, one per line
+  openModal('ovQuickPhases');
+};
+
+window.editPhaseName=(btn)=>{
+  const id=btn.dataset.phid;const ph=(EST.phases||[]).find(p=>p.id===id);if(!ph)return;
+  // Reuse quick input modal
+  $('quickPhaseInput').value=ph.name;
+  $('quickPhaseTitle').textContent='Rename Phase';
+  $('quickPhaseSubmit').onclick=()=>{
+    const n=$('quickPhaseInput').value.trim();if(!n)return;
+    ph.name=n;closeModal('ovQuickInput');schedAS();renderEst();toast('Renamed');
+  };
+  openModal('ovQuickInput');
+};
+
+window.deletePhase=(btn)=>{
+  const id=btn.dataset.phid;
+  showConfirm('Delete this phase? Line items will become unassigned.',(()=>{
+    EST.phases=(EST.phases||[]).filter(p=>p.id!==id);
+    (EST.categories||[]).forEach(cat=>(cat.lines||[]).forEach(ln=>{if(ln.phaseId===id)delete ln.phaseId;}));
+    schedAS();renderEst();toast('Phase deleted');
+  }));
+};
+
+// Phase assignment modal
+window.openPhaseModal=(ci,li)=>{
+  PHASE_PENDING={ci,li};
+  const phases=EST.phases||[];
+  const ln=EST.categories[ci].lines[li];
+  if(!phases.length){toast('No phases yet — add phases first from the Phase Breakdown panel');return;}
+  $('phasePickList').innerHTML=phases.map(ph=>`<div onclick="assignPhase('${ph.id}')" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid ${ln.phaseId===ph.id?'var(--blue)':'var(--bd)'};background:${ln.phaseId===ph.id?'rgba(10,132,255,.1)':'var(--s2)'};cursor:pointer;margin-bottom:6px;transition:all .15s">
+    <span style="font-size:18px"></span>
+    <span style="font-weight:600;color:${ln.phaseId===ph.id?'var(--blue)':'var(--tx)'}">${esc(ph.name)}</span>
+    ${ln.phaseId===ph.id?'<span style="margin-left:auto;font-size:11px;color:var(--blue)">✓ Current</span>':''}
+  </div>`).join('');
+  if(ln.phaseId){$('phasePickList').innerHTML+=`<button onclick="assignPhase(null)" class="btn btn-xs btn-danger" style="margin-top:6px">Remove phase assignment</button>`;}
+  openModal('ovPhase');
+};
+
+window.assignPhase=(phId)=>{
+  const{ci,li}=PHASE_PENDING;if(ci===null)return;
+  EST.categories[ci].lines[li].phaseId=phId||undefined;
+  closeModal('ovPhase');schedAS();renderEst();
+};
+
+window.createPhaseFromModal=()=>{
+  const name=$('newPhaseName').value.trim();if(!name){toast('Enter a phase name','err');return;}
+  EST.phases=EST.phases||[];
+  const id='ph'+Date.now();EST.phases.push({id,name,active:true});
+  $('newPhaseName').value='';
+  assignPhase(id);
+};
+
+// PDF GENERATION
+function getJsPDF(){
+  // jsPDF UMD can expose as window.jspdf.jsPDF or window.jsPDF
+  if(window.jspdf&&window.jspdf.jsPDF)return window.jspdf.jsPDF;
+  if(window.jsPDF)return window.jsPDF;
+  return null;
+}
+function loadJsPDF(){
+  return new Promise((res,rej)=>{
+    if(getJsPDF())return res(getJsPDF());
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+    s.onload=()=>{const J=getJsPDF();J?res(J):rej(new Error('jsPDF loaded but global not found'));};
+    s.onerror=()=>rej(new Error('Failed to load jsPDF from CDN'));
+    document.head.appendChild(s);
+  });
+}
+window.genPDF=async id=>{
+  if(!hasPerm('exportPDF')){toast('No permission','err');return;}
+  const p=id===EST?.id?EST:PROJS.find(x=>x.id===id);
+  if(!p){toast('Quote not found','err');return;}
+  let jsPDF=getJsPDF();
+  if(!jsPDF){
+    toast('Loading PDF library…');
+    try{jsPDF=await loadJsPDF();}
+    catch(e){toast('PDF library failed to load','err');console.error(e);return;}
+  }
+  try{
+    buildPDF(new jsPDF({orientation:'portrait',unit:'pt',format:'letter'}),p,true);
+    toast('PDF exported ✓');
+  }catch(e){
+    console.error('PDF error:',e);
+    toast('PDF error: '+(e.message||e),'err');
+  }
+};
+
+function savePDF(doc,filename){
+  // iOS/Safari/Brave often block doc.save() — use blob + open in new tab as fallback
+  try{
+    const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+    if(isIOS){
+      const blob=doc.output('blob');
+      const url=URL.createObjectURL(blob);
+      const w=window.open(url,'_blank');
+      if(!w){
+        // popup blocked — offer data uri link
+        const a=document.createElement('a');a.href=url;a.download=filename;a.target='_blank';
+        document.body.appendChild(a);a.click();document.body.removeChild(a);
+      }
+      setTimeout(()=>URL.revokeObjectURL(url),60000);
+    } else {
+      doc.save(filename);
+    }
+  }catch(e){
+    console.error('savePDF error, trying doc.save:',e);
+    try{doc.save(filename);}catch(e2){
+      // Last resort: open data uri
+      const uri=doc.output('datauristring');
+      window.open(uri,'_blank');
+    }
+  }
+}
+
+function pdfHdr(doc,p,ver){
+  doc.setFillColor(9,9,9);doc.rect(0,0,612,792,'F');doc.setFillColor(201,168,76);doc.rect(0,0,612,5,'F');
+  doc.setFillColor(15,15,15);doc.rect(36,18,540,58,'F');doc.setDrawColor(50,50,50);doc.setLineWidth(0.4);doc.rect(36,18,540,58,'S');
+  doc.setFontSize(20);doc.setFont('helvetica','bold');doc.setTextColor(255,255,255);doc.text('FORMO',52,48);
+  doc.setFontSize(7.5);doc.setFont('helvetica','bold');doc.setTextColor(201,168,76);doc.text('RENOVATION',52,60);
+  doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(160,160,160);doc.text('ESTIMATE — '+ver.toUpperCase(),420,36);doc.text(new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}),420,50);if(p.estimatedDays)doc.text('Duration: '+p.estimatedDays+' day'+(p.estimatedDays!==1?'s':''),420,64);
+  doc.setFillColor(20,20,20);doc.rect(36,84,540,74,'F');doc.setTextColor(201,168,76);doc.setFontSize(15);doc.setFont('helvetica','bold');doc.text(p.name||'Unnamed',52,104);doc.setFontSize(8.5);doc.setFont('helvetica','normal');doc.setTextColor(150,150,150);doc.text('Client: '+(p.client||'—'),52,118);if(p.phone)doc.text('Phone: '+p.phone,52,130);doc.text('Address: '+(p.address||'—'),52,142);doc.setTextColor(100,100,100);doc.text('Status: '+(p.status||'draft').toUpperCase(),420,104);if(p.email)doc.text('Email: '+p.email,420,118);
+  return 172;
+}
+
+function addPDFPhotos(doc,photos,y){
+  if(!photos?.length)return;
+  if(y>650){doc.addPage();doc.setFillColor(9,9,9);doc.rect(0,0,612,792,'F');y=36;}
+  y+=12;doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(201,168,76);doc.text('PROJECT PHOTOS & REFERENCES',36,y);y+=12;
+  let px=36,py=y,pw=162,phH=122;
+  photos.forEach((photo)=>{
+    if(py+phH>750){doc.addPage();doc.setFillColor(9,9,9);doc.rect(0,0,612,792,'F');px=36;py=36;}
+    try{if(photo&&photo.data)doc.addImage(photo.data,'JPEG',px,py,pw,phH);}catch(e){console.warn('photo skip',e);}
+    px+=pw+10;if(px+pw>570){px=36;py+=phH+10;}
+  });
+}
+
+function buildPDF(doc,p,internal){
+  let y=pdfHdr(doc,p,internal?'Internal — Full Breakdown':'Client Summary');
+  const cats=p.categories||[],adjs=p.adjustments||[],profRows=p.profitRows||[],miscItems=p.miscItems||[];
+  const CC3={Labor:[201,168,76],Materials:[10,132,255],Supplies:[48,209,88],Subcontractor:[191,90,242],'Debris/Dumpster':[255,214,10]};
+  if(internal){
+    doc.setFontSize(7.5);doc.setFont('helvetica','bold');doc.setTextColor(255,100,100);doc.text('CONFIDENTIAL — INTERNAL USE ONLY',36,y);y+=16;
+    cats.forEach(cat=>{
+      if(y>700){doc.addPage();doc.setFillColor(9,9,9);doc.rect(0,0,612,792,'F');y=36;}
+      const ct=catTot(cat.lines||[]),col=CC3[cat.cat]||[180,180,180];
+      doc.setFillColor(20,20,20);doc.rect(36,y-12,540,19,'F');doc.setFillColor(...col);doc.rect(36,y-12,3,19,'F');
+      doc.setFontSize(8.5);doc.setFont('helvetica','bold');doc.setTextColor(...col);doc.text((cat.cat||'').toUpperCase(),46,y);doc.setTextColor(220,220,220);doc.text(fmt(ct),556,y,{align:'right'});y+=14;
+      doc.setFontSize(7);doc.setFont('helvetica','normal');doc.setTextColor(80,80,80);doc.text('Description',44,y);doc.text('Unit',278,y);doc.text('Qty',338,y,{align:'right'});doc.text('$/Unit',418,y,{align:'right'});doc.text('Total',556,y,{align:'right'});y+=5;
+      doc.setDrawColor(40,40,40);doc.setLineWidth(0.2);doc.line(36,y,576,y);y+=7;
+      (cat.lines||[]).forEach(ln=>{
+        if(y>720){doc.addPage();doc.setFillColor(9,9,9);doc.rect(0,0,612,792,'F');y=36;}
+        const lt=(+(ln.qty||0))*(+(ln.unitPrice||0));
+        doc.setFontSize(8);doc.setFont('helvetica','normal');doc.setTextColor(200,200,200);doc.text(String(ln.desc||'').slice(0,52),44,y);doc.setTextColor(120,120,120);doc.text(String(ln.unit||''),278,y);doc.text(String(ln.qty||0),338,y,{align:'right'});doc.text('$'+String((+ln.unitPrice||0).toFixed(2)),418,y,{align:'right'});doc.setTextColor(210,210,210);doc.setFont('helvetica','bold');doc.text(fmt(lt),556,y,{align:'right'});y+=12;
+      });y+=5;
+    });
+    if(adjs.length){y+=4;doc.setFillColor(20,20,20);doc.rect(36,y-10,540,18,'F');doc.setFontSize(8.5);doc.setFont('helvetica','bold');doc.setTextColor(255,214,10);doc.text('ADJUSTMENTS',44,y);y+=13;adjs.forEach(a=>{doc.setFontSize(8);doc.setFont('helvetica','normal');doc.setTextColor(200,200,200);doc.text(a.name||'',44,y);doc.text(a.type==='pct'?'+'+a.value+'%':fmt(a.value),556,y,{align:'right'});y+=12;});}
+    const COST=costTotal(cats,adjs),PROF=profitTotal(cats,profRows),MISC=miscTotal(miscItems),GRAND=COST+PROF+MISC;
+    if(profRows.length){y+=6;doc.setFillColor(18,30,18);doc.rect(36,y-10,540,18,'F');doc.setFontSize(8.5);doc.setFont('helvetica','bold');doc.setTextColor(48,209,88);doc.text('PROFIT MARKUP',44,y);y+=13;profRows.forEach(r=>{const b=cats.filter(c=>c.cat===r.cat).reduce((s,c)=>s+catTot(c.lines),0);doc.setFontSize(8);doc.setFont('helvetica','normal');doc.setTextColor(200,200,200);doc.text(r.cat+' — '+r.pct+'% markup',44,y);doc.setTextColor(48,209,88);doc.text(fmt(b*(r.pct/100)),556,y,{align:'right'});y+=12;});}
+    if(miscItems.length){y+=6;doc.setFillColor(22,22,14);doc.rect(36,y-10,540,18,'F');doc.setFontSize(8.5);doc.setFont('helvetica','bold');doc.setTextColor(255,214,10);doc.text('MISCELLANEOUS',44,y);y+=13;miscItems.forEach(m=>{doc.setFontSize(8);doc.setFont('helvetica','normal');doc.setTextColor(200,200,200);doc.text(m.desc||'',44,y);doc.setTextColor(255,214,10);doc.text(fmt(m.amount||0),556,y,{align:'right'});y+=12;});}
+    // Phase breakdown in PDF
+    const phArr=p.phases||[];
+    if(phArr.length){
+      y+=10;if(y>670){doc.addPage();doc.setFillColor(9,9,9);doc.rect(0,0,612,792,'F');y=36;}
+      doc.setFillColor(8,18,38);doc.rect(36,y-10,540,18,'F');doc.setFontSize(8.5);doc.setFont('helvetica','bold');doc.setTextColor(10,132,255);doc.text('PHASE BREAKDOWN',44,y);y+=14;
+      doc.setFontSize(7);doc.setFont('helvetica','normal');doc.setTextColor(60,80,100);
+      doc.text('Phase',44,y);doc.text('Cost',340,y,{align:'right'});doc.text('Total w/Profit',450,y,{align:'right'});doc.text('% of Job',556,y,{align:'right'});y+=5;
+      doc.setDrawColor(20,40,70);doc.setLineWidth(0.2);doc.line(36,y,576,y);y+=8;
+      const pr2=calcProfitRate(cats,profRows);
+      phArr.forEach(ph=>{
+        if(y>720){doc.addPage();doc.setFillColor(9,9,9);doc.rect(0,0,612,792,'F');y=36;}
+        let pC=0;cats.forEach(cat=>(cat.lines||[]).forEach(ln=>{if(ln.phaseId===ph.id)pC+=(+(ln.qty||0))*(+(ln.unitPrice||0));}));
+        const tBase=cats.reduce((s,c)=>s+catTot(c.lines),0);const adjT2=COST-tBase;const pAdj=tBase>0?adjT2*(pC/tBase):0;
+        const pCA=pC+pAdj;const pP=pCA*pr2;const pT=pCA+pP;const pPct=COST>0?((pCA/COST)*100).toFixed(1):'0';
+        const isAct=ph.active!==false;
+        doc.setFontSize(8.5);doc.setFont('helvetica',isAct?'bold':'normal');doc.setTextColor(isAct?200:80,isAct?200:80,isAct?200:80);
+        doc.text((isAct?'● ':'○ ')+ph.name,44,y);
+        if(!isAct){doc.setFillColor(50,10,10);doc.rect(500,y-8,55,11,'F');doc.setFontSize(6.5);doc.setFont('helvetica','bold');doc.setTextColor(255,69,58);doc.text('INACTIVE',527,y-1,{align:'center'});doc.setFontSize(8.5);}
+        doc.setFont('helvetica','normal');doc.setTextColor(isAct?201:60,isAct?168:60,isAct?76:20);doc.text(fmt(pCA),340,y,{align:'right'});
+        doc.setTextColor(isAct?48:30,isAct?209:80,isAct?88:30);doc.text(fmt(pT),450,y,{align:'right'});
+        doc.setTextColor(isAct?10:40,isAct?132:40,isAct?255:80);doc.text(pPct+'%',556,y,{align:'right'});
+        y+=13;
+      });
+      // Totals row for active phases
+      const actPh=phArr.filter(ph=>ph.active!==false);
+      let actC=0;actPh.forEach(ph=>{cats.forEach(cat=>(cat.lines||[]).forEach(ln=>{if(ln.phaseId===ph.id)actC+=(+(ln.qty||0))*(+(ln.unitPrice||0));}));});
+      const actT=actC*(1+pr2);
+      doc.setDrawColor(20,40,70);doc.line(36,y,576,y);y+=8;
+      doc.setFontSize(8.5);doc.setFont('helvetica','bold');doc.setTextColor(10,132,255);doc.text(actPh.length+'/'+phArr.length+' phases active',44,y);
+      doc.setTextColor(201,168,76);doc.text(fmt(actC),340,y,{align:'right'});
+      doc.setTextColor(48,209,88);doc.text(fmt(actT),450,y,{align:'right'});
+      doc.setTextColor(10,132,255);doc.text(COST>0?((actC/COST)*100).toFixed(1)+'%':'—',556,y,{align:'right'});y+=14;
+    }
+    y+=10;doc.setFillColor(25,40,25);doc.rect(36,y-12,540,30,'F');doc.setFontSize(10);doc.setFont('helvetica','bold');doc.setTextColor(150,150,150);doc.text('Cost: '+fmt(COST)+'   Profit: '+fmt(PROF)+'   Misc: '+fmt(MISC),44,y+4);
+    y+=32;doc.setFillColor(201,168,76);doc.rect(36,y-14,540,32,'F');doc.setFontSize(18);doc.setFont('helvetica','bold');doc.setTextColor(0,0,0);doc.text('GRAND TOTAL',50,y+5);doc.text(fmt(GRAND),556,y+5,{align:'right'});
+    addPDFPhotos(doc,p.photos||[],y+36);
+    savePDF(doc,'FORMO_'+(p.name||'Estimate').replace(/\s+/g,'_')+'_INTERNAL.pdf');
+  } else {
+    const catGroups={};cats.forEach(c=>{catGroups[c.cat]=(catGroups[c.cat]||0)+catTot(c.lines);});
+    doc.setFontSize(10);doc.setFont('helvetica','bold');doc.setTextColor(201,168,76);doc.text('COST BREAKDOWN BY CATEGORY',36,y);y+=16;
+    Object.entries(catGroups).forEach(([cat,total])=>{const col=CC3[cat]||[180,180,180];doc.setFillColor(20,20,20);doc.rect(36,y-12,540,22,'F');doc.setFillColor(...col);doc.rect(36,y-12,4,22,'F');doc.setFontSize(10);doc.setFont('helvetica','bold');doc.setTextColor(...col);doc.text(cat,50,y);doc.setTextColor(220,220,220);doc.text(fmt(total),556,y,{align:'right'});y+=24;});
+    if(adjs.length){y+=6;doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(255,214,10);doc.text('ADJUSTMENTS',36,y);y+=12;adjs.forEach(a=>{doc.setFontSize(8.5);doc.setFont('helvetica','normal');doc.setTextColor(180,180,180);doc.text(a.name||'',44,y);doc.text(a.type==='pct'?'+'+a.value+'%':'—',556,y,{align:'right'});y+=12;});}
+    const COST=costTotal(cats,adjs),PROF=profitTotal(cats,profRows),MISC=miscTotal(miscItems),GRAND=COST+PROF+MISC;
+    y+=10;doc.setFillColor(25,25,15);doc.rect(36,y-10,540,22,'F');doc.setFontSize(11);doc.setFont('helvetica','bold');doc.setTextColor(201,168,76);doc.text('COST SUBTOTAL',44,y+1);doc.text(fmt(COST),556,y+1,{align:'right'});
+    if(profRows.length){y+=24;doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(48,209,88);doc.text('PROFIT',36,y);y+=12;profRows.forEach(r=>{const b=cats.filter(c=>c.cat===r.cat).reduce((s,c)=>s+catTot(c.lines),0);doc.setFontSize(8.5);doc.setFont('helvetica','normal');doc.setTextColor(150,150,150);doc.text(r.cat+' — '+r.pct+'%',44,y);doc.setTextColor(48,209,88);doc.text(fmt(b*(r.pct/100)),556,y,{align:'right'});y+=12;});}
+    if(miscItems.length){y+=8;doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(255,214,10);doc.text('MISCELLANEOUS',36,y);y+=12;miscItems.forEach(m=>{doc.setFontSize(8.5);doc.setFont('helvetica','normal');doc.setTextColor(150,150,150);doc.text(m.desc||'',44,y);doc.setTextColor(255,214,10);doc.text(fmt(m.amount||0),556,y,{align:'right'});y+=12;});}
+    y+=14;doc.setFillColor(201,168,76);doc.rect(36,y-14,540,36,'F');doc.setFontSize(18);doc.setFont('helvetica','bold');doc.setTextColor(0,0,0);doc.text('ESTIMATE TOTAL',52,y+7);doc.text(fmt(GRAND),556,y+7,{align:'right'});
+    y+=36;doc.setFontSize(7.5);doc.setFont('helvetica','italic');doc.setTextColor(70,70,70);doc.text('This estimate is for reference. Final pricing subject to site assessment and signed contract.',36,y+10);doc.text('Formo Renovation · Nashville, TN',36,y+22);
+    addPDFPhotos(doc,p.photos||[],y+36);
+    savePDF(doc,'FORMO_'+(p.name||'Estimate').replace(/\s+/g,'_')+'_SUMMARY.pdf');
+  }
+}
+
+window.deleteQuote=(qid)=>{
+  if(!hasPerm('deleteEstimates')){toast('No permission','err');return;}
+  showConfirm('Delete this quote?',async()=>{
+    try{await deleteDoc(doc(db,'sow_estimates',qid));toast('Quote deleted');}
+    catch(e){toast('Delete failed: '+(e.code||e.message),'err');}
+  });
+};
+
+window.deleteGroup=(pid)=>{
+  if(!hasPerm('deleteEstimates')){toast('No permission','err');return;}
+  const qs=PROJS.filter(q=>q.projectId===pid);
+  const proj=PROJECTS.find(p=>p.id===pid);
+  showConfirm(`Delete group "${proj?.name}"? Its ${qs.length} quote${qs.length!==1?'s':''} will become unassigned.`,async()=>{
+    for(const qt of qs)await updateDoc(doc(db,'sow_estimates',qt.id),{projectId:null});
+    await deleteDoc(doc(db,'sow_projects',pid));
+    toast('Group deleted');
+  });
+};
+
+window.openAssignGroup=(qid)=>{
+  const qt=PROJS.find(q=>q.id===qid);if(!qt)return;
+  const list=$('assignGroupList');
+  list.innerHTML=PROJECTS.map(g=>{
+    const isCur=qt.projectId===g.id;
+    return`<div onclick="doAssignGroup('${qid}','${g.id}')" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid ${isCur?'var(--gold)':'var(--bd)'};background:${isCur?'var(--gold-bg)':'var(--s2)'};cursor:pointer;margin-bottom:6px;transition:all .15s">
+      <span style="font-size:18px"></span>
+      <div style="flex:1"><div style="font-weight:600;font-size:13px;color:${isCur?'var(--gold)':'var(--tx)'}">${esc(g.name)}</div>${g.client?`<div style="font-size:11px;color:var(--tx4)">${esc(g.client)}</div>`:''}
+      </div>
+      ${isCur?'<span style="font-size:11px;color:var(--gold)">✓ Current</span>':''}
+    </div>`;
+  }).join('')||(PROJECTS.length===0?'<div style="font-size:12px;color:var(--tx4);padding:8px 0">No groups yet — create one first</div>':'');
+  if(qt.projectId){list.innerHTML+=`<button onclick="doAssignGroup('${qid}',null)" class="btn btn-danger btn-sm" style="margin-top:8px;width:100%;justify-content:center">Remove from group</button>`;}
+  openModal('ovAssignGroup');
+};
+
+window.doAssignGroup=async(qid,gid)=>{
+  await updateDoc(doc(db,'sow_estimates',qid),{projectId:gid||null,updatedAt:serverTimestamp()});
+  if(gid)await updateDoc(doc(db,'sow_projects',gid),{updatedAt:serverTimestamp()}).catch(()=>{});
+  closeModal('ovAssignGroup');
+  toast(gid?'Quote assigned to group ✓':'Removed from group');
+};
+
+window.applyQuickPhases=()=>{
+  const txt=$('quickPhasesText').value.trim();if(!txt)return;
+  const names=txt.split('\n').map(s=>s.trim()).filter(Boolean);
+  EST.phases=EST.phases||[];
+  const existing=EST.phases.map(p=>p.name.toLowerCase());
+  let added=0;
+  names.forEach(name=>{
+    if(!existing.includes(name.toLowerCase())){
+      EST.phases.push({id:'ph'+Date.now()+Math.random().toString(36).slice(2,6),name,active:true});
+      added++;
+    }
+  });
+  closeModal('ovQuickPhases');schedAS();renderEst();
+  toast(added+' phase'+(added!==1?'s':'')+' added ✓');
+};
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.ov.on,.confirm-ov.on').forEach(el=>el.classList.remove('on'));});
+</script>
+<!-- Quick single input modal (rename, etc) -->
+<div class="ov" id="ovQuickInput">
+  <div class="modal">
+    <div class="mhd"><h3 id="quickPhaseTitle">Enter Name</h3><button class="mcls" onclick="closeModal('ovQuickInput')">✕</button></div>
+    <div class="mbody">
+      <div class="f"><label>Name</label><input id="quickPhaseInput" placeholder="Phase name…" onkeydown="if(event.key==='Enter')document.getElementById('quickPhaseSubmit').click()"></div>
+    </div>
+    <div class="mfoot">
+      <button class="btn btn-ghost" onclick="closeModal('ovQuickInput')">Cancel</button>
+      <button class="btn btn-gold" id="quickPhaseSubmit">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Quick multi-phase add -->
+<div class="ov" id="ovQuickPhases">
+  <div class="modal lg">
+    <div class="mhd"><h3>Quick Add Phases</h3><button class="mcls" onclick="closeModal('ovQuickPhases')">✕</button></div>
+    <div class="mbody">
+      <div class="info-box" style="margin-bottom:14px">Type one phase per line — e.g. <b>Master Bath</b>, <b>Built-in Millwork</b>, <b>Countertop</b></div>
+      <div class="f">
+        <label>Phases (one per line)</label>
+        <textarea id="quickPhasesText" style="min-height:160px;font-size:14px;line-height:2" placeholder="Master Bath&#10;Built-in Millwork&#10;Countertop Install&#10;Paint"></textarea>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="btn btn-ghost" onclick="closeModal('ovQuickPhases')">Cancel</button>
+      <button class="btn btn-gold" onclick="applyQuickPhases()">Add Phases ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- Assign to Group -->
+<div class="ov" id="ovAssignGroup">
+  <div class="modal">
+    <div class="mhd"><h3>Assign to Group</h3><button class="mcls" onclick="closeModal('ovAssignGroup')">✕</button></div>
+    <div class="mbody">
+      <p style="font-size:12px;color:var(--tx3);margin-bottom:14px">Select a group for this quote, or remove from current group:</p>
+      <div id="assignGroupList"></div>
+      <div style="margin-top:10px;border-top:1px solid var(--bd);padding-top:10px">
+        <button class="btn btn-ghost btn-sm" onclick="openNewProject();closeModal('ovAssignGroup')" style="border-color:rgba(201,168,76,.3);color:var(--gold)">+ Create New Group</button>
+      </div>
+    </div>
+    <div class="mfoot"><button class="btn btn-ghost" onclick="closeModal('ovAssignGroup')">Cancel</button></div>
+  </div>
+</div>
+
+</body>
+</html>
