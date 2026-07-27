@@ -2710,6 +2710,71 @@ body.lead-stage #mobileBottomNav .mbn-lead{display:flex}
 .ls-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
 .lead-nextbtn{width:100%;margin-top:24px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:15px;padding:14px}
 .lead-nextbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* ── Estimador nativo ── */
+#leadEstArea{max-width:820px;margin:0 auto;padding-bottom:48px}
+.btn-green{background:rgba(48,209,88,.14);color:var(--green);border:1px solid rgba(48,209,88,.3)}
+.btn-green:hover{background:rgba(48,209,88,.22)}
+.est-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.est-top-act{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.est-mini{background:var(--s2);border:1px solid var(--bd2);color:var(--tx2);border-radius:9px;padding:7px 10px;font-size:12px;outline:none}
+.est-mini svg{width:15px;height:15px}
+.est-summary{background:var(--gold-bg,rgba(201,168,76,.08));border:1px solid rgba(201,168,76,.16);border-radius:10px;padding:11px 13px;font-size:13px;color:var(--tx2);line-height:1.55;margin-bottom:12px}
+.est-days{display:inline-block;background:rgba(201,168,76,.16);color:var(--gold);border-radius:6px;padding:1px 7px;font-size:11px;font-weight:700;margin-left:4px}
+.est-phases{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.est-phase-chip{font-size:11.5px;font-weight:600;color:var(--blue);background:rgba(10,132,255,.12);border:1px solid rgba(10,132,255,.25);border-radius:8px;padding:4px 10px}
+.est-addcats{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.est-add-lbl{font-size:10px;color:var(--tx3);font-weight:700}
+.est-empty-note,.est-none{padding:12px 14px;font-size:12.5px;color:var(--tx4)}
+.est-cat{background:var(--s1);border:1px solid var(--bd);border-radius:13px;margin-bottom:10px;overflow:hidden}
+.est-cat-hd{display:flex;align-items:center;gap:8px;padding:11px 13px;border-bottom:1px solid var(--bd)}
+.est-cat-name{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;flex:0 0 auto}
+.est-cat-tot{font-family:var(--ff-bc);font-size:16px;font-weight:800;color:var(--tx1);margin-left:6px}
+.est-cat-hd .btn{margin-left:auto}
+.est-cat-hd .btn+.btn{margin-left:6px}
+.est-li{display:grid;grid-template-columns:minmax(0,1fr) 68px 58px 66px 78px 26px;gap:6px;align-items:center;padding:6px 13px}
+.est-li-hd{padding-top:9px;padding-bottom:4px}
+.est-li-hd span{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--tx4)}
+.est-li-hd span:nth-child(3),.est-li-hd span:nth-child(4),.est-li-hd span:nth-child(5){text-align:right}
+.est-in{background:var(--s2);border:1px solid var(--bd);border-radius:8px;color:var(--tx1);font-size:13px;padding:7px 9px;outline:none;min-width:0;width:100%}
+.est-in:focus{border-color:var(--gold)}
+.est-in-num{text-align:right}
+.est-li-tot{font-family:var(--ff-bc);font-size:14px;font-weight:700;text-align:right;white-space:nowrap;color:var(--tx1)}
+.est-li-del{background:none;border:none;color:var(--tx4);cursor:pointer;font-size:13px;padding:4px}
+.est-li-del:hover{color:var(--red)}
+.est-card{background:var(--s1);border:1px solid var(--bd);border-radius:13px;margin-top:12px;overflow:hidden}
+.est-card-hd{display:flex;align-items:center;gap:8px;padding:11px 14px;border-bottom:1px solid var(--bd);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--tx2)}
+.est-card-hd .btn{margin-left:auto}
+.est-card-hd.est-hd-green{color:var(--green)}
+.est-card-hd.est-hd-amber{color:var(--amber)}
+.est-adj{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--bd);font-size:13px}
+.est-adj-name{color:var(--gold);font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.est-adj-apply{font-size:11px;color:var(--tx3)}
+.est-adj-val{font-family:var(--ff-bc);font-size:15px;font-weight:700;color:var(--gold)}
+.est-sumbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:14px;margin-top:14px}
+.est-sum-item{min-width:64px}
+.est-sum-cost{margin-left:auto;text-align:right}
+.est-sum-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--tx4);margin-bottom:2px}
+.est-sum-val{font-family:var(--ff-bc);font-size:16px;font-weight:800}
+.est-prof{display:grid;grid-template-columns:minmax(0,1fr) 110px 90px 26px;gap:8px;align-items:center;padding:8px 14px;border-bottom:1px solid var(--bd)}
+.est-prof-pct{display:flex;align-items:center;gap:4px}
+.est-prof-pct span{color:var(--tx3);font-size:12px}
+.est-prof-v{font-family:var(--ff-bc);font-size:15px;font-weight:700;color:var(--green);text-align:right;white-space:nowrap}
+.est-misc{display:grid;grid-template-columns:minmax(0,1fr) 120px 26px;gap:8px;align-items:center;padding:8px 14px;border-bottom:1px solid var(--bd)}
+.est-grand{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;background:linear-gradient(135deg,var(--s2),var(--s1));border:1px solid var(--bd2);border-radius:15px;padding:18px;margin-top:16px}
+.est-grand-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--tx3);margin-bottom:7px}
+.est-grand-nums{display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap}
+.est-gn-l{font-size:9px;color:var(--tx3);margin-bottom:2px}
+.est-gn-v{font-family:var(--ff-bc);font-size:20px;font-weight:800}
+.est-plus{color:var(--tx4);font-size:15px;margin-bottom:3px}
+.est-grand-total{text-align:right}
+.est-grand-v{font-family:var(--ff-bc);font-size:40px;font-weight:800;color:var(--green);line-height:1}
+.est-sowbox{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:13px;font-size:13px;color:var(--tx2);line-height:1.7;white-space:pre-wrap;max-height:340px;overflow-y:auto}
+@media(max-width:560px){
+  .est-li{grid-template-columns:minmax(0,1fr) 44px 46px 52px 58px 22px;gap:4px}
+  .est-in{padding:6px 6px;font-size:12px}
+  .est-prof{grid-template-columns:minmax(0,1fr) 84px 74px 22px}
+  .est-grand-v{font-size:32px}
+}
 /* ── Home rediseñado: recientes + carpetas ── */
 .home-sec-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 12px}
 .home-sec-t{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--tx3);display:inline-flex;align-items:center;gap:8px}
@@ -2866,6 +2931,7 @@ body.lead-stage #mobileBottomNav .mbn-lead{display:flex}
   <div class="tab-nav">
     <div class="t-item t-lead" data-tab="leadproj" onclick="switchTab('leadproj')">Proyecto</div>
     <div class="t-item t-lead" data-tab="leadsow" onclick="switchTab('leadsow')">Generar SOW</div>
+    <div class="t-item t-lead" data-tab="leadest" onclick="switchTab('leadest')">Estimador</div>
     <div class="t-item on" data-tab="dash" onclick="switchTab('dash')"><span data-t="dashboard">Dashboard</span></div>
     <div class="t-item" data-tab="gen" onclick="switchTab('gen')"><span data-t="generate">Generate</span></div>
     <div class="t-item" data-tab="tasks" onclick="switchTab('tasks')"><span data-t="tasks">Tasks</span></div>
@@ -2889,6 +2955,9 @@ body.lead-stage #mobileBottomNav .mbn-lead{display:flex}
     </div>
     <div class="tab-pane" id="tab-leadsow">
       <div id="leadSowArea"></div>
+    </div>
+    <div class="tab-pane" id="tab-leadest">
+      <div id="leadEstArea"></div>
     </div>
     <div class="tab-pane on" id="tab-dash">
       <div id="projDashContent"></div>
@@ -5204,7 +5273,7 @@ function saveAppSett(){const k=document.getElementById('apiKey').value.trim();if
 function loadProjSettForm(){const p=CP();if(!p)return;[['spName','name'],['spClient','client'],['spCont','contractor'],['spDate','startDate'],['spAddr','address']].forEach(([id,k])=>document.getElementById(id).value=p[k]||'');document.getElementById('spStatus').value=p.status||'active';if(typeof loadSiteLocation==='function')loadSiteLocation(p);var _etEl=document.getElementById('spEntryTime');if(_etEl)_etEl.value=p.entryTime||'07:00';if(typeof renderProjectBackups==='function')renderProjectBackups();}
 async function saveProjMeta(){const p=CP();if(!p)return;[['spName','name'],['spClient','client'],['spCont','contractor'],['spDate','startDate'],['spAddr','address']].forEach(([id,k])=>{p[k]=document.getElementById(id).value.trim();});p.status=document.getElementById('spStatus').value;var _lat=parseFloat((document.getElementById('spLat')||{}).value);var _lng=parseFloat((document.getElementById('spLng')||{}).value);var _rad=parseFloat((document.getElementById('spRadius')||{}).value)||150;if(!isNaN(_lat)&&!isNaN(_lng)){p.siteLocation={lat:_lat,lng:_lng,radius:_rad};}else if(p.siteLocation&&p.siteLocation.lat!=null){/* keep existing coords; only update the radius if provided */ if(!isNaN(_rad))p.siteLocation.radius=_rad;}/* if there were never coords and none entered, leave as-is (do not wipe) */var _et=(document.getElementById('spEntryTime')||{}).value;if(_et)p.entryTime=_et;const bc=document.querySelector('.bc-cur');if(bc)bc.textContent=p.name;document.getElementById('gName').value=p.name;renderDash();await fbSave(p);}
 
-function switchTab(tab){if(typeof syncBottomNav==='function')syncBottomNav(tab);document.querySelectorAll('.t-item').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));document.querySelectorAll('.tab-pane').forEach(p=>p.classList.toggle('on',p.id==='tab-'+tab));if(tab==='leadproj'&&typeof renderLeadProject==='function')renderLeadProject();if(tab==='leadsow'&&typeof renderLeadSOW==='function')renderLeadSOW();if(tab==='dash'&&typeof renderProjDash==='function')renderProjDash();if(tab==='sched'){renderSched();renderSchedBuilder();}if(tab==='crew')renderCrew();if(tab==='payroll')renderPayroll();if(tab==='expenses'&&typeof renderExpensesTab==='function')renderExpensesTab();if(tab==='files'&&typeof renderFilesTab==='function')renderFilesTab();if(tab==='portal'&&typeof renderPortalAdmin==='function')renderPortalAdmin();if(tab==='photos'&&typeof renderPhotosTab==='function')renderPhotosTab();if((tab==='survey'||tab==='estimate')&&typeof renderEmbed==='function')renderEmbed(tab);if(tab==='finance')renderFinance();if(tab==='proj'&&typeof renderClientFeedback==='function')renderClientFeedback();if(tab==='reports'){renderReports();document.getElementById('smsOutput').innerHTML='<span class="sms-placeholder">Click Generate to create a native-English daily progress summary ready to send via text.</span>';}}
+function switchTab(tab){if(typeof syncBottomNav==='function')syncBottomNav(tab);document.querySelectorAll('.t-item').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));document.querySelectorAll('.tab-pane').forEach(p=>p.classList.toggle('on',p.id==='tab-'+tab));if(tab==='leadproj'&&typeof renderLeadProject==='function')renderLeadProject();if(tab==='leadsow'&&typeof renderLeadSOW==='function')renderLeadSOW();if(tab==='leadest'&&typeof renderLeadEst==='function')renderLeadEst();if(tab==='dash'&&typeof renderProjDash==='function')renderProjDash();if(tab==='sched'){renderSched();renderSchedBuilder();}if(tab==='crew')renderCrew();if(tab==='payroll')renderPayroll();if(tab==='expenses'&&typeof renderExpensesTab==='function')renderExpensesTab();if(tab==='files'&&typeof renderFilesTab==='function')renderFilesTab();if(tab==='portal'&&typeof renderPortalAdmin==='function')renderPortalAdmin();if(tab==='photos'&&typeof renderPhotosTab==='function')renderPhotosTab();if((tab==='survey'||tab==='estimate')&&typeof renderEmbed==='function')renderEmbed(tab);if(tab==='finance')renderFinance();if(tab==='proj'&&typeof renderClientFeedback==='function')renderClientFeedback();if(tab==='reports'){renderReports();document.getElementById('smsOutput').innerHTML='<span class="sms-placeholder">Click Generate to create a native-English daily progress summary ready to send via text.</span>';}}
 function om(id){document.getElementById(id).classList.add('on');}
 function cm(id){document.getElementById(id).classList.remove('on');}
 document.querySelectorAll('.ov').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('on');}));
@@ -11999,9 +12068,13 @@ function applyLeadGating(){
   var p=CP();
   var lead=isLeadStage(p);
   document.body.classList.toggle('lead-stage',!!lead);
+  var hasSOW=!!(p&&p.sowDraft);
   document.querySelectorAll('.t-item[data-tab]').forEach(function(it){
-    var tab=it.dataset.tab;var isLeadTab=(tab==='leadproj'||tab==='leadsow');
-    if(lead){it.style.display=isLeadTab?'':'none';}
+    var tab=it.dataset.tab;var isLeadTab=(tab==='leadproj'||tab==='leadsow'||tab==='leadest');
+    if(lead){
+      if(tab==='leadest')it.style.display=hasSOW?'':'none';
+      else it.style.display=isLeadTab?'':'none';
+    }
     else if(isLeadTab){it.style.display='none';}
     /* si NO es lead, las pestañas de ejecución las gobierna applyRoleAccess */
   });
@@ -12133,6 +12206,7 @@ function renderLeadSOW(){
   h+='<div class="ls-out-wrap" id="lsOutWrap" style="display:none"><div class="lp-sec-t" style="margin-top:0">Borrador (editable)</div>'
     +'<textarea class="ls-out" id="lsOut" placeholder="El borrador aparecerá aquí…"></textarea>'
     +'<div class="ls-actions"><button class="btn btn-ghost btn-sm" onclick="leadCopySOW()">Copiar</button><button class="btn btn-ghost btn-sm" onclick="leadSowPdf()">'+_I('download')+' PDF</button><button class="btn btn-gold btn-sm" onclick="leadSaveSOW()">Guardar SOW</button></div></div>';
+  if(p.sowDraft)h+='<button class="btn btn-gold lead-nextbtn" onclick="switchTab(\'leadest\')">'+_I('calc')+' Ir al Estimador &#8594;</button>';
   area.innerHTML=h;
   if(p.sowDraft){var w=document.getElementById('lsOutWrap');var o=document.getElementById('lsOut');if(w&&o){w.style.display='';o.value=p.sowDraft;}}
 }
@@ -12320,8 +12394,259 @@ async function leadSaveSOW(){
   p.sowDraft=txt;await fbSave(p);
   try{await setDoc(doc(db,'sow_projects','sow_'+p.id),{id:'sow_'+p.id,projectId:p.id,name:p.name,address:p.address||'',client:(p.customer&&p.customer.name)||p.client||'',phone:(p.customer&&p.customer.phone)||'',email:(p.customer&&p.customer.email)||'',status:'draft',sow:txt,updatedAt:Date.now()},{merge:true});
   }catch(e){console.warn('sow_projects',e);}
-  toast('SOW guardado ✓ (listo para el estimador)');
+  // Sincronizar el SOW al estimado y desbloquear la pestaña Estimador
+  if(_EST&&_EST._pid===p.id)_EST.sow=txt;
+  if(typeof applyLeadGating==='function')applyLeadGating();
+  if(typeof renderLeadSOW==='function')renderLeadSOW();
+  toast('SOW guardado ✓ — pestaña Estimador desbloqueada');
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   8.2/native — ESTIMADOR NATIVO (portado del estimator.html)
+   Datos en sow_estimates/estpm_<pid>. Misma IA, mismas fórmulas.
+   ══════════════════════════════════════════════════════════════════ */
+var _EST=null,_estPrices=null,_estSaveTimer=null,_estAIran={};
+var EST_CATS=['Labor','Materials','Supplies','Debris/Dumpster','Subcontractor'];
+var EST_CC={Labor:'var(--gold)',Materials:'var(--blue)',Supplies:'var(--green)',Subcontractor:'#bf5af2','Debris/Dumpster':'var(--amber)'};
+function estFmt(n){n=+n||0;return '$'+Math.round(n).toLocaleString('en-US');}
+function estCatTot(lines){return (lines||[]).reduce(function(s,l){return s+(+(l.qty||0))*(+(l.unitPrice||0));},0);}
+function estCostTotal(cats,adjs){
+  var base=(cats||[]).reduce(function(s,c){return s+estCatTot(c.lines);},0);
+  var lab=(cats||[]).filter(function(c){return c.cat==='Labor';}).reduce(function(s,c){return s+estCatTot(c.lines);},0);
+  var mat=(cats||[]).filter(function(c){return c.cat==='Materials';}).reduce(function(s,c){return s+estCatTot(c.lines);},0);
+  var adj=0;(adjs||[]).forEach(function(a){var b2=a.apply==='labor'?lab:a.apply==='materials'?mat:base;adj+=a.type==='pct'?b2*(+a.value/100):(+a.value);});
+  return base+adj;
+}
+function estProfitTotal(cats,rows){return (rows||[]).reduce(function(s,r){var b=(cats||[]).filter(function(c){return c.cat===r.cat;}).reduce(function(ss,c){return ss+estCatTot(c.lines);},0);return s+b*(+(r.pct||0)/100);},0);}
+function estMiscTotal(items){return (items||[]).reduce(function(s,i){return s+(+(i.amount||0));},0);}
+function estCatSum(cats,cat){return (cats||[]).filter(function(c){return c.cat===cat;}).reduce(function(s,c){return s+estCatTot(c.lines);},0);}
+
+async function estLoad(){
+  var p=CP();if(!p)return null;
+  if(_EST&&_EST._pid===p.id)return _EST;
+  var id='estpm_'+p.id;
+  var blank={id:id,projectId:'sow_'+p.id,name:p.name,client:(p.customer&&p.customer.name)||p.client||'',phone:(p.customer&&p.customer.phone)||'',email:(p.customer&&p.customer.email)||'',address:p.address||'',status:'draft',sow:p.sowDraft||'',categories:[],adjustments:[],profitRows:[],miscItems:[],phases:[],estimatedDays:null,summary:'',notes:''};
+  try{var snap=await getDoc(doc(db,'sow_estimates',id));_EST=snap.exists()?snap.data():blank;}catch(e){_EST=blank;}
+  if(!_EST.sow&&p.sowDraft)_EST.sow=p.sowDraft;
+  _EST._pid=p.id;
+  return _EST;
+}
+function estSchedSave(){if(_estSaveTimer)clearTimeout(_estSaveTimer);_estSaveTimer=setTimeout(function(){estSave(true);},900);}
+async function estSave(silent){
+  if(!_EST)return;_EST.updatedAt=Date.now();
+  var toSave=Object.assign({},_EST);delete toSave._pid;
+  try{await setDoc(doc(db,'sow_estimates',_EST.id),toSave);if(!silent)toast('Estimado guardado ✓');setSS&&setSS('ok','Live');}
+  catch(e){console.warn('est save',e);if(!silent)toast('Error al guardar el estimado','err');}
+}
+
+async function renderLeadEst(){
+  var area=document.getElementById('leadEstArea');if(!area)return;
+  var p=CP();if(!p){area.innerHTML='<div class="lp-empty">Abre un proyecto.</div>';return;}
+  if(!p.sowDraft){area.innerHTML='<div class="lp-empty">Primero genera y guarda el SOW en la pestaña "Generar SOW".</div>';return;}
+  area.innerHTML='<div class="lp-empty">Cargando estimado…</div>';
+  await estLoad();
+  // Auto-correr IA la primera vez (sin partidas) para llenar el estimado desde el SOW
+  if((!_EST.categories||!_EST.categories.length)&&_EST.sow&&!_estAIran[p.id]){_estAIran[p.id]=true;await estAI(true);return;}
+  _estRender();
+}
+
+function _estRender(){
+  var area=document.getElementById('leadEstArea');if(!area||!_EST)return;
+  var cats=_EST.categories||[],adjs=_EST.adjustments||[],profRows=_EST.profitRows||[],misc=_EST.miscItems||[],phases=_EST.phases||[];
+  var COST=estCostTotal(cats,adjs),PROF=estProfitTotal(cats,profRows),MISC=estMiscTotal(misc),GRAND=COST+PROF+MISC;
+  var h='';
+  h+='<button class="home-back" style="margin-bottom:10px" onclick="switchTab(\'leadsow\')">&#8592; Generar SOW</button>';
+  h+='<div class="est-top"><div><div class="ls-sub" style="text-transform:uppercase;letter-spacing:.08em;font-size:10px;color:var(--tx4);font-weight:700">Estimado</div>'
+    +'<h2 class="ls-title">'+X(_EST.name||p_name())+'</h2></div>'
+    +'<div class="est-top-act">'
+    +'<select class="est-mini" onchange="estSetStatus(this.value)"><option value="draft"'+(_EST.status==='draft'?' selected':'')+'>Draft</option><option value="sent"'+(_EST.status==='sent'?' selected':'')+'>Sent</option><option value="won"'+(_EST.status==='won'?' selected':'')+'>Won</option><option value="lost"'+(_EST.status==='lost'?' selected':'')+'>Lost</option></select>'
+    +'<input class="est-mini" type="number" min="1" placeholder="Días" value="'+(_EST.estimatedDays||'')+'" onchange="estSetDays(this.value)" style="width:64px" title="Días estimados">'
+    +'<button class="btn btn-ghost btn-sm" onclick="estAI(false)">'+_I('bulb')+' IA</button>'
+    +'<button class="btn btn-ghost btn-sm" onclick="estSave(false)">Guardar</button>'
+    +'<button class="btn btn-gold btn-sm" onclick="estPdf()">'+_I('download')+' Cotización</button>'
+    +'</div></div>';
+  if(_EST.summary)h+='<div class="est-summary">'+X(_EST.summary)+(_EST.estimatedDays?'  <span class="est-days">'+_EST.estimatedDays+' día'+(_EST.estimatedDays!=1?'s':'')+'</span>':'')+'</div>';
+  if(phases.length)h+='<div class="est-phases">'+phases.map(function(ph){return '<span class="est-phase-chip">'+X(ph.name||ph.id)+'</span>';}).join('')+'</div>';
+  // Add category buttons
+  h+='<div class="est-addcats"><span class="est-add-lbl">AGREGAR:</span>'+EST_CATS.map(function(c){return '<button class="btn btn-xs btn-dim" onclick="estAddCat(\''+c.replace(/[^A-Za-z]/g,'')+'\')" data-cat="'+c+'">'+(c==='Debris/Dumpster'?'Debris':c==='Subcontractor'?'Sub':c)+'</button>';}).join('')+'</div>';
+  // Categories
+  h+='<div id="estCats">'+cats.map(function(cat,ci){return _estCatHTML(cat,ci,phases);}).join('')+(cats.length?'':'<div class="est-empty-note">Sin partidas. Toca <b>IA</b> para extraerlas del SOW o agrega una categoría.</div>')+'</div>';
+  // Adjustments
+  h+='<div class="est-card"><div class="est-card-hd"><span>Ajustes y factores</span><button class="btn btn-xs btn-gold" onclick="estAddAdj()">+ Agregar</button></div><div id="estAdj">'+(adjs.length?adjs.map(function(a,ai){return _estAdjHTML(a,ai);}).join(''):'<div class="est-none">Sin ajustes</div>')+'</div></div>';
+  // Summary bar
+  h+='<div class="est-sumbar">'
+    +_estSumItem('Labor','var(--gold)','sb-lab',estCatSum(cats,'Labor'))
+    +_estSumItem('Materials','var(--blue)','sb-mat',estCatSum(cats,'Materials'))
+    +_estSumItem('Supplies','var(--green)','sb-sup',estCatSum(cats,'Supplies'))
+    +_estSumItem('Subs','#bf5af2','sb-sub',estCatSum(cats,'Subcontractor'))
+    +_estSumItem('Debris','var(--amber)','sb-deb',estCatSum(cats,'Debris/Dumpster'))
+    +'<div class="est-sum-item est-sum-cost"><div class="est-sum-lbl">COSTO</div><div class="est-sum-val" style="color:var(--gold);font-size:20px" id="sb-cost">'+estFmt(COST)+'</div></div>'
+    +'</div>';
+  // Profit
+  h+='<div class="est-card"><div class="est-card-hd est-hd-green"><span>Ganancia (markup)</span><button class="btn btn-xs btn-green" onclick="estAddProf()">+ Fila</button></div>'
+    +'<div id="estProf">'+(profRows.length?profRows.map(function(r,ri){return _estProfHTML(r,ri,cats);}).join(''):'<div class="est-none">Sin ganancia — agrega una fila y define tu % por categoría</div>')+'</div></div>';
+  // Misc
+  h+='<div class="est-card"><div class="est-card-hd est-hd-amber"><span>Misceláneos</span><button class="btn btn-xs btn-dim" onclick="estAddMisc()">+ Agregar</button></div>'
+    +'<div id="estMisc">'+(misc.length?misc.map(function(m,mi){return _estMiscHTML(m,mi);}).join(''):'<div class="est-none">Sin gastos misceláneos</div>')+'</div></div>';
+  // Grand total
+  h+='<div class="est-grand"><div class="est-grand-break"><div class="est-grand-lbl">DESGLOSE</div><div class="est-grand-nums">'
+    +'<div><div class="est-gn-l">COSTO</div><div class="est-gn-v" style="color:var(--gold)" id="gt-cost">'+estFmt(COST)+'</div></div><div class="est-plus">+</div>'
+    +'<div><div class="est-gn-l">GANANCIA</div><div class="est-gn-v" style="color:var(--green)" id="gt-prof">'+estFmt(PROF)+'</div></div><div class="est-plus">+</div>'
+    +'<div><div class="est-gn-l">MISC</div><div class="est-gn-v" style="color:var(--amber)" id="gt-misc">'+estFmt(MISC)+'</div></div>'
+    +'</div></div><div class="est-grand-total"><div class="est-grand-lbl" style="color:var(--green)">TOTAL</div><div class="est-grand-v" id="gt-grand">'+estFmt(GRAND)+'</div></div></div>';
+  // Notes + SOW
+  h+='<div class="est-card"><div class="est-card-hd"><span>Notas internas</span></div><div style="padding:12px 14px"><textarea class="lp-desc" placeholder="Notas internas, objetivos de margen…" onchange="estSetNotes(this.value)">'+X(_EST.notes||'')+'</textarea></div></div>';
+  h+='<div class="est-card"><div class="est-card-hd"><span>Scope of Work</span><button class="btn btn-xs btn-ghost" onclick="var e=document.getElementById(\'estSowPrev\');if(e)e.style.display=e.style.display===\'none\'?\'block\':\'none\'">Ver / ocultar</button></div><div id="estSowPrev" style="display:none;padding:12px 14px"><div class="est-sowbox">'+X(_EST.sow||'')+'</div></div></div>';
+  area.innerHTML=h;
+}
+function p_name(){var p=CP();return p?p.name:'';}
+function _estSumItem(lbl,col,id,v){return '<div class="est-sum-item"><div class="est-sum-lbl">'+lbl+'</div><div class="est-sum-val" style="color:'+col+'" id="'+id+'">'+estFmt(v)+'</div></div>';}
+function _estCatHTML(cat,ci,phases){
+  var col=EST_CC[cat.cat]||'var(--tx2)';var isSub=cat.cat==='Subcontractor';
+  var lines=(cat.lines||[]).map(function(ln,li){
+    var lt=(+(ln.qty||0))*(+(ln.unitPrice||0));
+    return '<div class="est-li">'
+      +'<input class="est-in est-in-desc" placeholder="Descripción" value="'+X(ln.desc||'')+'" oninput="estOnLI('+ci+','+li+',\'desc\',this.value)">'
+      +'<input class="est-in est-in-unit" placeholder="Unidad" value="'+X(ln.unit||'')+'" oninput="estOnLI('+ci+','+li+',\'unit\',this.value)">'
+      +'<input class="est-in est-in-num" type="number" placeholder="Cant." value="'+(ln.qty||'')+'" oninput="estOnLI('+ci+','+li+',\'qty\',this.value)">'
+      +'<input class="est-in est-in-num" type="number" placeholder="$/u" value="'+(ln.unitPrice||'')+'" oninput="estOnLI('+ci+','+li+',\'unitPrice\',this.value)">'
+      +'<div class="est-li-tot" id="lt-'+ci+'-'+li+'">'+estFmt(lt)+'</div>'
+      +'<button class="est-li-del" onclick="estDelLine('+ci+','+li+')">&#10005;</button>'
+      +'</div>';
+  }).join('');
+  return '<div class="est-cat">'
+    +'<div class="est-cat-hd"><span class="est-cat-name" style="color:'+col+'">'+X(cat.cat)+'</span><span class="est-cat-tot" id="ct-'+ci+'">'+estFmt(estCatTot(cat.lines))+'</span>'
+    +'<button class="btn btn-xs btn-ghost" onclick="estAddLine('+ci+')">+ Partida</button><button class="btn btn-xs btn-danger" onclick="estDelCat('+ci+')">&#10005;</button></div>'
+    +'<div class="est-li est-li-hd"><span>Descripción</span><span>Unidad</span><span>Cant.</span><span>$/u</span><span>Total</span><span></span></div>'
+    +lines+'</div>';
+}
+function _estAdjHTML(a,ai){return '<div class="est-adj"><span class="est-adj-name">'+X(a.name||'')+'</span><span class="est-adj-apply">'+(a.apply==='labor'?'→Labor':a.apply==='materials'?'→Materials':'→Total')+'</span><span class="est-adj-val">'+(a.type==='pct'?'+'+a.value+'%':estFmt(a.value))+'</span><button class="est-li-del" onclick="estDelAdj('+ai+')">&#10005;</button></div>';}
+function _estProfHTML(r,ri,cats){
+  var b=(cats||[]).filter(function(c){return c.cat===r.cat;}).reduce(function(s,c){return s+estCatTot(c.lines);},0);var pa=b*(+(r.pct||0)/100);
+  return '<div class="est-prof"><select class="est-in" onchange="estOnProf('+ri+',\'cat\',this.value)">'+EST_CATS.map(function(c){return '<option'+(r.cat===c?' selected':'')+'>'+c+'</option>';}).join('')+'</select>'
+    +'<div class="est-prof-pct"><input class="est-in est-in-num" type="number" min="0" placeholder="%" value="'+(r.pct||'')+'" oninput="estOnProf('+ri+',\'pct\',this.value)"><span>%</span></div>'
+    +'<div class="est-prof-v" id="pr-'+ri+'">'+estFmt(pa)+'</div><button class="est-li-del" onclick="estDelProf('+ri+')">&#10005;</button></div>';
+}
+function _estMiscHTML(m,mi){return '<div class="est-misc"><input class="est-in" placeholder="Descripción (gas, snacks, regalo…)" value="'+X(m.desc||'')+'" oninput="estOnMisc('+mi+',\'desc\',this.value)"><input class="est-in est-in-num" type="number" placeholder="Monto" value="'+(m.amount||'')+'" oninput="estOnMisc('+mi+',\'amount\',this.value)"><button class="est-li-del" onclick="estDelMisc('+mi+')">&#10005;</button></div>';}
+
+function estRecalc(){
+  if(!_EST)return;var cats=_EST.categories||[],adjs=_EST.adjustments||[],prof=_EST.profitRows||[],misc=_EST.miscItems||[];
+  var COST=estCostTotal(cats,adjs),PROF=estProfitTotal(cats,prof),MISC=estMiscTotal(misc),GRAND=COST+PROF+MISC;
+  function up(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
+  up('sb-lab',estFmt(estCatSum(cats,'Labor')));up('sb-mat',estFmt(estCatSum(cats,'Materials')));up('sb-sup',estFmt(estCatSum(cats,'Supplies')));up('sb-sub',estFmt(estCatSum(cats,'Subcontractor')));up('sb-deb',estFmt(estCatSum(cats,'Debris/Dumpster')));
+  up('sb-cost',estFmt(COST));up('gt-cost',estFmt(COST));up('gt-prof',estFmt(PROF));up('gt-misc',estFmt(MISC));up('gt-grand',estFmt(GRAND));
+}
+function estOnLI(ci,li,f,v){var ln=_EST.categories[ci].lines[li];ln[f]=(f==='qty'||f==='unitPrice')?(parseFloat(v)||0):v;
+  var lt=(+(ln.qty||0))*(+(ln.unitPrice||0));var le=document.getElementById('lt-'+ci+'-'+li);if(le)le.textContent=estFmt(lt);
+  var ce=document.getElementById('ct-'+ci);if(ce)ce.textContent=estFmt(estCatTot(_EST.categories[ci].lines));estRecalc();estSchedSave();}
+function estAddLine(ci){_EST.categories[ci].lines=_EST.categories[ci].lines||[];_EST.categories[ci].lines.push({desc:'',unit:'',qty:0,unitPrice:0});estSchedSave();_estRender();}
+function estDelLine(ci,li){_EST.categories[ci].lines.splice(li,1);estSchedSave();_estRender();}
+function estAddCat(catKey){var map={Labor:'Labor',Materials:'Materials',Supplies:'Supplies',DebrisDumpster:'Debris/Dumpster',Subcontractor:'Subcontractor'};var cat=map[catKey]||catKey;_EST.categories=_EST.categories||[];_EST.categories.push({cat:cat,lines:[]});estSchedSave();_estRender();}
+function estDelCat(ci){_EST.categories.splice(ci,1);estSchedSave();_estRender();}
+function estAddProf(){_EST.profitRows=_EST.profitRows||[];var used=_EST.profitRows.map(function(r){return r.cat;});var next=EST_CATS.find(function(c){return used.indexOf(c)<0;})||'Labor';_EST.profitRows.push({cat:next,pct:0});estSchedSave();_estRender();}
+function estDelProf(ri){_EST.profitRows.splice(ri,1);estSchedSave();_estRender();}
+function estOnProf(ri,f,v){_EST.profitRows[ri][f]=f==='pct'?(parseFloat(v)||0):v;var b=(_EST.categories||[]).filter(function(c){return c.cat===_EST.profitRows[ri].cat;}).reduce(function(s,c){return s+estCatTot(c.lines);},0);var pe=document.getElementById('pr-'+ri);if(pe)pe.textContent=estFmt(b*(+(_EST.profitRows[ri].pct||0)/100));estRecalc();estSchedSave();if(f==='cat')_estRender();}
+function estAddMisc(){_EST.miscItems=_EST.miscItems||[];_EST.miscItems.push({desc:'',amount:0});estSchedSave();_estRender();}
+function estDelMisc(mi){_EST.miscItems.splice(mi,1);estSchedSave();_estRender();}
+function estOnMisc(mi,f,v){_EST.miscItems[mi][f]=f==='amount'?(parseFloat(v)||0):v;estRecalc();estSchedSave();}
+function estAddAdj(){showPrompt2('Nuevo ajuste',function(name,val,type,apply){if(!name||!val)return;_EST.adjustments=_EST.adjustments||[];_EST.adjustments.push({name:name,value:+val||0,type:type,apply:apply});estSchedSave();_estRender();});}
+function estDelAdj(ai){_EST.adjustments.splice(ai,1);estSchedSave();_estRender();}
+function estSetStatus(v){if(!_EST)return;_EST.status=v;estSchedSave();}
+function estSetDays(v){if(!_EST)return;_EST.estimatedDays=parseInt(v)||null;estSchedSave();}
+function estSetNotes(v){if(!_EST)return;_EST.notes=v;estSchedSave();}
+
+// Modal simple para ajustes (sin prompt() de iOS)
+function showPrompt2(title,cb){
+  var ov=document.getElementById('estAdjModal');
+  if(!ov){ov=document.createElement('div');ov.id='estAdjModal';ov.className='ov';document.body.appendChild(ov);}
+  ov.innerHTML='<div class="modal sm" onclick="event.stopPropagation()"><div class="mhd"><h3>'+X(title)+'</h3><button class="mcls" onclick="cm(\'estAdjModal\')">&#10005;</button></div><div class="mbody">'
+    +'<div class="f"><label>Nombre</label><input id="adjN" placeholder="Ej. Prima por altura"></div>'
+    +'<div class="f"><label>Valor</label><input id="adjV" type="number" placeholder="15"></div>'
+    +'<div class="f"><label>Tipo</label><select id="adjT"><option value="pct">Porcentaje (%)</option><option value="flat">Monto fijo ($)</option></select></div>'
+    +'<div class="f"><label>Aplicar a</label><select id="adjA"><option value="total">Total</option><option value="labor">Labor</option><option value="materials">Materials</option></select></div>'
+    +'<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button class="btn btn-ghost btn-sm" onclick="cm(\'estAdjModal\')">Cancelar</button><button class="btn btn-gold btn-sm" id="adjOk">Agregar</button></div>'
+    +'</div></div>';
+  ov.onclick=function(e){if(e.target===ov)cm('estAdjModal');};
+  om('estAdjModal');
+  document.getElementById('adjOk').onclick=function(){var n=(document.getElementById('adjN').value||'').trim();var v=document.getElementById('adjV').value;var t=document.getElementById('adjT').value;var a=document.getElementById('adjA').value;cm('estAdjModal');cb(n,v,t,a);};
+}
+
+async function estAI(silent){
+  if(!_EST)await estLoad();if(!_EST)return;
+  var k=localStorage.getItem('formo_api');
+  if(!k){toast('Agrega tu API key en Ajustes → API Key','err');if(!silent&&typeof openAppSettings==='function'){openAppSettings();if(typeof stab==='function')stab('api');}_estRender();return;}
+  var sow=(_EST.sow||(CP()&&CP().sowDraft)||'').trim();
+  if(!sow){toast('Genera el SOW primero','err');_estRender();return;}
+  var area=document.getElementById('leadEstArea');if(area)area.innerHTML='<div class="lp-empty">La IA está analizando el SOW y armando el estimado…</div>';
+  // Librería de precios (best-effort) para consistencia con el estimador
+  var pLib='';try{if(!_estPrices){var ps=await getDocs(collection(db,'sow_prices'));_estPrices=[];ps.forEach(function(dd){_estPrices.push(dd.data());});}pLib=(_estPrices||[]).slice(0,50).map(function(x){return x.desc+' ('+x.unit+'): $'+x.avgPrice;}).join('\n');}catch(e){}
+  var prompt='You are a construction estimating expert for Formo Renovation in Nashville, TN.\n'
+    +'Analyze this Scope of Work and extract all line items into a structured cost breakdown.\n'
+    +'SCOPE OF WORK:\n'+sow+'\n'
+    +'PRICE LIBRARY (use these when applicable):\n'+(pLib||'Empty.')+'\n'
+    +'Return ONLY valid JSON, no markdown:\n'
+    +'{"summary":"brief overview","estimatedDays":5,"phases":[{"id":"ph1","name":"Master Bath"}],"categories":[{"cat":"Labor","lines":[{"desc":"Exterior spray paint","unit":"sqft","qty":3000,"unitPrice":1.50,"notes":"","phaseId":"ph1"}]}],"adjustmentSuggestions":[{"name":"Height Premium","type":"pct","value":15,"apply":"labor","notes":""}],"profitSuggestions":[{"cat":"Labor","pct":100},{"cat":"Subcontractor","pct":30}],"miscSuggestions":[{"desc":"Fuel runs","amount":150}]}\n'
+    +'Categories: Labor,Materials,Supplies,Debris/Dumpster,Subcontractor. Be thorough.\n'
+    +'IMPORTANT: Extract phases from section headers/titles in the SOW. Create a phases array with unique ids and names. Assign each line item a phaseId matching its phase. If no clear phases, create one phase per major scope area.';
+  try{
+    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:8000,messages:[{role:'user',content:prompt}]})});
+    var d=await res.json();if(!res.ok)throw new Error((d.error&&d.error.message)||'API error');
+    var txt=((d.content.find(function(c){return c.type==='text';})||{}).text||'').replace(/```json|```/g,'').trim();
+    var parsed=JSON.parse(txt);
+    _EST.categories=parsed.categories||[];
+    _EST.adjustments=parsed.adjustmentSuggestions||[];
+    if(parsed.profitSuggestions&&parsed.profitSuggestions.length)_EST.profitRows=parsed.profitSuggestions;
+    if(parsed.miscSuggestions&&parsed.miscSuggestions.length)_EST.miscItems=parsed.miscSuggestions;
+    if(parsed.estimatedDays)_EST.estimatedDays=parsed.estimatedDays;
+    if(parsed.summary)_EST.summary=parsed.summary;
+    if(parsed.phases&&parsed.phases.length)_EST.phases=parsed.phases;
+    await estSave(true);_estRender();if(!silent)toast('Estimado generado ✓');
+  }catch(err){console.error('est ai',err);toast('Error IA: '+(err&&err.message||'error'),'err');_estRender();}
+}
+
+function estPdf(){
+  var p=CP();if(!p||!_EST)return;
+  var cats=_EST.categories||[],adjs=_EST.adjustments||[],prof=_EST.profitRows||[],misc=_EST.miscItems||[];
+  var GRAND=estCostTotal(cats,adjs)+estProfitTotal(cats,prof)+estMiscTotal(misc);
+  _loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js').then(function(){
+    try{
+      var jsPDF=window.jspdf.jsPDF;var d=new jsPDF({unit:'pt',format:'letter'});
+      var W=d.internal.pageSize.getWidth();var H=d.internal.pageSize.getHeight();var M=54;var y=58;
+      try{if(typeof FORMO_LOGO!=='undefined')d.addImage(FORMO_LOGO,'PNG',M,y-22,52,52);}catch(e){}
+      d.setFont('helvetica','bold');d.setFontSize(16);d.setTextColor(20);d.text('QUOTE',W-M,y,{align:'right'});
+      d.setFont('helvetica','normal');d.setFontSize(9);d.setTextColor(130);d.text('Formo Renovation  ·  Insured & W9 Ready',W-M,y+15,{align:'right'});
+      y+=44;d.setDrawColor(210);d.line(M,y,W-M,y);y+=22;
+      d.setFont('helvetica','bold');d.setFontSize(13);d.setTextColor(25);d.text(String(p.name||'Project'),M,y);y+=17;
+      d.setFont('helvetica','normal');d.setFontSize(10);d.setTextColor(90);
+      var cl=(_EST.client||'');if(cl){d.text('Prepared for: '+cl,M,y);y+=14;}
+      if(p.address){d.text(String(p.address),M,y);y+=14;}
+      if(_EST.estimatedDays){d.text('Estimated duration: '+_EST.estimatedDays+' day'+(_EST.estimatedDays!=1?'s':''),M,y);y+=14;}
+      y+=8;d.setDrawColor(225);d.line(M,y,W-M,y);y+=20;
+      // Scope summary (from phases / SOW), client-facing, no internal costs
+      d.setFont('helvetica','bold');d.setFontSize(11);d.setTextColor(20);d.text('Scope Summary',M,y);y+=16;
+      d.setFont('helvetica','normal');d.setFontSize(10);d.setTextColor(60);
+      var scope=(_EST.summary||'').trim();
+      if(!scope&&(_EST.phases||[]).length)scope=_EST.phases.map(function(ph){return '• '+(ph.name||ph.id);}).join('\n');
+      if(!scope)scope=(_EST.sow||'').split('\n').slice(0,12).join('\n');
+      var sl=d.splitTextToSize(scope||'See attached Scope of Work.',W-2*M);
+      for(var i=0;i<sl.length;i++){if(y>H-120){d.addPage();y=58;}d.text(sl[i],M,y);y+=14;}
+      y+=16;if(y>H-120){d.addPage();y=58;}
+      // Total box (client pays GRAND — no cost/profit split)
+      d.setFillColor(245);d.rect(M,y-4,W-2*M,52,'F');
+      d.setFont('helvetica','bold');d.setFontSize(11);d.setTextColor(60);d.text('PROJECT TOTAL',M+14,y+20);
+      d.setFontSize(24);d.setTextColor(20);d.text(estFmt(GRAND),W-M-14,y+24,{align:'right'});
+      y+=72;
+      d.setFont('helvetica','normal');d.setFontSize(9);d.setTextColor(120);
+      d.text('This quote is valid for 30 days. Any work not listed in the Scope of Work is not included and may be priced separately.',M,y,{maxWidth:W-2*M});y+=26;
+      d.setFont('helvetica','normal');d.setFontSize(10);d.setTextColor(90);
+      d.text('Dan Lares  ·  615-608-1220  ·  dan@formorenovation.com',M,y);d.text('Formo Renovation  ·  Insured & W9 Ready',M,y+14);
+      d.save('Quote - '+String(p.name||'Project').replace(/[^\w\- ]+/g,'').trim()+'.pdf');
+      toast('Cotización PDF generada ✓');
+    }catch(err){console.error('quote pdf',err);toast('No se pudo crear el PDF: '+(err&&err.message||'error'),'err');}
+  }).catch(function(err){toast('No se pudo cargar el motor PDF','err');});
+}
+['renderLeadEst','estAI','estSave','estPdf','estAddCat','estDelCat','estAddLine','estDelLine','estOnLI','estAddProf','estDelProf','estOnProf','estAddMisc','estDelMisc','estOnMisc','estAddAdj','estDelAdj','estSetStatus','estSetDays','estSetNotes','showPrompt2'
+].forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
 
 ['isLeadStage','applyLeadGating','renderLeadProject','_renderLeadGallery','_leadGalleryRefresh','_refreshLeadIfActive','leadSetCover','leadEditName','leadEditAddr','leadEditDesc','leadSetLabel','leadSaveCustomer','leadCoverSelect','renderLeadSOW','leadGenSOW','leadCopySOW','leadSaveSOW','leadSowPdf'
 ].forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
