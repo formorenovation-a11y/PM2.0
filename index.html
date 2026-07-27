@@ -2708,6 +2708,8 @@ body.lead-stage #mobileBottomNav .mbn-lead{display:flex}
 .ls-out{width:100%;min-height:320px;resize:vertical;background:var(--s1);border:1px solid var(--bd);border-radius:12px;color:var(--tx1);font-size:14px;line-height:1.55;padding:14px;font-family:inherit;white-space:pre-wrap}
 .ls-out:focus{outline:none;border-color:var(--gold)}
 .ls-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+.lead-nextbtn{width:100%;margin-top:24px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:15px;padding:14px}
+.lead-nextbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 /* ── Home rediseñado: recientes + carpetas ── */
 .home-sec-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 12px}
 .home-sec-t{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--tx3);display:inline-flex;align-items:center;gap:8px}
@@ -12035,6 +12037,7 @@ function renderLeadProject(){
     +'<button class="lp-cam" onclick="openBeforeAfterCamera()">'+_I('camera')+'<span>Tomar foto</span></button>'
     +'<label class="lp-gal">'+_I('image')+'<span>Galería</span><input type="file" accept="image/*" multiple style="display:none" onchange="handlePhotoGallerySelect(this.files)"></label>'
     +'</div><div class="lp-grid" id="leadGalleryGrid"></div></div>';
+  h+='<button class="btn btn-gold lead-nextbtn" onclick="switchTab(\'leadsow\')">'+_I('filetext')+' Generar SOW &#8594;</button>';
   area.innerHTML=h;
   _renderLeadGallery();
 }
@@ -12120,6 +12123,7 @@ function renderLeadSOW(){
   var photos=p.photos||[];
   var notes=photos.map(function(ph){return (ph.caption||ph.transcript||'').trim();}).filter(Boolean);
   var h='';
+  h+='<button class="home-back" style="margin-bottom:10px" onclick="switchTab(\'leadproj\')">&#8592; Proyecto / Fotos</button>';
   h+='<div class="ls-hd"><h2 class="ls-title">Generar SOW</h2><div class="ls-sub">Junta la descripción del proyecto y las descripciones de todas las fotos (solo texto, sin imágenes) para redactar el borrador del Scope of Work.</div></div>';
   h+='<div class="lp-sec"><div class="lp-sec-t">Material recabado</div>';
   h+='<div class="ls-src"><div class="ls-src-lbl">Descripción del proyecto</div><div class="ls-src-val">'+(p.description?X(p.description):'<i>Sin descripción — agrégala en Proyecto/Fotos</i>')+'</div></div>';
