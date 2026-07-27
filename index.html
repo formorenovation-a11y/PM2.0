@@ -2701,6 +2701,26 @@ body.lead-stage #mobileBottomNav .mbn-lead{display:flex}
 .ls-out{width:100%;min-height:320px;resize:vertical;background:var(--s1);border:1px solid var(--bd);border-radius:12px;color:var(--tx1);font-size:14px;line-height:1.55;padding:14px;font-family:inherit;white-space:pre-wrap}
 .ls-out:focus{outline:none;border-color:var(--gold)}
 .ls-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+/* Botón eliminar en la galería lead */
+.lp-del{position:absolute;top:8px;right:8px;z-index:2;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:rgba(5,5,5,.62);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);color:#fff;cursor:pointer;transition:background .16s,transform .16s}
+.lp-del:active{transform:scale(.9)}
+.lp-del:hover{background:var(--red)}
+.lp-del svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* Barra rápida de anotación en la cámara (estilo CompanyCam) */
+.cam-quick{position:absolute;left:12px;right:12px;bottom:112px;display:flex;align-items:center;gap:10px;z-index:5;pointer-events:none}
+.cam-quick>*{pointer-events:auto}
+.cam-quick-thumb{width:52px;height:52px;border-radius:11px;object-fit:cover;border:2px solid #fff;flex-shrink:0;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.5)}
+.cam-quick-field{flex:1;display:flex;align-items:center;gap:4px;background:#fff;border-radius:13px;padding:5px 6px 5px 14px;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.cam-quick-inp{flex:1;border:none;outline:none;background:transparent;font-size:15px;color:#111;min-width:0}
+.cam-quick-inp::placeholder{color:#8a8a8a}
+.cam-quick-btn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;border:none;background:transparent;color:#333;cursor:pointer;flex-shrink:0;transition:background .16s,transform .16s}
+.cam-quick-btn:active{transform:scale(.92)}
+.cam-quick-btn.rec{background:var(--red);color:#fff;animation:camPulse 1.1s ease-in-out infinite}
+@keyframes camPulse{0%,100%{opacity:1}50%{opacity:.55}}
+.cam-quick-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cam-quick-draw{width:52px;height:52px;border-radius:13px;border:2px solid #fff;background:rgba(5,5,5,.55);backdrop-filter:blur(6px);color:#fff;cursor:pointer;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.4);transition:transform .16s}
+.cam-quick-draw:active{transform:scale(.92)}
+.cam-quick-draw svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 </style>
 
 <!-- PAYROLL PAGE -->
@@ -11332,6 +11352,9 @@ async function importSurveyPhotos(){
    - The ghost is a visual reference only, never stored on the new photo
    ══════════════════════════════════════════════════════════════════ */
 var _camStream=null,_camFacing='environment',_camBeforeId=null,_camBeforeUrl='';
+var _CAM_MIC_SVG='<svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M12 17v4M8.5 21h7"/></svg>';
+var _CAM_KB_SVG='<svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><path d="M6 10h.01M9 10h.01M12 10h.01M15 10h.01M18 10h.01M7.5 13.5h9"/></svg>';
+var _camLastPhotoId=null,_camQuickRecog=null,_camDescTimer=null;
 
 function openBeforeAfterCamera(beforeId){
   var p=CP();if(!p)return;
@@ -11347,6 +11370,15 @@ function openBeforeAfterCamera(beforeId){
         +'<button class="cam-chip" onclick="camSwitch()">Flip</button></div>'
       +'<div class="cam-opacity" id="camOpacityWrap" style="display:none"><span>Ghost</span>'
         +'<input type="range" min="0" max="100" value="40" oninput="camSetOpacity(this.value)"><span id="camOpacityVal">40%</span></div>'
+      +'<div class="cam-quick" id="camQuick" style="display:none">'
+        +'<img id="camQuickThumb" class="cam-quick-thumb" alt="" onclick="camQuickDraw()">'
+        +'<div class="cam-quick-field">'
+          +'<input id="camQuickDesc" class="cam-quick-inp" placeholder="Descripción" oninput="camQuickDescInput(this.value)">'
+          +'<button type="button" class="cam-quick-btn" id="camQuickMic" onclick="camQuickMic()" title="Dictar">'+_CAM_MIC_SVG+'</button>'
+          +'<button type="button" class="cam-quick-btn" onclick="var e=document.getElementById(\'camQuickDesc\');if(e)e.focus()" title="Teclado">'+_CAM_KB_SVG+'</button>'
+        +'</div>'
+        +'<button type="button" class="cam-quick-draw" onclick="camQuickDraw()" title="Rayar la foto">'+(typeof _I!=='undefined'?_I('pencil'):'')+'</button>'
+      +'</div>'
       +'<div class="cam-bottombar">'
         +'<button class="cam-side" onclick="camPickBefore()" id="camBeforeBtn">Before</button>'
         +'<button class="cam-shutter" onclick="camCapture()" title="Take photo"></button>'
@@ -11359,6 +11391,7 @@ function openBeforeAfterCamera(beforeId){
   if(_camBeforeUrl){ghost.src=_camBeforeUrl;ghost.style.display='block';ghost.style.opacity='0.4';
     document.getElementById('camOpacityWrap').style.display='flex';document.getElementById('camClearBtn').style.visibility='visible';}
   else{ghost.style.display='none';document.getElementById('camOpacityWrap').style.display='none';document.getElementById('camClearBtn').style.visibility='hidden';}
+  _camQuickHide();
   _camStart();
 }
 async function _camStart(){
@@ -11423,17 +11456,75 @@ async function camCapture(){
     await uploadBytes(sRef,blob);
     var url=await getDownloadURL(sRef);
     if(!p.photos)p.photos=[];
-    p.photos.push({id:'ph'+Date.now().toString(36),name:'camera.jpg',type:'image/jpeg',size:blob.size||0,url:url,path:path,
+    var newId='ph'+Date.now().toString(36);
+    p.photos.push({id:newId,name:'camera.jpg',type:'image/jpeg',size:blob.size||0,url:url,path:path,
       shareClient:false,caption:'',phase:(typeof _photoActivePhase!=='undefined'?_photoActivePhase:'')||'',gps:null,takenAt:Date.now(),
       source:'camera',beforeId:_camBeforeId||null,uploadedBy:u?u.name:'',date:todayStr(),ts:Date.now()});
     await fbSave(p);
     // flash + keep camera open for more shots
     var wrap=document.querySelector('.cam-wrap');if(wrap){wrap.style.transition='none';wrap.style.filter='brightness(3)';setTimeout(function(){wrap.style.transition='filter .3s';wrap.style.filter='none';},60);}
     toast('Photo saved ✓');
+    // Mostrar barra rápida (estilo CompanyCam): describir/dictar/rayar la foto recién tomada sin salir
+    _camQuickShow(newId,url);
     if(typeof renderPhotosTab==='function')renderPhotosTab();
   }catch(err){console.error('camera upload',err);toast('Upload failed: '+(err&&err.message||'error'),'err');}
 }
+
+/* ── Barra rápida en cámara (CompanyCam-style) ── */
+function _camQuickShow(id,url){
+  _camLastPhotoId=id;
+  var q=document.getElementById('camQuick');if(!q)return;
+  var th=document.getElementById('camQuickThumb');if(th)th.src=url;
+  var inp=document.getElementById('camQuickDesc');if(inp){inp.value='';}
+  _camStopQuickRec();
+  q.style.display='flex';
+}
+function _camQuickHide(){
+  var q=document.getElementById('camQuick');if(q)q.style.display='none';
+  _camStopQuickRec();_camLastPhotoId=null;
+  if(_camDescTimer){clearTimeout(_camDescTimer);_camDescTimer=null;}
+}
+function camQuickDescInput(v){
+  if(!_camLastPhotoId)return;
+  if(_camDescTimer)clearTimeout(_camDescTimer);
+  _camDescTimer=setTimeout(function(){_camQuickSaveDesc(v);},700);
+}
+function _camQuickSaveDesc(v){
+  var p=CP();if(!p||!_camLastPhotoId)return;
+  var ph=(p.photos||[]).find(function(x){return x.id===_camLastPhotoId;});if(!ph)return;
+  ph.caption=(v||'').trim();ph.transcript=ph.caption;
+  fbSave(p);
+  if(typeof renderPhotosTab==='function')renderPhotosTab();
+}
+function camQuickMic(){
+  var btn=document.getElementById('camQuickMic');var inp=document.getElementById('camQuickDesc');
+  if(_camQuickRecog){_camStopQuickRec();if(btn)btn.classList.remove('rec');return;}
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){ /* iOS Safari: sin Web Speech — usar el micrófono del teclado */ if(inp)inp.focus();toast('Toca el micrófono del teclado para dictar','ok');return; }
+  var lang=(typeof LANG!=='undefined'&&LANG==='es')?'es-ES':'en-US';
+  try{
+    var r=new SR();r.lang=lang;r.continuous=true;r.interimResults=true;
+    var base=(inp&&inp.value||'');var finalTxt='';
+    r.onresult=function(ev){var interim='';for(var i=ev.resultIndex;i<ev.results.length;i++){var tx=ev.results[i][0].transcript;if(ev.results[i].isFinal)finalTxt+=tx+' ';else interim+=tx;}
+      var full=(base?base.trim()+' ':'')+finalTxt+interim;if(inp)inp.value=full;camQuickDescInput(full);};
+    r.onerror=function(){_camStopQuickRec();if(btn)btn.classList.remove('rec');};
+    r.onend=function(){if(_camQuickRecog){/* auto-stopped */_camQuickRecog=null;if(btn)btn.classList.remove('rec');}};
+    r.start();_camQuickRecog=r;if(btn)btn.classList.add('rec');
+  }catch(e){if(inp)inp.focus();}
+}
+function _camStopQuickRec(){if(_camQuickRecog){try{_camQuickRecog.stop();}catch(e){}_camQuickRecog=null;}var btn=document.getElementById('camQuickMic');if(btn)btn.classList.remove('rec');}
+function camQuickDraw(){
+  if(!_camLastPhotoId){toast('Toma una foto primero','err');return;}
+  _camStopQuickRec();
+  // Volcar la descripción pendiente (debounce) antes de abrir el editor para no perderla
+  if(_camDescTimer){clearTimeout(_camDescTimer);_camDescTimer=null;}
+  var inp=document.getElementById('camQuickDesc');if(inp)_camQuickSaveDesc(inp.value);
+  if(typeof openPhotoEditor==='function')openPhotoEditor(_camLastPhotoId);
+}
+['_camQuickShow','_camQuickHide','camQuickDescInput','camQuickMic','camQuickDraw'
+].forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
 function camClose(){
+  _camQuickHide();
   if(_camStream){_camStream.getTracks().forEach(function(t){t.stop();});_camStream=null;}
   var ov=document.getElementById('camOv');if(ov)ov.style.display='none';
   var pick=document.getElementById('camPickOv');if(pick)pick.style.display='none';
@@ -11780,11 +11871,12 @@ function _renderLeadGallery(){
   var cnt=document.getElementById('leadPhotoCount');if(cnt)cnt.textContent=photos.length?(' · '+photos.length):'';
   if(!photos.length){grid.innerHTML='<div class="lp-ph-empty">Aún no hay fotos. Toca <b>Tomar foto</b> para capturar con descripción o nota de voz.</div>';return;}
   grid.innerHTML=photos.slice().reverse().map(function(ph){
-    var cap=(ph.caption||ph.transcript||'').trim();
-    return '<div class="lp-item" onclick="openPhotoEditor('+JSON.stringify(ph.id).replace(/"/g,'&quot;')+')">'
+    var cap=(ph.caption||ph.transcript||'').trim();var idj=JSON.stringify(ph.id).replace(/"/g,'&quot;');
+    return '<div class="lp-item" onclick="openPhotoEditor('+idj+')">'
+      +'<button class="lp-del" onclick="event.stopPropagation();photoDelete('+idj+')" title="Eliminar">'+_I('trash')+'</button>'
       +'<div class="lp-imgwrap"><img src="'+X(ph.url)+'" alt="" loading="lazy">'+(typeof _marksSVG!=='undefined'?_marksSVG(ph.marks):'')+'</div>'
       +'<div class="lp-badges">'+(ph.marks&&ph.marks.length?'<span class="lp-badge" title="Anotada">'+_I('pencil')+'</span>':'')+(ph.audioUrl?'<span class="lp-badge" title="Nota de voz">\u25B6</span>':'')+(ph.gps?'<span class="lp-badge gps" title="GPS"></span>':'')+'</div>'
-      +'<div class="lp-cap'+(cap?'':' lp-cap-empty')+'">'+(cap?X(cap):'+ descripción')+'</div>'
+      +'<div class="lp-cap'+(cap?'':' lp-cap-empty')+'">'+(cap?X(cap):'+ descripción / rayar')+'</div>'
       +'</div>';
   }).join('');
 }
