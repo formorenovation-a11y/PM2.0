@@ -2774,6 +2774,46 @@ body.lead-stage.has-sow #mobileBottomNav .mbn-lead-est{display:flex}
 .est-grand-total{text-align:right}
 .est-grand-v{font-family:var(--ff-bc);font-size:40px;font-weight:800;color:var(--green);line-height:1}
 .est-sowbox{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:13px;font-size:13px;color:var(--tx2);line-height:1.7;white-space:pre-wrap;max-height:340px;overflow-y:auto}
+/* Selector de fase por partida */
+.est-li-wrap{border-bottom:1px solid var(--bd)}
+.est-li-wrap:last-child{border-bottom:none}
+.est-li-phase{display:flex;align-items:center;gap:6px;padding:0 13px 8px 13px;margin-top:-2px}
+.est-li-phase svg{width:13px;height:13px;stroke:var(--blue);fill:none;stroke-width:2;flex-shrink:0}
+.est-li-phase select{background:var(--s2);border:1px solid var(--bd);border-radius:7px;color:var(--tx2);font-size:11.5px;padding:4px 7px;outline:none;max-width:220px}
+/* Phase breakdown */
+.est-card-hd.est-hd-blue{color:var(--blue)}
+.est-ph-count{font-size:11px;color:var(--tx3);font-weight:600;margin-left:auto;margin-right:8px}
+.est-hd-blue .est-ph-addbtn{margin-left:0}
+.est-ph-hdr{display:grid;grid-template-columns:30px minmax(0,1.7fr) 84px 96px 56px 44px;gap:8px;padding:8px 14px;background:rgba(10,132,255,.05);border-bottom:1px solid rgba(10,132,255,.12)}
+.est-ph-hdr span{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:rgba(90,150,255,.7)}
+.est-ph-hdr span.r{text-align:right}
+.est-ph-row{display:grid;grid-template-columns:30px minmax(0,1.7fr) 84px 96px 56px 44px;gap:8px;align-items:center;padding:9px 14px;border-bottom:1px solid var(--bd)}
+.est-ph-row.inactive{opacity:.6}
+.est-ph-tog{width:24px;height:24px;border-radius:7px;border:1px solid var(--bd2);background:var(--s2);color:var(--green);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;padding:0}
+.est-ph-tog.on{background:rgba(48,209,88,.16);border-color:rgba(48,209,88,.4)}
+.est-ph-tog.off{color:var(--tx4)}
+.est-ph-nw{min-width:0}
+.est-ph-name{font-size:13px;font-weight:600;color:var(--tx1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.est-ph-sub{font-size:10px;color:var(--tx4);margin:1px 0 4px}
+.est-ph-bar{height:4px;background:var(--s3);border-radius:99px;overflow:hidden}
+.est-ph-fill{height:100%;background:var(--blue);border-radius:99px}
+.est-ph-cost,.est-ph-total,.est-ph-pct{font-family:var(--ff-bc);font-weight:700;white-space:nowrap}
+.est-ph-cost.r,.est-ph-total.r,.est-ph-pct.r,.est-ph-hdr span.r{text-align:right}
+.est-ph-cost{font-size:14px;color:var(--gold)}
+.est-ph-total{font-size:14px;color:var(--green)}
+.est-ph-pct{font-size:12.5px;color:var(--blue)}
+.est-ph-cost.dim,.est-ph-total.dim,.est-ph-pct.dim{color:var(--tx3)}
+.est-ph-act{display:flex;gap:2px;justify-content:flex-end}
+.est-ph-act .est-li-del svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2}
+.est-ph-foot{display:grid;grid-template-columns:30px minmax(0,1.7fr) 84px 96px 56px 44px;gap:8px;align-items:center;padding:11px 14px;background:rgba(10,132,255,.06);border-top:1px solid rgba(10,132,255,.15)}
+.est-ph-foot-lbl{font-size:10.5px;font-weight:700;color:var(--blue)}
+.est-ph-foot .est-ph-cost,.est-ph-foot .est-ph-total,.est-ph-foot .est-ph-pct{font-size:15px;font-weight:800}
+.est-ph-inactive{padding:9px 14px;font-size:11.5px;color:var(--tx3);background:rgba(255,69,58,.05);border-top:1px solid rgba(255,69,58,.15)}
+.est-ph-inactive b{color:var(--red);font-family:var(--ff-bc);font-size:15px}
+@media(max-width:560px){
+  .est-ph-hdr,.est-ph-row,.est-ph-foot{grid-template-columns:26px minmax(0,1.3fr) 64px 74px 44px 30px;gap:5px}
+  .est-ph-cost,.est-ph-total{font-size:12px}
+}
 @media(max-width:560px){
   .est-li{grid-template-columns:minmax(0,1fr) 44px 46px 52px 58px 22px;gap:4px}
   .est-in{padding:6px 6px;font-size:12px}
@@ -3746,8 +3786,8 @@ const TXT={
 };
 let LANG='en';
 function t(k){return(TXT[LANG]||TXT.en)[k]||k;}
-function setLang(l){LANG=l;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('on',b.dataset.l===l));applyLang();saveMeta();}
-function applyLang(){document.querySelectorAll('[data-t]').forEach(el=>{const k=el.dataset.t;if(k)el.textContent=t(k);});document.querySelectorAll('[data-tp]').forEach(el=>{const k=el.dataset.tp;if(k)el.placeholder=t(k);});try{if(typeof _leadRerender==='function')_leadRerender();}catch(e){}}
+function setLang(l){LANG=l;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('on',b.dataset.l===l));applyLang();saveMeta();try{if(typeof _leadRerender==='function')_leadRerender();}catch(e){}}
+function applyLang(){document.querySelectorAll('[data-t]').forEach(el=>{const k=el.dataset.t;if(k)el.textContent=t(k);});document.querySelectorAll('[data-tp]').forEach(el=>{const k=el.dataset.tp;if(k)el.placeholder=t(k);});}
 /* Base English, Spanish when ES is selected */
 function L(en,es){return (LANG==='es'&&es)?es:en;}
 function _leadRerender(){
@@ -12484,7 +12524,6 @@ function _estRender(){
     +'<button class="btn btn-gold btn-sm" onclick="estPdf()">'+_I('download')+' '+L('Quote','Cotización')+'</button>'
     +'</div></div>';
   if(_EST.summary)h+='<div class="est-summary">'+X(_EST.summary)+(_EST.estimatedDays?'  <span class="est-days">'+_EST.estimatedDays+' '+L('day','día')+(_EST.estimatedDays!=1?'s':'')+'</span>':'')+'</div>';
-  if(phases.length)h+='<div class="est-phases">'+phases.map(function(ph){return '<span class="est-phase-chip">'+X(ph.name||ph.id)+'</span>';}).join('')+'</div>';
   // Add category buttons
   h+='<div class="est-addcats"><span class="est-add-lbl">'+L('ADD:','AGREGAR:')+'</span>'+EST_CATS.map(function(c){return '<button class="btn btn-xs btn-dim" onclick="estAddCat(\''+c.replace(/[^A-Za-z]/g,'')+'\')" data-cat="'+c+'">'+(c==='Debris/Dumpster'?'Debris':c==='Subcontractor'?'Sub':c)+'</button>';}).join('')+'</div>';
   // Categories
@@ -12512,6 +12551,8 @@ function _estRender(){
     +'<div><div class="est-gn-l">'+L('PROFIT','GANANCIA')+'</div><div class="est-gn-v" style="color:var(--green)" id="gt-prof">'+estFmt(PROF)+'</div></div><div class="est-plus">+</div>'
     +'<div><div class="est-gn-l">MISC</div><div class="est-gn-v" style="color:var(--amber)" id="gt-misc">'+estFmt(MISC)+'</div></div>'
     +'</div></div><div class="est-grand-total"><div class="est-grand-lbl" style="color:var(--green)">'+L('TOTAL','TOTAL')+'</div><div class="est-grand-v" id="gt-grand">'+estFmt(GRAND)+'</div></div></div>';
+  // Phase breakdown with % (portado del estimador)
+  h+=estPhasesPanel();
   // Notes + SOW
   h+='<div class="est-card"><div class="est-card-hd"><span>'+L('Internal notes','Notas internas')+'</span></div><div style="padding:12px 14px"><textarea class="lp-desc" placeholder="'+L('Internal notes, margin targets…','Notas internas, objetivos de margen…')+'" onchange="estSetNotes(this.value)">'+X(_EST.notes||'')+'</textarea></div></div>';
   h+='<div class="est-card"><div class="est-card-hd"><span>Scope of Work</span><button class="btn btn-xs btn-ghost" onclick="var e=document.getElementById(\'estSowPrev\');if(e)e.style.display=e.style.display===\'none\'?\'block\':\'none\'">'+L('Show / hide','Ver / ocultar')+'</button></div><div id="estSowPrev" style="display:none;padding:12px 14px"><div class="est-sowbox">'+X(_EST.sow||'')+'</div></div></div>';
@@ -12521,16 +12562,19 @@ function p_name(){var p=CP();return p?p.name:'';}
 function _estSumItem(lbl,col,id,v){return '<div class="est-sum-item"><div class="est-sum-lbl">'+lbl+'</div><div class="est-sum-val" style="color:'+col+'" id="'+id+'">'+estFmt(v)+'</div></div>';}
 function _estCatHTML(cat,ci,phases){
   var col=EST_CC[cat.cat]||'var(--tx2)';var isSub=cat.cat==='Subcontractor';
+  var phs=(_EST&&_EST.phases)||[];
   var lines=(cat.lines||[]).map(function(ln,li){
     var lt=(+(ln.qty||0))*(+(ln.unitPrice||0));
-    return '<div class="est-li">'
+    var phaseSel=phs.length?('<div class="est-li-phase">'+_I('route')+'<select onchange="estSetLinePhase('+ci+','+li+',this.value)"><option value="">'+L('— no phase —','— sin fase —')+'</option>'+phs.map(function(ph){return '<option value="'+X(ph.id)+'"'+(ln.phaseId===ph.id?' selected':'')+'>'+X(ph.name||ph.id)+'</option>';}).join('')+'</select></div>'):'';
+    return '<div class="est-li-wrap">'
+      +'<div class="est-li">'
       +'<input class="est-in est-in-desc" placeholder="'+L('Description','Descripción')+'" value="'+X(ln.desc||'')+'" oninput="estOnLI('+ci+','+li+',\'desc\',this.value)">'
       +'<input class="est-in est-in-unit" placeholder="'+L('Unit','Unidad')+'" value="'+X(ln.unit||'')+'" oninput="estOnLI('+ci+','+li+',\'unit\',this.value)">'
       +'<input class="est-in est-in-num" type="number" placeholder="'+L('Qty','Cant.')+'" value="'+(ln.qty||'')+'" oninput="estOnLI('+ci+','+li+',\'qty\',this.value)">'
       +'<input class="est-in est-in-num" type="number" placeholder="$/u" value="'+(ln.unitPrice||'')+'" oninput="estOnLI('+ci+','+li+',\'unitPrice\',this.value)">'
       +'<div class="est-li-tot" id="lt-'+ci+'-'+li+'">'+estFmt(lt)+'</div>'
       +'<button class="est-li-del" onclick="estDelLine('+ci+','+li+')">&#10005;</button>'
-      +'</div>';
+      +'</div>'+phaseSel+'</div>';
   }).join('');
   return '<div class="est-cat">'
     +'<div class="est-cat-hd"><span class="est-cat-name" style="color:'+col+'">'+X(cat.cat)+'</span><span class="est-cat-tot" id="ct-'+ci+'">'+estFmt(estCatTot(cat.lines))+'</span>'
@@ -12663,7 +12707,68 @@ function estPdf(){
     }catch(err){console.error('quote pdf',err);toast(L('Could not create the PDF: ','No se pudo crear el PDF: ')+(err&&err.message||'error'),'err');}
   }).catch(function(err){toast(L('Could not load the PDF engine','No se pudo cargar el motor PDF'),'err');});
 }
-['renderLeadEst','estAI','estSave','estPdf','estAddCat','estDelCat','estAddLine','estDelLine','estOnLI','estAddProf','estDelProf','estOnProf','estAddMisc','estDelMisc','estOnMisc','estAddAdj','estDelAdj','estSetStatus','estSetDays','estSetNotes','showPrompt2'
+
+/* ── Phase breakdown con % (portado de renderPhasesPanel del estimador) ── */
+function estPhasesPanel(){
+  if(!_EST)return '';
+  var cats=_EST.categories||[],adjs=_EST.adjustments||[],prof=_EST.profitRows||[],misc=_EST.miscItems||[],phases=_EST.phases||[];
+  var GRAND_COST=estCostTotal(cats,adjs);
+  var GRAND_ALL=GRAND_COST+estProfitTotal(cats,prof)+estMiscTotal(misc);
+  var totalBase=cats.reduce(function(s,c){return s+estCatTot(c.lines);},0);
+  var head='<div class="est-card"><div class="est-card-hd est-hd-blue"><span>'+L('Phase breakdown','Desglose por fases')+'</span>'
+    +(phases.length?'<span class="est-ph-count">'+phases.filter(function(p){return p.active!==false;}).length+'/'+phases.length+' '+L('active','activas')+'</span>':'')
+    +'<button class="btn btn-xs btn-ghost est-ph-addbtn" onclick="estAddPhase()">'+L('+ Phase','+ Fase')+'</button></div>';
+  if(!phases.length){
+    return head+'<div class="est-none" style="text-align:center;padding:22px 16px">'+L('No phases yet. Run AI to auto-detect phases from the SOW, or add one manually.','Sin fases aún. Corre la IA para detectarlas del SOW o agrega una manualmente.')+'</div></div>';
+  }
+  var rows=phases.map(function(ph){
+    var pRaw=0,pLines=0;
+    cats.forEach(function(cat){(cat.lines||[]).forEach(function(ln){if(ln.phaseId===ph.id){pRaw+=(+(ln.qty||0))*(+(ln.unitPrice||0));pLines++;}});});
+    var pct=totalBase>0?(pRaw/totalBase*100):0;var pShare=totalBase>0?(pRaw/totalBase):0;
+    return {ph:ph,pCost:GRAND_COST*pShare,pTotal:GRAND_ALL*pShare,pct:pct,pLines:pLines,active:ph.active!==false};
+  });
+  var activeRaw=0,inactiveRaw=0;
+  cats.forEach(function(cat){(cat.lines||[]).forEach(function(ln){var raw=(+(ln.qty||0))*(+(ln.unitPrice||0));var ph=phases.find(function(p){return p.id===ln.phaseId;});if(ph&&ph.active===false)inactiveRaw+=raw;else activeRaw+=raw;});});
+  var h=head+'<div class="est-ph-hdr"><span></span><span>'+L('Phase','Fase')+'</span><span class="r">'+L('Cost','Costo')+'</span><span class="r">'+L('Total w/Profit','Total c/Ganancia')+'</span><span class="r">'+L('% of Job','% del trabajo')+'</span><span></span></div>';
+  rows.forEach(function(r){
+    h+='<div class="est-ph-row'+(r.active?'':' inactive')+'">'
+      +'<button class="est-ph-tog '+(r.active?'on':'off')+'" onclick="estTogglePhase(\''+r.ph.id+'\')" title="'+(r.active?L('Deactivate','Desactivar'):L('Activate','Activar'))+'">'+(r.active?'&#10003;':'')+'</button>'
+      +'<div class="est-ph-nw"><div class="est-ph-name">'+X(r.ph.name||r.ph.id)+'</div><div class="est-ph-sub">'+r.pLines+' '+(r.pLines===1?L('line','partida'):L('lines','partidas'))+'</div><div class="est-ph-bar"><div class="est-ph-fill" style="width:'+Math.round(r.pct)+'%;opacity:'+(r.active?1:.3)+'"></div></div></div>'
+      +'<div class="est-ph-cost r'+(r.active?'':' dim')+'">'+estFmt(r.pCost)+'</div>'
+      +'<div class="est-ph-total r'+(r.active?'':' dim')+'">'+estFmt(r.pTotal)+'</div>'
+      +'<div class="est-ph-pct r'+(r.active?'':' dim')+'">'+r.pct.toFixed(1)+'%</div>'
+      +'<div class="est-ph-act"><button class="est-li-del" onclick="estRenamePhase(\''+r.ph.id+'\')" title="'+L('Rename','Renombrar')+'">'+_I('pencil')+'</button><button class="est-li-del" onclick="estDelPhase(\''+r.ph.id+'\')">&#10005;</button></div>'
+      +'</div>';
+  });
+  var actShare=totalBase>0?(activeRaw/totalBase):0;
+  h+='<div class="est-ph-foot"><span></span><div class="est-ph-foot-lbl">'+(rows.every(function(r){return r.active;})?L('ALL PHASES ACTIVE','TODAS ACTIVAS'):(rows.filter(function(r){return r.active;}).length+' '+L('OF','DE')+' '+rows.length+' '+L('ACTIVE','ACTIVAS')))+'</div>'
+    +'<div class="est-ph-cost r" style="color:var(--gold)">'+estFmt(GRAND_COST*actShare)+'</div>'
+    +'<div class="est-ph-total r" style="color:var(--green)">'+estFmt(GRAND_ALL*actShare)+'</div>'
+    +'<div class="est-ph-pct r">'+(totalBase>0?(activeRaw/totalBase*100).toFixed(1)+'%':'—')+'</div><span></span></div>';
+  if(rows.some(function(r){return !r.active;})){
+    var saved=totalBase>0?(inactiveRaw/totalBase*GRAND_ALL):0;
+    h+='<div class="est-ph-inactive">'+L('Inactive phases reduce total by','Las fases inactivas reducen el total en')+' <b>'+estFmt(saved)+'</b> ('+(totalBase>0?(inactiveRaw/totalBase*100).toFixed(1):'0')+'% '+L('of cost scope','del alcance de costo')+')</div>';
+  }
+  return h+'</div>';
+}
+function estSetLinePhase(ci,li,v){if(!_EST)return;_EST.categories[ci].lines[li].phaseId=v||'';estSchedSave();_estRender();}
+function estTogglePhase(id){if(!_EST)return;var ph=(_EST.phases||[]).find(function(p){return p.id===id;});if(!ph)return;ph.active=(ph.active===false);estSchedSave();_estRender();}
+function estAddPhase(){if(!_EST)return;estNameModal(L('New phase','Nueva fase'),'',function(name){if(!name)return;_EST.phases=_EST.phases||[];_EST.phases.push({id:'ph'+Date.now().toString(36),name:name,active:true});estSchedSave();_estRender();});}
+function estRenamePhase(id){if(!_EST)return;var ph=(_EST.phases||[]).find(function(p){return p.id===id;});if(!ph)return;estNameModal(L('Rename phase','Renombrar fase'),ph.name||'',function(name){if(!name)return;ph.name=name;estSchedSave();_estRender();});}
+function estDelPhase(id){if(!_EST)return;showConfirm(L('Delete this phase? Line items stay but become unassigned.','¿Eliminar esta fase? Las partidas quedan sin fase asignada.'),function(){_EST.phases=(_EST.phases||[]).filter(function(p){return p.id!==id;});(_EST.categories||[]).forEach(function(c){(c.lines||[]).forEach(function(ln){if(ln.phaseId===id)ln.phaseId='';});});estSchedSave();_estRender();});}
+function estNameModal(title,val,cb){
+  var ov=document.getElementById('estNameOv');
+  if(!ov){ov=document.createElement('div');ov.id='estNameOv';ov.className='ov';document.body.appendChild(ov);}
+  ov.innerHTML='<div class="modal sm" onclick="event.stopPropagation()"><div class="mhd"><h3>'+X(title)+'</h3><button class="mcls" onclick="cm(\'estNameOv\')">&#10005;</button></div><div class="mbody">'
+    +'<div class="f"><label>'+L('Name','Nombre')+'</label><input id="estNameInp" value="'+X(val||'')+'" placeholder="'+L('Phase name','Nombre de la fase')+'" maxlength="40"></div>'
+    +'<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button class="btn btn-ghost btn-sm" onclick="cm(\'estNameOv\')">'+L('Cancel','Cancelar')+'</button><button class="btn btn-gold btn-sm" id="estNameOk">'+L('Save','Guardar')+'</button></div>'
+    +'</div></div>';
+  ov.onclick=function(e){if(e.target===ov)cm('estNameOv');};
+  om('estNameOv');var inp=document.getElementById('estNameInp');setTimeout(function(){if(inp){inp.focus();inp.select();}},80);
+  document.getElementById('estNameOk').onclick=function(){var n=(document.getElementById('estNameInp').value||'').trim();cm('estNameOv');cb(n);};
+  if(inp)inp.onkeydown=function(e){if(e.key==='Enter'){var n=(inp.value||'').trim();cm('estNameOv');cb(n);}};
+}
+['renderLeadEst','estAI','estSave','estPdf','estAddCat','estDelCat','estAddLine','estDelLine','estOnLI','estAddProf','estDelProf','estOnProf','estAddMisc','estDelMisc','estOnMisc','estAddAdj','estDelAdj','estSetStatus','estSetDays','estSetNotes','showPrompt2','estPhasesPanel','estSetLinePhase','estTogglePhase','estAddPhase','estRenamePhase','estDelPhase','estNameModal'
 ].forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
 
 ['isLeadStage','applyLeadGating','renderLeadProject','_renderLeadGallery','_leadGalleryRefresh','_refreshLeadIfActive','leadSetCover','leadEditName','leadEditAddr','leadEditDesc','leadSetLabel','leadSaveCustomer','leadCoverSelect','renderLeadSOW','leadGenSOW','leadCopySOW','leadSaveSOW','leadSowPdf'
