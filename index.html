@@ -12384,6 +12384,42 @@ Return ONLY the Scope of Work document text, with no preamble, no explanations, 
 /* PDF sobrio del SOW (membrete Formo, jsPDF ya presente) */
 function _sowIsBullet(l){return /^[-•*]\s+/.test(l);}
 function _sowIsNumSec(l){return /^\d+\.\s+\S/.test(l);}
+/* Renderiza el cuerpo del SOW en el doc jsPDF; devuelve la y final. Reutilizable (SOW y Quote). */
+function _pdfSowBody(d,text,M,y,W,H){
+  var lines=String(text||'').replace(/\r/g,'').split('\n');
+  var maxW=W-2*M;
+  function pageBreak(need){if(y+(need||0)>H-56){d.addPage();y=58;}}
+  for(var i=0;i<lines.length;i++){
+    var t=lines[i].replace(/\s+$/,'').trim();
+    if(!t){y+=7;continue;}
+    if(/^[-=_*·]{3,}$/.test(t))continue;
+    if(_sowIsBullet(t)){
+      var bt=t.replace(/^[-•*]\s+/,'');
+      d.setFont('helvetica','normal');d.setFontSize(10.5);d.setTextColor(45);
+      var wrapped=d.splitTextToSize(bt,maxW-16);pageBreak(wrapped.length*14);
+      d.setFillColor(150);d.circle(M+4,y-3.5,1.5,'F');
+      d.text(wrapped,M+14,y);y+=wrapped.length*14+2;
+    } else if(_sowIsNumSec(t)){
+      y+=8;pageBreak(20);d.setFont('helvetica','bold');d.setFontSize(12.5);d.setTextColor(18);d.text(t,M,y);y+=17;
+    } else if(/^phase\b/i.test(t)){
+      y+=6;pageBreak(18);d.setFont('helvetica','bold');d.setFontSize(11);d.setTextColor(30);d.text(t,M,y);y+=15;
+    } else {
+      var nxt='';for(var j=i+1;j<lines.length;j++){if(lines[j].trim()){nxt=lines[j].trim();break;}}
+      var isSub=(t.length<52 && _sowIsBullet(nxt) && !/[.,:;]$/.test(t));
+      if(isSub){y+=6;pageBreak(16);d.setFont('helvetica','bold');d.setFontSize(10.5);d.setTextColor(35);d.text(t,M,y);y+=15;}
+      else{d.setFont('helvetica','normal');d.setFontSize(10.5);d.setTextColor(55);var pw=d.splitTextToSize(t,maxW);pageBreak(pw.length*14);d.text(pw,M,y);y+=pw.length*14+3;}
+    }
+  }
+  return y;
+}
+/* Quita el membrete inicial y la firma del SOW para reusar el cuerpo dentro del Quote */
+function _sowScopeOnly(text){
+  var lines=String(text||'').replace(/\r/g,'').split('\n');
+  var start=0;for(var i=0;i<lines.length;i++){if(/^\s*1\.\s/.test(lines[i])||/project overview/i.test(lines[i])){start=i;break;}}
+  var end=lines.length;for(var j=start;j<lines.length;j++){if(/^\s*6\.\s*signature/i.test(lines[j])||/^\s*signature\s*$/i.test(lines[j])||/dan lares/i.test(lines[j])){end=j;break;}}
+  var body=lines.slice(start,end).join('\n').trim();
+  return body||String(text||'').trim();
+}
 function _sowPdf(p,text){
   var jsPDF=window.jspdf.jsPDF;var d=new jsPDF({unit:'pt',format:'letter'});
   var W=d.internal.pageSize.getWidth();var H=d.internal.pageSize.getHeight();var M=54;var y=58;
@@ -12391,46 +12427,7 @@ function _sowPdf(p,text){
   d.setFont('helvetica','bold');d.setFontSize(16);d.setTextColor(20);d.text('SCOPE OF WORK',W-M,y,{align:'right'});
   d.setFont('helvetica','normal');d.setFontSize(9);d.setTextColor(130);d.text('Formo Renovation  ·  Insured & W9 Ready',W-M,y+15,{align:'right'});
   y+=44;d.setDrawColor(210);d.line(M,y,W-M,y);y+=24;
-  var lines=String(text||'').replace(/\r/g,'').split('\n');
-  var maxW=W-2*M;
-  function pageBreak(need){if(y+ (need||0) > H-56){d.addPage();y=58;}}
-  for(var i=0;i<lines.length;i++){
-    var raw=lines[i];var l=raw.replace(/\s+$/,'');
-    var t=l.trim();
-    if(!t){y+=7;continue;}
-    // Skip decorative separators
-    if(/^[-=_*·]{3,}$/.test(t))continue;
-    if(_sowIsBullet(t)){
-      var bt=t.replace(/^[-•*]\s+/,'');
-      d.setFont('helvetica','normal');d.setFontSize(10.5);d.setTextColor(45);
-      var wrapped=d.splitTextToSize(bt,maxW-16);
-      pageBreak(wrapped.length*14);
-      d.setFillColor(150);d.circle(M+4,y-3.5,1.5,'F');
-      d.text(wrapped,M+14,y);y+=wrapped.length*14+2;
-    } else if(_sowIsNumSec(t)){
-      y+=8;pageBreak(20);
-      d.setFont('helvetica','bold');d.setFontSize(12.5);d.setTextColor(18);
-      d.text(t,M,y);y+=17;
-    } else if(/^phase\b/i.test(t)){
-      y+=6;pageBreak(18);
-      d.setFont('helvetica','bold');d.setFontSize(11);d.setTextColor(30);
-      d.text(t,M,y);y+=15;
-    } else {
-      // Subheading if next non-empty line is a bullet and this line is short
-      var nxt='';for(var j=i+1;j<lines.length;j++){if(lines[j].trim()){nxt=lines[j].trim();break;}}
-      var isSub=(t.length<52 && _sowIsBullet(nxt) && !/[.,:;]$/.test(t));
-      if(isSub){
-        y+=6;pageBreak(16);
-        d.setFont('helvetica','bold');d.setFontSize(10.5);d.setTextColor(35);
-        d.text(t,M,y);y+=15;
-      } else {
-        d.setFont('helvetica','normal');d.setFontSize(10.5);d.setTextColor(55);
-        var pw=d.splitTextToSize(t,maxW);
-        pageBreak(pw.length*14);
-        d.text(pw,M,y);y+=pw.length*14+3;
-      }
-    }
-  }
+  _pdfSowBody(d,text,M,y,W,H);
   return d;
 }
 async function leadSowPdf(){
@@ -12484,7 +12481,8 @@ async function estLoad(){
   if(_EST&&_EST._pid===p.id)return _EST;
   var id='estpm_'+p.id;
   var blank={id:id,projectId:'sow_'+p.id,name:p.name,client:(p.customer&&p.customer.name)||p.client||'',phone:(p.customer&&p.customer.phone)||'',email:(p.customer&&p.customer.email)||'',address:p.address||'',status:'draft',sow:p.sowDraft||'',categories:[],adjustments:[],profitRows:[],miscItems:[],phases:[],estimatedDays:null,summary:'',notes:''};
-  try{var snap=await getDoc(doc(db,'sow_estimates',id));_EST=snap.exists()?snap.data():blank;}catch(e){_EST=blank;}
+  /* Estimate lives in the project's PRIVATE sub-doc (admin-only per Firestore rules; pricing never public) */
+  try{var snap=await getDoc(doc(db,'projects',p.id,'private','estimate'));_EST=snap.exists()?snap.data():blank;}catch(e){_EST=blank;}
   if(!_EST.sow&&p.sowDraft)_EST.sow=p.sowDraft;
   _EST._pid=p.id;
   return _EST;
@@ -12493,7 +12491,7 @@ function estSchedSave(){if(_estSaveTimer)clearTimeout(_estSaveTimer);_estSaveTim
 async function estSave(silent){
   if(!_EST)return;_EST.updatedAt=Date.now();
   var toSave=Object.assign({},_EST);delete toSave._pid;
-  try{await setDoc(doc(db,'sow_estimates',_EST.id),toSave);if(!silent)toast(L('Estimate saved ✓','Estimado guardado ✓'));setSS&&setSS('ok','Live');}
+  try{await setDoc(doc(db,'projects',_EST._pid,'private','estimate'),toSave);if(!silent)toast(L('Estimate saved ✓','Estimado guardado ✓'));setSS&&setSS('ok','Live');}
   catch(e){console.warn('est save',e);if(!silent)toast(L('Could not save the estimate','Error al guardar el estimado'),'err');}
 }
 
@@ -12678,26 +12676,26 @@ function estPdf(){
       d.setFont('helvetica','bold');d.setFontSize(16);d.setTextColor(20);d.text('QUOTE',W-M,y,{align:'right'});
       d.setFont('helvetica','normal');d.setFontSize(9);d.setTextColor(130);d.text('Formo Renovation  ·  Insured & W9 Ready',W-M,y+15,{align:'right'});
       y+=44;d.setDrawColor(210);d.line(M,y,W-M,y);y+=22;
-      d.setFont('helvetica','bold');d.setFontSize(13);d.setTextColor(25);d.text(String(p.name||'Project'),M,y);y+=17;
+      d.setFont('helvetica','bold');d.setFontSize(14);d.setTextColor(25);d.text(String(p.name||'Project'),M,y);y+=18;
       d.setFont('helvetica','normal');d.setFontSize(10);d.setTextColor(90);
-      var cl=(_EST.client||'');if(cl){d.text('Prepared for: '+cl,M,y);y+=14;}
+      var cl=((_EST.client)||(p.customer&&p.customer.name)||p.client||'');if(cl){d.text('Prepared for: '+cl,M,y);y+=14;}
       if(p.address){d.text(String(p.address),M,y);y+=14;}
       if(_EST.estimatedDays){d.text('Estimated duration: '+_EST.estimatedDays+' day'+(_EST.estimatedDays!=1?'s':''),M,y);y+=14;}
-      y+=8;d.setDrawColor(225);d.line(M,y,W-M,y);y+=20;
-      // Scope summary (from phases / SOW), client-facing, no internal costs
-      d.setFont('helvetica','bold');d.setFontSize(11);d.setTextColor(20);d.text('Scope Summary',M,y);y+=16;
-      d.setFont('helvetica','normal');d.setFontSize(10);d.setTextColor(60);
-      var scope=(_EST.summary||'').trim();
-      if(!scope&&(_EST.phases||[]).length)scope=_EST.phases.map(function(ph){return '• '+(ph.name||ph.id);}).join('\n');
-      if(!scope)scope=(_EST.sow||'').split('\n').slice(0,12).join('\n');
-      var sl=d.splitTextToSize(scope||'See attached Scope of Work.',W-2*M);
-      for(var i=0;i<sl.length;i++){if(y>H-120){d.addPage();y=58;}d.text(sl[i],M,y);y+=14;}
-      y+=16;if(y>H-120){d.addPage();y=58;}
-      // Total box (client pays GRAND — no cost/profit split)
-      d.setFillColor(245);d.rect(M,y-4,W-2*M,52,'F');
-      d.setFont('helvetica','bold');d.setFontSize(11);d.setTextColor(60);d.text('PROJECT TOTAL',M+14,y+20);
-      d.setFontSize(24);d.setTextColor(20);d.text(estFmt(GRAND),W-M-14,y+24,{align:'right'});
-      y+=72;
+      y+=10;
+      // PROJECT TOTAL box (client pays GRAND — no internal cost/profit split)
+      d.setFillColor(245);d.rect(M,y-4,W-2*M,54,'F');
+      d.setFont('helvetica','bold');d.setFontSize(11);d.setTextColor(60);d.text('PROJECT TOTAL',M+14,y+22);
+      d.setFontSize(25);d.setTextColor(20);d.text(estFmt(GRAND),W-M-14,y+26,{align:'right'});
+      y+=76;
+      // Full SOW (scope with all phases / inclusions), letterhead + signature stripped
+      var sow=(_EST.sow||p.sowDraft||'').trim();
+      if(sow){
+        d.setDrawColor(225);d.line(M,y,W-M,y);y+=20;
+        d.setFont('helvetica','bold');d.setFontSize(12.5);d.setTextColor(18);d.text('Scope of Work',M,y);y+=8;
+        y=_pdfSowBody(d,_sowScopeOnly(sow),M,y+8,W,H);
+        y+=8;
+      }
+      if(y>H-120){d.addPage();y=58;}else{d.setDrawColor(225);d.line(M,y,W-M,y);y+=18;}
       d.setFont('helvetica','normal');d.setFontSize(9);d.setTextColor(120);
       d.text('This quote is valid for 30 days. Any work not listed in the Scope of Work is not included and may be priced separately.',M,y,{maxWidth:W-2*M});y+=26;
       d.setFont('helvetica','normal');d.setFontSize(10);d.setTextColor(90);
