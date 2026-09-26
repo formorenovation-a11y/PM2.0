@@ -19,7 +19,7 @@
 /* Sello de versión: para saber, mirando la pantalla, qué build está
    corriendo ese iPad. Sin esto, "ya lo arreglé" y "sigue igual" son
    dos frases imposibles de reconciliar. */
-window.FORMO_BUILD='2026-09-26f';
+window.FORMO_BUILD='2026-09-26g';
 function _swAviso(reg){
   if(document.getElementById('swBar'))return;
   var esp=(navigator.language||'').toLowerCase().indexOf('es')===0
@@ -5638,6 +5638,144 @@ body.lt .mat-filter-btn.on .mfb-n{background:rgba(255,255,255,.72);color:inherit
  .home-hero .dash-top-acts{width:100%}
 }
 @media(prefers-reduced-motion:reduce){.home-hero-bg{transition:none}}
+
+/* ── New Project · asistente en 4 pasos (render de Dan) ── */
+#newProjOv{padding:0}
+#newProjOv.on{align-items:stretch}
+.modal.np-wiz{max-width:none;width:100%;max-height:none;height:100dvh;border-radius:0;border:none;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
+.np-wiz-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:22px 32px 16px;border-bottom:1px solid var(--bd);background:var(--bg);position:relative}
+.np-wiz-hd-l{min-width:0;flex:1 1 320px}
+.np-crumb{display:inline-flex;align-items:center;gap:6px;background:transparent;border:none;color:var(--tx3);font:inherit;font-size:14px;cursor:pointer;padding:6px 0;min-height:32px}
+.np-crumb:hover{color:var(--tx)}
+.np-crumb [data-ico] svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;transform:rotate(90deg)}
+.np-wiz-hd h2{font-family:var(--ff-bc);font-size:34px;font-weight:800;line-height:1.05;color:var(--tx);margin:4px 0 6px}
+.np-wiz-sub{font-size:15px;color:var(--tx2);margin:0}
+.np-wiz-x{position:absolute;right:16px;top:14px}
+.np-steps{list-style:none;margin:0;padding:8px 44px 0 0;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.np-step{display:flex;align-items:center}
+.np-step+.np-step::before{content:"";width:34px;height:1px;background:var(--bd2);margin:0 8px}
+.np-step.done+.np-step::before{background:var(--gold)}
+.np-step button{display:inline-flex;align-items:center;gap:10px;background:transparent;border:none;color:var(--tx3);font:inherit;font-size:14px;font-weight:600;cursor:pointer;padding:4px 2px;min-height:40px}
+.np-step i{width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;border:1.5px solid var(--bd2);font-style:normal;font-weight:700;font-size:14px;color:var(--tx2);flex:0 0 auto;transition:background .18s,border-color .18s}
+.np-step.on i{background:var(--gold-fill);border-color:var(--gold-fill);color:var(--on-gold)}
+.np-step.on button{color:var(--tx)}
+.np-step.done i{border-color:var(--gold);color:var(--gold)}
+.np-step.done i svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.np-wiz-body{flex:1;min-height:0;overflow:auto;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.85fr);gap:22px;padding:22px 32px;align-items:start}
+.np-wiz .np-body{padding:0;background:var(--s1);border:1px solid var(--bd);border-radius:16px;max-height:none;overflow:visible}
+.np-pane{display:none;padding:22px 24px}
+.np-pane.on{display:block}
+.np-pane-hd{margin-bottom:18px}
+.np-pane-hd h3{font-size:20px;font-weight:700;color:var(--tx);margin:0 0 4px}
+.np-pane-hd p{font-size:13.5px;color:var(--tx3);margin:0}
+.np-help{font-size:12.5px;color:var(--tx3);margin-top:6px}
+.np-info{display:flex;align-items:flex-start;gap:8px;margin-top:14px}
+.np-info [data-ico] svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;flex:0 0 auto;margin-top:2px}
+.np-addr-row{display:flex;gap:8px;align-items:stretch}
+.np-addr-row .ac-wrap{flex:1;min-width:0}
+.np-loc-btn.np-map{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.np-loc-btn.np-map [data-ico] svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8}
+.np-wiz .np-row2{gap:12px}
+.np-wiz .np-row2 .f{margin:0}
+.np-wiz .np-labels{gap:8px}
+.np-wiz .np-label{padding:10px 14px;font-size:13px;border-radius:10px;min-height:42px}
+.np-wiz .np-label svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.np-wiz .np-label.on{background:var(--gold-bg)}
+.np-trade svg:last-child{display:none;width:14px;height:14px}
+.np-trade.on svg:last-child{display:inline-block}
+.np-seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.np-seg-b{background:var(--s2);border:1px solid var(--bd2);color:var(--tx2);font:inherit;font-size:14px;font-weight:600;border-radius:10px;padding:11px 14px;min-height:46px;cursor:pointer;transition:border-color .18s,color .18s,background .18s}
+.np-seg-b.on{border-color:var(--gold-line);color:var(--gold);background:var(--gold-bg)}
+.np-search{position:relative}
+.np-search [data-ico]{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--tx4);pointer-events:none}
+.np-search [data-ico] svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.np-search input{padding-left:38px}
+.np-cli-list{display:flex;flex-direction:column;border:1px solid var(--bd);border-radius:12px;overflow:hidden;margin-top:8px;background:var(--s2)}
+.np-cli-row{display:flex;align-items:center;gap:12px;padding:12px 14px;min-height:60px;background:transparent;border:none;border-bottom:1px solid var(--bd);color:var(--tx);font:inherit;text-align:left;cursor:pointer;transition:background .16s}
+.np-cli-row:last-child{border-bottom:0}
+.np-cli-row:hover{background:var(--s3)}
+.np-cli-row.on{background:var(--s3)}
+.np-cli-av{width:40px;height:40px;border-radius:50%;background:var(--s4);display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--tx2);flex:0 0 auto}
+.np-cli-tx{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.np-cli-tx b{font-size:14.5px;font-weight:600}
+.np-cli-tx small{font-size:12.5px;color:var(--tx3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.np-cli-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--bd3);flex:0 0 auto;position:relative}
+.np-cli-row.on .np-cli-radio{border-color:var(--gold)}
+.np-cli-row.on .np-cli-radio::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--gold)}
+.np-cli-empty{padding:16px;font-size:13px;color:var(--tx3)}
+.np-cli-newrow{display:flex;align-items:center;gap:10px;width:100%;margin-top:12px;padding:13px 14px;min-height:50px;border:1px solid var(--bd2);border-radius:12px;background:var(--s2);color:var(--tx);font:inherit;font-size:14px;font-weight:600;cursor:pointer;text-align:left}
+.np-cli-newrow:hover{border-color:var(--gold-line)}
+.np-cli-newrow [data-ico] svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.np-cli-chev{margin-left:auto;color:var(--tx4)}
+.np-cli-chev svg{transform:rotate(-90deg)}
+.np-toggle{display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-size:13.5px;color:var(--tx2);margin:6px 0 8px;min-height:32px}
+.np-toggle input{position:absolute;opacity:0;width:1px;height:1px}
+.np-toggle i{width:42px;height:24px;border-radius:999px;background:var(--s4);position:relative;transition:background .18s;flex:0 0 auto}
+.np-toggle i::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .18s cubic-bezier(.23,1,.32,1)}
+.np-toggle input:checked+i{background:var(--gold-fill)}
+.np-toggle input:checked+i::after{transform:translateX(18px)}
+.np-toggle input:focus-visible+i{outline:2px solid var(--gold);outline-offset:2px}
+.np-wiz .np-team{gap:8px}
+.np-wiz .np-team-item{min-height:52px;padding:10px 14px;border-radius:12px;font-size:14px}
+.np-wiz .np-team-item input{width:18px;height:18px;accent-color:var(--gold)}
+/* Columna derecha */
+.np-side{display:flex;flex-direction:column;gap:14px;position:sticky;top:0}
+.np-prev{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:16px}
+.np-prev-hd{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--tx);margin-bottom:12px}
+.np-prev-hd [data-ico] svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.8}
+.np-prev-cover{aspect-ratio:16/10;border-radius:12px;background:var(--s2) center/cover no-repeat;border:1.5px dashed var(--bd2);display:flex;align-items:flex-end;padding:12px;cursor:pointer;position:relative;overflow:hidden}
+.np-prev-cover.has{border-style:solid;border-color:var(--bd)}
+.np-prev-cover-empty{display:inline-flex;align-items:center;gap:8px;background:rgba(0,0,0,.55);color:#fff;font-size:13px;font-weight:600;padding:8px 12px;border-radius:10px}
+.np-prev-cover-empty [data-ico] svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+.np-prev-card{display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;margin-top:12px;padding:12px;border:1px solid var(--bd);border-radius:12px;background:var(--s2)}
+.np-prev-card b{font-size:16px;color:var(--tx)}
+.np-prev-meta{grid-row:2;display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--tx3)}
+.np-prev-meta span{display:inline-flex;align-items:center;gap:5px}
+.np-prev-meta svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8}
+.np-prev-pill{grid-column:2;grid-row:1/3;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--s3);color:var(--tx2)}
+.np-prev-pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--dot,var(--tx4))}
+.np-prev-steps{list-style:none;margin:14px 0 0;padding:14px 0 0;border-top:1px solid var(--bd);display:flex;flex-direction:column;gap:12px}
+.np-prev-steps li{display:flex;align-items:flex-start;gap:12px}
+.np-prev-steps li i{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--bd2);display:inline-flex;align-items:center;justify-content:center;font-style:normal;font-weight:700;font-size:13px;color:var(--tx3);flex:0 0 auto}
+.np-prev-steps li.on i{background:var(--gold-fill);border-color:var(--gold-fill);color:var(--on-gold)}
+.np-prev-steps li.done i{border-color:var(--gold);color:var(--gold)}
+.np-prev-steps li.done i svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.4}
+.np-prev-steps li div{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.np-prev-steps li b{font-size:14px;color:var(--tx)}
+.np-prev-steps li small{font-size:12.5px;color:var(--tx3)}
+.np-prev-edit{flex:0 0 auto;padding:4px 0;min-height:0;font-size:13px;color:var(--gold)}
+.np-tips{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:16px}
+.np-tips-hd{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--tx);margin-bottom:12px}
+.np-tips-hd svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.8}
+.np-tip{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-top:1px solid var(--bd)}
+.np-tip:first-of-type{border-top:0}
+.np-tip>svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.8;flex:0 0 auto;margin-top:2px}
+.np-tip b{display:block;font-size:14px;color:var(--tx)}
+.np-tip small{font-size:12.5px;color:var(--tx3);line-height:1.45}
+.np-wiz-ft{padding:14px 32px;background:var(--bg);align-items:center}
+.np-ft-sp{flex:1}
+.np-wiz-ft .btn{min-height:46px;padding:0 20px;font-size:15px}
+.np-wiz-ft .btn [data-ico] svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;transform:rotate(90deg)}
+@media(max-width:1000px){
+ .np-wiz-body{grid-template-columns:1fr;padding:16px}
+ .np-side{position:static}
+ .np-tips,.np-prev-cover,.np-prev-steps{display:none}
+ .np-prev-card{margin-top:0}
+ .np-wiz-hd{padding:16px 16px 12px}
+ .np-wiz-hd h2{font-size:28px}
+ .np-steps{padding-right:0;gap:2px}
+ .np-step+.np-step::before{width:14px;margin:0 4px}
+ .np-step button span{display:none}
+ .np-step.on button span{display:inline}
+ .np-wiz-ft{padding:12px 16px;flex-wrap:wrap}
+ .np-pane{padding:16px}
+ .np-wiz .np-row2{grid-template-columns:1fr}
+ .np-seg{grid-template-columns:1fr 1fr}
+ .np-addr-row{flex-wrap:wrap}
+}
+@media(prefers-reduced-motion:reduce){.np-toggle i::after,.np-step i{transition:none}}
+.np-wiz-ft .btn[hidden],#newProjOv [hidden]{display:none!important}
+#npBackBtn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;transform:rotate(90deg)}
 </style>
 </head>
 <body>
@@ -11312,35 +11450,102 @@ body.lt .sec-menu{box-shadow:0 18px 44px -18px rgba(0,0,0,.34)}
 <div class="toast" id="toast"></div>
 
 <div class="ov" id="newProjOv">
-  <div class="modal sm">
-    <div class="mhd"><h3 data-t="newProject">New Project</h3><button class="mcls" onclick="npCancel()">&#10005;</button></div>
-    <div class="mbody np-body">
-      <div class="f np-f-name"><label for="npName">Project name <span class="np-req">required</span></label><input id="npName" placeholder="e.g. 2142 Maytown Cir" aria-describedby="npNameErr" oninput="npNameTyped()"><div class="np-err" id="npNameErr" hidden>Give the project a name to create it.</div></div>
-      <div class="f np-f-addr"><label for="npAddr1">Project address <span class="et-hint">recommended</span></label>
-        <div class="ac-wrap"><input id="npAddr1" data-aac="np" autocomplete="off" placeholder="Start typing — Middle TN first"><div class="ac-drop aac-drop" role="listbox"></div></div>
-        <div class="np-loc"><button type="button" class="np-loc-btn" id="npMapBtn" onclick="npPickAddr()">Choose on map</button><button type="button" class="np-loc-btn" id="npLocBtn" onclick="npCaptureLocation()">Use current location</button><button type="button" class="np-loc-btn" id="npManualBtn" onclick="npManualAddr()">Enter manually</button><span class="np-loc-status" id="npLocStatus"></span></div>
-        <div class="np-addr-more" id="npAddrMore" hidden>
-          <input id="npAddr2" class="np-inp" placeholder="Address line 2 (optional)">
-          <div class="np-row3"><input id="npCity" class="np-inp" placeholder="City"><input id="npState" class="np-inp" placeholder="State"><input id="npZip" class="np-inp" placeholder="Zip"></div>
-        </div>
+  <div class="modal np-wiz" role="dialog" aria-labelledby="npWizTitle">
+    <!-- Cabecera: migas, título del paso y stepper -->
+    <div class="np-wiz-hd">
+      <div class="np-wiz-hd-l">
+        <button type="button" class="np-crumb" onclick="npCancel()"><span data-ico="chev"></span> <span data-t="projects">Projects</span></button>
+        <h2 id="npWizTitle">Create Project</h2>
+        <p class="np-wiz-sub" id="npWizSub">Start with the basics. You can add more details later.</p>
       </div>
-      <div class="f"><label>Project type <span class="et-hint">recommended</span></label><div class="np-labels np-kinds" id="npKinds"></div></div>
-      <details class="np-more" id="npMore">
-        <summary>More details <span class="et-hint">status, description, cover, client, contract, team</span></summary>
-        <div class="f"><label>Status</label><div class="np-labels" id="npLabels"></div></div>
-        <div class="f"><label>Description <span class="et-hint">helps the AI understand the project</span></label><textarea id="npDesc" data-rich="1" placeholder="What is this project about? Rooms, scope, client goals..."></textarea></div>
-        <div class="f"><label>Cover photo</label><label class="np-cover" id="npCoverLabel"><input type="file" accept="image/*" style="display:none" onchange="npCoverSelect(this.files)"><span id="npCoverTxt">+ Add cover photo</span></label></div>
-        <div class="np-sec-title">Customer</div>
-        <div class="f"><label>Bill to <span class="et-hint">who pays this project</span></label><select id="npCustomer" onchange="npPickCustomer(this.value)"><option value="">— New client (type below) —</option></select></div>
-        <div class="f"><label>Name</label><input id="npClient" placeholder="Client name"></div>
-        <div class="np-row2"><input id="npPhone" class="np-inp" placeholder="Phone"><input id="npEmail" class="np-inp" placeholder="Email"></div>
+      <ol class="np-steps" id="npSteps" aria-label="Steps">
+        <li class="np-step on" data-s="1"><button type="button" onclick="npGo(1)"><i>1</i><span>Project Info</span></button></li>
+        <li class="np-step" data-s="2"><button type="button" onclick="npGo(2)"><i>2</i><span>Client</span></button></li>
+        <li class="np-step" data-s="3"><button type="button" onclick="npGo(3)"><i>3</i><span>Project Details</span></button></li>
+        <li class="np-step" data-s="4"><button type="button" onclick="npGo(4)"><i>4</i><span>Team Access</span></button></li>
+      </ol>
+      <button class="mcls np-wiz-x" aria-label="Close" onclick="npCancel()">&#10005;</button>
+    </div>
+    <div class="np-wiz-body">
+    <div class="mbody np-body">
+      <!-- Paso 1 · Project Info -->
+      <section class="np-pane on" data-pane="1">
+        <div class="np-pane-hd"><h3>Project Information</h3><p>Tell us about the project. This helps Formo set up the right tools and workflows.</p></div>
+        <div class="f np-f-name"><label for="npName">Project name <span class="np-req">required</span></label><input id="npName" placeholder="e.g. 2142 Maytown Cir" aria-describedby="npNameErr" oninput="npNameTyped();npPreview()"><div class="np-err" id="npNameErr" hidden>Give the project a name to create it.</div><div class="np-help">Use a clear name your team will recognize.</div></div>
+        <div class="f"><label>Project type <span class="et-hint">recommended</span></label><div class="np-labels np-kinds" id="npKinds"></div></div>
+        <div class="f np-f-addr"><label for="npAddr1">Address <span class="et-hint">recommended</span></label>
+          <div class="np-addr-row"><div class="ac-wrap"><input id="npAddr1" data-aac="np" autocomplete="off" placeholder="Start typing — Middle TN first" oninput="npPreview()"><div class="ac-drop aac-drop" role="listbox"></div></div><button type="button" class="np-loc-btn np-map" id="npMapBtn" onclick="npPickAddr()"><span data-ico="mapPin"></span> Map</button></div>
+          <div class="np-loc"><button type="button" class="np-loc-btn" id="npLocBtn" onclick="npCaptureLocation()">Use current location</button><button type="button" class="np-loc-btn" id="npManualBtn" onclick="npManualAddr()">Enter address manually</button><span class="np-loc-status" id="npLocStatus"></span></div>
+          <div class="np-addr-more" id="npAddrMore" hidden>
+            <input id="npAddr2" class="np-inp" placeholder="Address line 2 (optional)">
+            <div class="np-row3"><input id="npCity" class="np-inp" placeholder="City" oninput="npPreview()"><input id="npState" class="np-inp" placeholder="State" oninput="npPreview()"><input id="npZip" class="np-inp" placeholder="Zip"></div>
+          </div>
+        </div>
+        <div class="np-row2">
+          <div class="f"><label for="npStart">Expected start date <span class="et-hint">optional</span></label><input id="npStart" type="date"></div>
+          <div class="f"><label for="npDuration">Estimated duration <span class="et-hint">optional</span></label><select id="npDuration"><option value="">Select duration</option><option value="1-3d">1–3 days</option><option value="1w">About a week</option><option value="2-4w">2–4 weeks</option><option value="1-3m">1–3 months</option><option value="3-6m">3–6 months</option><option value="6m+">6+ months</option></select></div>
+        </div>
+        <div class="f"><label for="npNotes">Notes <span class="et-hint">optional</span></label><textarea id="npNotes" rows="3" placeholder="Add any initial notes about this project..."></textarea></div>
+      </section>
+      <!-- Paso 2 · Client -->
+      <section class="np-pane" data-pane="2">
+        <div class="np-pane-hd"><h3>Client Information</h3><p>Link an existing client or create a new one. A new client is saved to your client database automatically.</p></div>
+        <div class="f"><label>Select client</label><div class="np-seg" role="tablist"><button type="button" role="tab" class="np-seg-b on" id="npCliExistBtn" onclick="npClientMode('existing')">Existing client</button><button type="button" role="tab" class="np-seg-b" id="npCliNewBtn" onclick="npClientMode('new')">New client</button></div></div>
+        <div id="npCliExisting">
+          <div class="f"><label for="npCliSearch">Search client</label><div class="np-search"><span data-ico="search"></span><input id="npCliSearch" placeholder="Search by name, email, or phone..." oninput="npClientList(this.value)" autocomplete="off"></div></div>
+          <div class="np-help">Or select a recent client</div>
+          <div class="np-cli-list" id="npCliList" role="radiogroup"></div>
+          <button type="button" class="np-cli-newrow" onclick="npClientMode('new')"><span data-ico="plus"></span> Create a new client instead <span class="np-cli-chev" data-ico="chev"></span></button>
+          <select id="npCustomer" hidden onchange="npPickCustomer(this.value)"><option value="">— New client (type below) —</option></select>
+        </div>
+        <div id="npCliNew" hidden>
+          <div class="f"><label>Client type</label><div class="np-labels" id="npCliTypes"></div></div>
+          <div class="f"><label for="npClient">Client / company name</label><input id="npClient" placeholder="Client name" oninput="npPreview()"></div>
+          <div class="np-row2"><div class="f"><label for="npEmail">Email</label><input id="npEmail" class="np-inp" placeholder="name@email.com" inputmode="email"></div><div class="f"><label for="npPhone">Phone</label><input id="npPhone" class="np-inp" placeholder="(555) 123-4567" inputmode="tel"></div></div>
+          <div class="f"><label>Billing address <span class="et-hint">use the project address or enter a different one</span></label>
+            <label class="np-toggle"><input type="checkbox" id="npBillSame" checked onchange="npBillToggle()"><i></i><span>Same as project address</span></label>
+            <input id="npBillAddr" class="np-inp" placeholder="Billing address" hidden></div>
+          <div class="f"><label>Preferred communication</label><div class="np-labels" id="npPref"></div></div>
+          <div class="f"><label for="npCliNotes">Notes <span class="et-hint">optional</span></label><textarea id="npCliNotes" rows="2" placeholder="Preferences, important details..."></textarea></div>
+          <div class="np-help np-info"><span data-ico="info"></span> This client will be saved to your client database automatically, so you can reuse them on future projects.</div>
+        </div>
+      </section>
+      <!-- Paso 3 · Project Details -->
+      <section class="np-pane" data-pane="3">
+        <div class="np-pane-hd"><h3>Project Details</h3><p>Add context to help Formo organize the right tools, scope and workflows.</p></div>
+        <div class="f"><label>Initial project stage <span class="et-hint">optional</span></label><div class="np-labels" id="npLabels"></div></div>
+        <div class="f"><label for="npDesc">Scope summary / short description <span class="et-hint">helps the AI understand the project</span></label><textarea id="npDesc" data-rich="1" rows="3" placeholder="e.g. Complete home renovation including kitchen, bathrooms, flooring and interior/exterior updates..."></textarea></div>
+        <div class="f"><label>Job categories / trades <span class="et-hint">optional · each one opens its consultation questionnaire</span></label><div class="np-labels np-trades" id="npTrades"></div></div>
         <div class="np-sec-title" data-t="fxNpContract">Contract <span class="et-hint">step 1 of Finance — you can set it later</span></div>
         <div class="fx-money np-money"><span>$</span><input id="npContract" type="number" inputmode="decimal" min="0" step="100" placeholder="Contract price (optional)" data-money></div>
-        <div class="np-sec-title">Team access</div>
+        <div class="f"><label for="npInternal">Internal notes <span class="et-hint">optional · never shown to the client</span></label><textarea id="npInternal" rows="2" placeholder="Special considerations, next steps..."></textarea></div>
+        <div class="f"><label>Cover photo</label><label class="np-cover" id="npCoverLabel"><input type="file" accept="image/*" style="display:none" onchange="npCoverSelect(this.files)"><span id="npCoverTxt">+ Add cover photo</span></label></div>
+      </section>
+      <!-- Paso 4 · Team Access -->
+      <section class="np-pane" data-pane="4">
+        <div class="np-pane-hd"><h3>Team Access</h3><p>Choose who works on this project. You can skip this and add people later.</p></div>
+        <div class="np-sec-title">Team access <span class="et-hint">optional</span></div>
         <div class="np-team" id="npTeam"></div>
-      </details>
+        <div class="np-help np-info"><span data-ico="info"></span> Roles and permissions come from each user's account (Settings → Users). Nothing here widens what a person can see.</div>
+      </section>
     </div>
-    <div class="mfoot"><button class="btn btn-ghost" onclick="npCancel()">Cancel</button><button class="btn btn-gold" id="npCreateBtn" onclick="createProject()">Create project</button></div>
+    <!-- Columna derecha: portada, vista previa, resumen de pasos -->
+    <aside class="np-side">
+      <div class="np-prev"><div class="np-prev-hd"><span data-ico="image"></span> Project Preview</div>
+        <div class="np-prev-cover" id="npPrevCover" onclick="document.querySelector('#npCoverLabel input').click()"><span class="np-prev-cover-empty"><span data-ico="camera"></span> Add cover photo</span></div>
+        <div class="np-prev-card"><b id="npPrevName">New project</b><div class="np-prev-meta"><span id="npPrevKind">Remodel</span><span id="npPrevCity"></span></div><span class="np-prev-pill" id="npPrevPill">Draft</span></div>
+        <ol class="np-prev-steps" id="npPrevSteps"></ol>
+      </div>
+      <div class="np-tips" id="npTips"></div>
+    </aside>
+    </div>
+    <div class="mfoot np-wiz-ft">
+      <button class="btn btn-ghost" id="npBackBtn" onclick="npBack()"><span data-ico="chev"></span> Back</button>
+      <span class="np-ft-sp"></span>
+      <button class="btn btn-ghost" id="npSkipBtn" onclick="npSkip()" hidden>Skip for now &rarr;</button>
+      <button class="btn btn-gold" id="npNextBtn" onclick="npNext()">Continue &rarr;</button>
+      <button class="btn btn-gold" id="npCreateBtn" onclick="createProject()" hidden>Create project</button>
+    </div>
   </div>
 </div>
 <div class="ov" id="editOv">
@@ -13869,7 +14074,7 @@ window.npPickCustomer=npPickCustomer;
    cuestionario de obra nueva y la calculadora de drywall. */
 var PROJECT_KINDS=[{k:'remodel',en:'Remodel',es:'Remodelación',c:'#c9a84c'},{k:'new',en:'New construction',es:'Construcción nueva',c:'#5f8fc9'},{k:'repair',en:'Repair / patches',es:'Reparación / parches',c:'#8a857a'}];
 var _npKind='remodel';
-function npSetKind(k){_npKind=k;document.querySelectorAll('#npKinds .np-label').forEach(function(b){b.classList.toggle('on',b.dataset.k===k);});}
+function npSetKind(k){_npKind=k;document.querySelectorAll('#npKinds .np-label').forEach(function(b){b.classList.toggle('on',b.dataset.k===k);});if(typeof npPreview==='function')npPreview();}
 function projKindMeta(k){return PROJECT_KINDS.find(function(x){return x.k===k;})||PROJECT_KINDS[0];}
 function mkProj(name){return{id:ID(),name:name,client:'',contractor:'',address:'',startDate:'',status:'active',label:'lead',createdAt:Date.now(),updatedAt:Date.now(),phases:JSON.parse(JSON.stringify(DEF_PHASES)),tasks:[],materials:[],collapsed:{}};}
 function startNewProject(){
@@ -13891,6 +14096,7 @@ function startNewProject(){
   var cl=document.getElementById('npCoverLabel');if(cl){cl.style.backgroundImage='';cl.classList.remove('has');}
   var lb=document.getElementById('npLabels');if(lb)lb.innerHTML=PROJECT_LABELS.map(function(l){return '<button type="button" class="np-label'+(l.k==='lead'?' on':'')+'" data-k="'+l.k+'" onclick="npSetLabel(\''+l.k+'\')"><span class="np-label-dot" style="background:'+l.c+'"></span>'+l.lbl+'</button>';}).join('');
   var tm=document.getElementById('npTeam');if(tm)tm.innerHTML=(META.users||[]).map(function(u){return '<label class="np-team-item"><input type="checkbox" value="'+u.id+'"'+(u.id===META.curUser?' checked':'')+'><span class="np-team-name">'+X(u.name)+'</span><span class="np-team-role">'+X(u.role||'')+'</span></label>';}).join('');
+  if(typeof npWizReset==='function')try{npWizReset();}catch(e){console.warn('np wizard',e);}
   om('newProjOv');setTimeout(function(){var e=document.getElementById('npName');if(e)e.focus();},80);
 }
 /* Sin nombre no hay proyecto: el error va junto al campo, no en un toast */
@@ -13898,13 +14104,13 @@ function npNameTyped(){var ne=document.getElementById('npNameErr');var nf=docume
 function npManualAddr(){var am=document.getElementById('npAddrMore');if(am)am.hidden=false;var a=document.getElementById('npAddr1');if(a)a.focus();}
 /* Cancelar solo advierte si ya se escribió algo con sustancia */
 function npCancel(){
-  var typed=['npName','npAddr1','npDesc','npClient','npPhone','npEmail','npContract'].some(function(id){var e=document.getElementById(id);return e&&String(e.value||'').trim();})||!!_npCoverFile;
+  var typed=['npName','npAddr1','npDesc','npClient','npPhone','npEmail','npContract','npNotes','npInternal','npCliNotes'].some(function(id){var e=document.getElementById(id);return e&&String(e.value||'').trim();})||!!_npCoverFile;
   if(!typed||typeof showConfirm!=='function'){cm('newProjOv');return;}
   showConfirm(L('Discard this new project? What you typed will be lost.','¿Descartar este proyecto nuevo? Lo que escribiste se perderá.'),function(){cm('newProjOv');});
 }
 var _npBusy=false;
 window.npNameTyped=npNameTyped;window.npManualAddr=npManualAddr;window.npCancel=npCancel;
-function npSetLabel(k){_npLabel=k;document.querySelectorAll('#npLabels .np-label').forEach(function(b){b.classList.toggle('on',b.dataset.k===k);});}
+function npSetLabel(k){_npLabel=k;document.querySelectorAll('#npLabels .np-label').forEach(function(b){b.classList.toggle('on',b.dataset.k===k);});if(typeof npPreview==='function')npPreview();}
 function npCaptureLocation(){
   var st=document.getElementById('npLocStatus');if(st)st.textContent='Locating…';
   if(!navigator.geolocation){if(st)st.textContent='Location not available on this device';return;}
@@ -13949,11 +14155,13 @@ async function _createProjectInner(n){
   if(_npCtr>0)p.contract={price:_npCtr,invoiceNo:'',notes:''};
   var team=[];document.querySelectorAll('#npTeam input:checked').forEach(function(c){team.push(c.value);});p.team=team;
   p.teamUids=(typeof teamUidsOf==='function')?teamUidsOf(team):[];
+  if(typeof npWizExtras==='function')try{npWizExtras(p);}catch(e){console.warn('np extras',e);}
   PROJECTS[p.id]=p;cm('newProjOv');
   if(_npCoverFile){try{var cpath=SP('projectFiles/')+p.id+'/cover_'+Date.now()+'.jpg';var cRef=storageRef(fbStorage,cpath);await uploadBytes(cRef,_npCoverFile);p.photo=await getDownloadURL(cRef);p.coverPath=cpath;}catch(e){console.warn('cover upload',e);}}
   if(_npCustId&&typeof custById==='function'&&custById(_npCustId)){var _nc=custById(_npCustId);p.customerId=_nc.id;p.customerLinked=true;p.client=_nc.name||'';p.customer={name:_nc.name||'',phone:_nc.phone||_nc.officePhone||'',email:_nc.billingEmail||_nc.email||'',address:p.address};}
   await fbSave(p);
   await syncCustomerDb(p,{now:true});
+  if(typeof npWizCustomerExtras==='function')await npWizCustomerExtras(p);
   delete p._newProject;openProj(p.id);
   if(p.projKind==='new')setTimeout(function(){toast(L('New construction: the drywall calculator is ready in Project → Questionnaire and in the SOW','Construcción nueva: la calculadora de drywall está en Proyecto → Cuestionario y en el SOW'));},900);
 }
@@ -14970,6 +15178,191 @@ async function moveProjToFolder(id,k){
 ].forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
 
 /* PROJECT */
+/* ══ NUEVO PROYECTO · asistente en 4 pasos (render de Dan) ═══════════
+   Project Info → Client → Project Details → Team Access → se crea y se
+   abre el proyecto (Home del proyecto, de ahí a la consulta / SOW).
+   Los campos son los mismos de siempre (npName, npAddr1, npKinds,
+   npLabels, npDesc, npClient/npPhone/npEmail, npContract, npTeam,
+   npCoverLabel) — createProject() y _createProjectInner() siguen
+   leyéndolos igual; aquí solo se ordenan por pasos y se añaden los
+   datos nuevos (fecha esperada, duración, tipo de cliente, contacto
+   preferido, oficios). Nada se guarda hasta "Create project". */
+var _npStep=1,_npCliMode='existing',_npCliType='homeowner',_npPref='call',_npTrades=[];
+var NP_TRADES=['interior_paint','exterior_paint','drywall','flooring','tile','kitchen','bathroom','roofing','framing','finish','cabinets','full_reno','general'];
+var NP_PREFS=[{k:'call',en:'Call',es:'Llamada',ico:'phone'},{k:'text',en:'Text',es:'Mensaje',ico:'message'},{k:'email',en:'Email',es:'Correo',ico:'filetext'}];
+var NP_STEPS=[
+  {n:1,en:'Project Info',es:'Datos del proyecto',subEn:'Start with the basics. You can add more details later.',subEs:'Empieza con lo básico. Puedes agregar detalles después.'},
+  {n:2,en:'Client',es:'Cliente',subEn:'Link an existing client or create a new one. You can always update this later.',subEs:'Vincula un cliente existente o crea uno nuevo. Siempre puedes cambiarlo.'},
+  {n:3,en:'Project Details',es:'Detalles del proyecto',subEn:'Add context to help Formo organize the right tools, scope and workflows.',subEs:'Agrega contexto para que Formo organice las herramientas y el alcance.'},
+  {n:4,en:'Team Access',es:'Acceso del equipo',subEn:'Choose who works on this project. You can skip this and add people later.',subEs:'Elige quién trabaja en este proyecto. Puedes saltarlo y agregar gente después.'}
+];
+var NP_TIPS={
+  1:[['Use a clear project name','Include the address or a short description.','Usa un nombre claro','Incluye la dirección o una descripción corta.'],
+     ['Select the right project type','This helps Formo suggest the right scope, templates and cost categories.','Elige el tipo correcto','Ayuda a Formo a sugerir alcance, plantillas y categorías de costo.'],
+     ['You can add more details later','Nothing is locked in. You can edit any of this information any time.','Puedes agregar detalles después','Nada queda fijo. Puedes editar todo en cualquier momento.']],
+  2:[['Choose the correct client type','It helps with reporting and filtering later.','Elige el tipo de cliente correcto','Ayuda con reportes y filtros después.'],
+     ['Include the preferred communication method','So your team stays aligned.','Indica cómo prefiere que le hablen','Para que el equipo esté alineado.'],
+     ['The client is saved to your database','And can be reused on future projects.','El cliente se guarda en tu base','Y se reutiliza en proyectos futuros.']],
+  3:[['Trades open their questionnaire','Each trade you pick adds its consultation questionnaire to the project.','Cada oficio abre su cuestionario','Cada oficio que elijas agrega su cuestionario de consulta al proyecto.'],
+     ['Scope summary feeds the AI','A short description helps draft the scope of work later.','El resumen alimenta la IA','Una descripción corta ayuda a redactar el alcance después.']],
+  4:[['Roles come from each account','Adding someone here never widens what they can see.','Los roles vienen de cada cuenta','Agregar a alguien aquí nunca amplía lo que puede ver.'],
+     ['You can skip this step','Add people later from the project home.','Puedes saltar este paso','Agrega gente después desde el inicio del proyecto.']]
+};
+function npWizReset(){
+  _npStep=1;_npCliMode='existing';_npCliType='homeowner';_npPref='call';_npTrades=[];
+  ['npStart','npDuration','npNotes','npCliSearch','npBillAddr','npCliNotes','npInternal'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
+  var bs=document.getElementById('npBillSame');if(bs){bs.checked=true;}npBillToggle();
+  var ct=document.getElementById('npCliTypes');if(ct)ct.innerHTML=(typeof CLIENT_TYPES!=='undefined'?CLIENT_TYPES:[]).map(function(t){return '<button type="button" class="np-label'+(t.k===_npCliType?' on':'')+'" data-k="'+t.k+'" onclick="npSetCliType(\''+t.k+'\')">'+_I(t.ico||'house')+'<span>'+L(t.en,t.es)+'</span></button>';}).join('');
+  var pf=document.getElementById('npPref');if(pf)pf.innerHTML=NP_PREFS.map(function(t){return '<button type="button" class="np-label'+(t.k===_npPref?' on':'')+'" data-k="'+t.k+'" onclick="npSetPref(\''+t.k+'\')">'+_I(t.ico)+'<span>'+L(t.en,t.es)+'</span></button>';}).join('');
+  var tr=document.getElementById('npTrades');if(tr)tr.innerHTML=NP_TRADES.map(function(k){var c=(typeof _intakeCat==='function')?_intakeCat(k):null;if(!c)return '';return '<button type="button" class="np-label np-trade" data-k="'+k+'" aria-pressed="false" onclick="npToggleTrade(\''+k+'\')"><span>'+X(L(c.en,c.es))+'</span>'+_I('tick')+'</button>';}).join('');
+  var pc=document.getElementById('npPrevCover');if(pc){pc.style.backgroundImage='';pc.classList.remove('has');}
+  npClientMode('existing',true);npClientList('');npGo(1,true);npPreview();
+}
+function npGo(n,silent){
+  n=Math.max(1,Math.min(4,n|0));
+  /* Avanzar más allá del paso 1 exige el nombre: el único dato obligatorio */
+  if(n>1&&_npStep===1&&!String((document.getElementById('npName')||{}).value||'').trim()){
+    var ne=document.getElementById('npNameErr'),nf=document.getElementById('npName');
+    if(ne)ne.hidden=false;if(nf){nf.classList.add('is-err');try{nf.focus();}catch(e){}}
+    return;
+  }
+  _npStep=n;
+  document.querySelectorAll('#newProjOv .np-pane').forEach(function(p){p.classList.toggle('on',+p.dataset.pane===n);});
+  document.querySelectorAll('#npSteps .np-step').forEach(function(li){var s=+li.dataset.s;li.classList.toggle('on',s===n);li.classList.toggle('done',s<n);var i=li.querySelector('i');if(i)i.innerHTML=s<n?_I('tick'):String(s);});
+  var st=NP_STEPS[n-1];
+  var t=document.getElementById('npWizTitle');if(t)t.textContent=L('Create Project','Crear proyecto');
+  var sb=document.getElementById('npWizSub');if(sb)sb.textContent=L(st.subEn,st.subEs);
+  var g=function(id){return document.getElementById(id);};
+  if(g('npBackBtn'))g('npBackBtn').style.visibility=n===1?'hidden':'';
+  if(g('npSkipBtn'))g('npSkipBtn').hidden=n===1;
+  if(g('npNextBtn'))g('npNextBtn').hidden=n===4;
+  if(g('npCreateBtn'))g('npCreateBtn').hidden=n!==4;
+  if(g('npSkipBtn'))g('npSkipBtn').innerHTML=(n===4?L('Skip for now','Saltar por ahora'):L('Skip','Saltar'))+' &rarr;';
+  if(g('npNextBtn'))g('npNextBtn').innerHTML=L('Continue','Continuar')+' &rarr;';
+  if(g('npBackBtn'))g('npBackBtn').innerHTML=_I('chev')+' '+L('Back','Atrás');
+  if(g('npCreateBtn')&&!_npBusy)g('npCreateBtn').textContent=L('Create project','Crear proyecto');
+  var tips=document.getElementById('npTips');
+  if(tips)tips.innerHTML='<div class="np-tips-hd">'+_I('bulb')+' '+L('Tips','Consejos')+'</div>'+(NP_TIPS[n]||[]).map(function(x){return '<div class="np-tip">'+_I('check')+'<div><b>'+L(x[0],x[2])+'</b><small>'+L(x[1],x[3])+'</small></div></div>';}).join('');
+  npPreview();
+  var body=document.querySelector('#newProjOv .np-wiz-body');if(body&&!silent)body.scrollTop=0;
+  if(!silent)setTimeout(function(){var first=document.querySelector('#newProjOv .np-pane.on input:not([hidden]),#newProjOv .np-pane.on button.np-seg-b');if(first&&n!==4)try{first.focus({preventScroll:true});}catch(e){}},60);
+}
+function npNext(){npGo(_npStep+1);}
+function npBack(){npGo(_npStep-1);}
+function npSkip(){if(_npStep>=4){createProject();return;}npGo(_npStep+1);}
+/* Cliente: existente (buscar / lista) o nuevo (campos) */
+function npClientMode(m,silent){
+  _npCliMode=m==='new'?'new':'existing';
+  var ex=document.getElementById('npCliExisting'),nw=document.getElementById('npCliNew');
+  if(ex)ex.hidden=_npCliMode!=='existing';if(nw)nw.hidden=_npCliMode!=='new';
+  var be=document.getElementById('npCliExistBtn'),bn=document.getElementById('npCliNewBtn');
+  if(be){be.classList.toggle('on',_npCliMode==='existing');be.setAttribute('aria-selected',String(_npCliMode==='existing'));}
+  if(bn){bn.classList.toggle('on',_npCliMode==='new');bn.setAttribute('aria-selected',String(_npCliMode==='new'));}
+  if(_npCliMode==='new'){
+    /* al pasar a "nuevo" se suelta la ficha elegida y se limpia lo copiado de ella */
+    if(typeof _npCustId!=='undefined'&&_npCustId){['npClient','npPhone','npEmail'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});}
+    var sel=document.getElementById('npCustomer');if(sel)sel.value='';
+    if(typeof npPickCustomer==='function')npPickCustomer('');
+    npClientList(document.getElementById('npCliSearch')?document.getElementById('npCliSearch').value:'');
+    if(!silent)setTimeout(function(){var e=document.getElementById('npClient');if(e)try{e.focus({preventScroll:true});}catch(x){}},40);
+  }
+  npPreview();
+}
+function _npClients(){
+  return (window.CUSTOMERS||[]).filter(function(c){return c&&!c._new&&c.name;}).slice()
+    .sort(function(a,b){return (b.updatedAt||0)-(a.updatedAt||0)||String(a.name).localeCompare(String(b.name));});
+}
+function npClientList(q){
+  var host=document.getElementById('npCliList');if(!host)return;
+  q=String(q||'').trim().toLowerCase();
+  var all=_npClients();
+  var list=q?all.filter(function(c){return [c.name,c.email,c.billingEmail,c.phone,c.officePhone].some(function(v){return String(v||'').toLowerCase().indexOf(q)>=0;});}):all.slice(0,6);
+  var cur=(typeof _npCustId!=='undefined')?_npCustId:'';
+  if(!all.length){host.innerHTML='<div class="np-cli-empty">'+L('No clients saved yet — create the first one below.','Aún no hay clientes guardados: crea el primero abajo.')+'</div>';return;}
+  if(!list.length){host.innerHTML='<div class="np-cli-empty">'+L('No client matches "'+q+'".','Ningún cliente coincide con "'+q+'".')+'</div>';return;}
+  host.innerHTML=list.map(function(c){
+    var ini=String(c.name||'?').split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toUpperCase();
+    var sub=c.billingEmail||c.email||c.phone||c.officePhone||((typeof clientTypeLbl==='function')?clientTypeLbl(c.type):'');
+    return '<button type="button" role="radio" aria-checked="'+(c.id===cur)+'" class="np-cli-row'+(c.id===cur?' on':'')+'" onclick="npChooseClient(\''+X(c.id)+'\')"><span class="np-cli-av">'+X(ini)+'</span><span class="np-cli-tx"><b>'+X(c.name)+'</b><small>'+X(sub)+'</small></span><span class="np-cli-radio" aria-hidden="true"></span></button>';
+  }).join('');
+}
+function npChooseClient(id){
+  var sel=document.getElementById('npCustomer');if(sel)sel.value=id;
+  if(typeof npPickCustomer==='function')npPickCustomer(id);
+  npClientList(document.getElementById('npCliSearch')?document.getElementById('npCliSearch').value:'');
+  npPreview();
+}
+function npSetCliType(k){_npCliType=k;document.querySelectorAll('#npCliTypes .np-label').forEach(function(b){b.classList.toggle('on',b.dataset.k===k);});}
+function npSetPref(k){_npPref=k;document.querySelectorAll('#npPref .np-label').forEach(function(b){b.classList.toggle('on',b.dataset.k===k);});}
+function npBillToggle(){var s=document.getElementById('npBillSame'),a=document.getElementById('npBillAddr');if(!a)return;a.hidden=!s||s.checked;}
+function npToggleTrade(k){
+  var i=_npTrades.indexOf(k);if(i<0)_npTrades.push(k);else _npTrades.splice(i,1);
+  document.querySelectorAll('#npTrades .np-trade').forEach(function(b){var on=_npTrades.indexOf(b.dataset.k)>=0;b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on));});
+  npPreview();
+}
+/* Vista previa: cómo se verá en la lista de proyectos */
+function npPreview(){
+  var g=function(id){var e=document.getElementById(id);return e?String(e.value||'').trim():'';};
+  var nm=document.getElementById('npPrevName');if(nm)nm.textContent=g('npName')||L('New project','Proyecto nuevo');
+  var km=(typeof projKindMeta==='function')?projKindMeta(typeof _npKind!=='undefined'?_npKind:'remodel'):null;
+  var kd=document.getElementById('npPrevKind');if(kd)kd.innerHTML=_I('house')+' '+X(km?L(km.en,km.es):'');
+  var city=[g('npCity'),g('npState')].filter(Boolean).join(', ')||g('npAddr1');
+  var ct=document.getElementById('npPrevCity');if(ct){ct.innerHTML=city?_I('mapPin')+' '+X(city):'';ct.hidden=!city;}
+  var lm=(typeof projLabelMeta==='function')?projLabelMeta(typeof _npLabel!=='undefined'?_npLabel:'lead'):null;
+  var pill=document.getElementById('npPrevPill');if(pill&&lm){pill.textContent=L(lm.lbl,lm.es||lm.lbl);pill.style.setProperty('--dot',lm.c);}
+  var cli=g('npClient');var cid=(typeof _npCustId!=='undefined')?_npCustId:'';var cc=(cid&&typeof custById==='function')?custById(cid):null;
+  var steps=document.getElementById('npPrevSteps');
+  if(steps){
+    var rows=[
+      [L('Project Info','Datos del proyecto'),[g('npName'),km?L(km.en,km.es):''].filter(Boolean).join(' · ')||L('Name and type','Nombre y tipo')],
+      [L('Client','Cliente'),(cc&&cc.name)||cli||(_npCliMode==='existing'?L('Select or create a client','Elige o crea un cliente'):L('New client','Cliente nuevo'))],
+      [L('Project Details','Detalles del proyecto'),(_npTrades.length?_npTrades.length+' '+L(_npTrades.length>1?'trades':'trade',_npTrades.length>1?'oficios':'oficio')+' · ':'')+(lm?L(lm.lbl,lm.es||lm.lbl):'')],
+      [L('Team Access','Acceso del equipo'),(function(){var n=document.querySelectorAll('#npTeam input:checked').length;return n?n+' '+L(n>1?'people':'person',n>1?'personas':'persona'):L('Invite team members (optional)','Invita al equipo (opcional)');})()]
+    ];
+    steps.innerHTML=rows.map(function(r,i){var n=i+1;var cls=n<_npStep?'done':n===_npStep?'on':'';return '<li class="'+cls+'"><i>'+(n<_npStep?_I('tick'):n)+'</i><div><b>'+X(r[0])+'</b><small>'+X(r[1])+'</small></div>'+(n<_npStep?'<button type="button" class="formo-link np-prev-edit" onclick="npGo('+n+')">'+L('Edit','Editar')+'</button>':'')+'</li>';}).join('');
+  }
+}
+/* La portada elegida también se ve en la vista previa */
+(function(){
+  var _cover0=(typeof npCoverSelect==='function')?npCoverSelect:null;
+  if(!_cover0)return;
+  window.npCoverSelect=function(files){_cover0(files);var pc=document.getElementById('npPrevCover');var cl=document.getElementById('npCoverLabel');if(pc&&cl&&cl.style.backgroundImage){pc.style.backgroundImage=cl.style.backgroundImage;pc.classList.add('has');}};
+})();
+/* Lo nuevo que el asistente recoge, para que _createProjectInner lo guarde */
+function npWizExtras(p){
+  var g=function(id){var e=document.getElementById(id);return e?String(e.value||'').trim():'';};
+  if(g('npStart'))p.desiredStart=g('npStart');
+  if(g('npDuration'))p.expectedDuration=g('npDuration');
+  if(g('npNotes'))p.notes=g('npNotes');
+  if(g('npInternal'))p.internalNotes=g('npInternal');
+  /* Oficios → cuestionarios de consulta (sin pisar los que ya existan) */
+  if(_npTrades.length){
+    p.intakes=Array.isArray(p.intakes)?p.intakes:[];
+    _npTrades.forEach(function(k){if(!p.intakes.some(function(it){return it.category===k;}))p.intakes.push({category:k,answers:{}});});
+    if(!p.intake)p.intake=p.intakes[0];
+  }
+  /* Cliente nuevo: tipo, contacto preferido, facturación */
+  if(!(p.customerLinked&&p.customerId)&&p.customer){
+    p.customer.type=_npCliType||'homeowner';
+    p.customer.prefContact=_npPref||'';
+    var same=document.getElementById('npBillSame');
+    if(same&&!same.checked&&g('npBillAddr'))p.customer.address=g('npBillAddr');
+    if(g('npCliNotes'))p.customer.notes=g('npCliNotes');
+  }
+}
+/* Después de guardar la ficha del cliente nuevo, se le añaden esos campos */
+async function npWizCustomerExtras(p){
+  try{
+    if(!p||!p.customerId||p.customerLinked||!p.customer)return;
+    var extra={};
+    if(p.customer.type)extra.type=p.customer.type;
+    if(p.customer.prefContact)extra.prefContact=p.customer.prefContact;
+    if(p.customer.notes)extra.notes=p.customer.notes;
+    if(p.customer.address&&p.customer.address!==p.address)extra.address=p.customer.address;
+    if(Object.keys(extra).length){extra.updatedAt=Date.now();await setDoc(D('customers',p.customerId),extra,{merge:true});}
+  }catch(e){console.warn('customer extras',e);}
+}
+['npWizReset','npGo','npNext','npBack','npSkip','npClientMode','npClientList','npChooseClient','npSetCliType','npSetPref','npBillToggle','npToggleTrade','npPreview','npWizExtras','npWizCustomerExtras'].forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
 function renderProject(){updateUserUI();renderProg();renderTasks();renderSched();renderMats();renderReports();loadProjSettForm();if(typeof renderProjNav==='function')try{renderProjNav();}catch(e){}
   /* Dan: "cuando un usuario suba las imágenes, que le aparezcan a todos
      los del equipo". La foto ya llegaba por la nube; lo que faltaba era
