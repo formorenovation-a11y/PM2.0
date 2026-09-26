@@ -19,7 +19,7 @@
 /* Sello de versión: para saber, mirando la pantalla, qué build está
    corriendo ese iPad. Sin esto, "ya lo arreglé" y "sigue igual" son
    dos frases imposibles de reconciliar. */
-window.FORMO_BUILD='2026-09-26d';
+window.FORMO_BUILD='2026-09-26f';
 function _swAviso(reg){
   if(document.getElementById('swBar'))return;
   var esp=(navigator.language||'').toLowerCase().indexOf('es')===0
@@ -5468,6 +5468,176 @@ body.lt .mat-filter-btn.on .mfb-n{background:rgba(255,255,255,.72);color:inherit
 .prop-est-src b.is-warn{color:var(--gold-l)}
 @media(max-width:760px){.est-sticky{position:static;box-shadow:none;gap:12px}.est-sticky-attn{margin-left:0;flex-basis:100%}.est-pg-row{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:'d t' 'c n'}.est-pg-cat{grid-area:c}.est-pg-desc{grid-area:d}.est-pg-num{grid-area:n;text-align:right}.est-pg-row b{grid-area:t}}
 @media(prefers-reduced-motion:reduce){.ls-progress{animation:none}}
+
+/* ── Proposal (§08) ── */
+.prop-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.prop-top-l{min-width:0;flex:1 1 280px}
+.prop-top-r{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.prop-ver{font-size:12px;color:var(--tx3)}
+.ls-saved.is-dirty{color:var(--gold-l)}
+.prop-based{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:8px;font-size:12.5px;color:var(--tx3)}
+.prop-based .formo-link{flex:0 0 auto;padding:4px 0;min-height:0;font-size:12.5px;color:var(--tx2);text-decoration-color:var(--bd2)}
+.prop-based b{color:var(--tx1);font-weight:600}
+.prop-based b.is-warn{color:var(--gold-l)}
+.ls-status.prop-st-changed{color:var(--gold-l);border-color:var(--gold-line);background:var(--gold-bg)}
+.ls-status.prop-st-approved{color:var(--green);border-color:rgba(48,209,88,.3);background:rgba(48,209,88,.08)}
+.prop-approved{display:flex;flex-direction:column;gap:3px;background:rgba(48,209,88,.08);border:1px solid rgba(48,209,88,.3);border-radius:12px;padding:12px 14px;margin:0 0 12px;font-size:13px;color:var(--tx2)}
+.prop-approved b{color:var(--green);font-size:14px}
+.prop-approved-note{color:var(--tx3);font-size:12.5px}
+.prop-estpick{background:var(--gold-bg);border:1px solid var(--gold-line);border-radius:12px;padding:14px;margin:0 0 12px;display:flex;flex-direction:column;gap:6px}
+.prop-estpick>b{font-size:14.5px;color:var(--tx1)}
+.prop-estpick>small{font-size:12.5px;color:var(--tx3)}
+.prop-estpick-list{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.prop-estpick-b{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;min-height:48px;color:var(--tx1);font:inherit;cursor:pointer;transition:border-color .18s,transform .16s cubic-bezier(.23,1,.32,1)}
+.prop-estpick-b:hover{border-color:var(--gold-line)}
+.prop-estpick-b:active{transform:scale(.985)}
+.prop-estpick-b>span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.prop-estpick-b>span b{font-size:13.5px}
+.prop-estpick-b>span small{font-size:12px;color:var(--tx3)}
+.prop-estpick-b>b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.prop-review{border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin:0 0 12px;background:var(--s1)}
+.prop-review-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+.prop-review-hd b{font-size:13.5px;color:var(--tx1)}
+.prop-rv-g{display:flex;flex-direction:column;padding:6px 0;border-top:1px solid var(--bd)}
+.prop-rv-g:first-of-type{border-top:0}
+.prop-rv-k{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx4);margin-bottom:2px}
+.prop-rv-g.is-blocking .prop-rv-k{color:var(--red)}
+.prop-rv-g.is-review .prop-rv-k{color:var(--gold-l)}
+.prop-rv-g .formo-link{padding:7px 0;min-height:36px;font-size:13.5px;color:var(--tx1)}
+.prop-rv-g.is-recommended .formo-link{color:var(--tx2)}
+.prop-link-note{font-size:12px;color:var(--tx3);margin-top:8px}
+.prop-who{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 12px;background:var(--s2);border:1px solid var(--bd);border-radius:10px;margin-bottom:10px}
+.prop-who-l{display:flex;flex-direction:column;gap:2px;min-width:0}
+.prop-who-l b{font-size:14px;color:var(--tx1)}
+.prop-who-l small{font-size:12.5px;color:var(--tx3);overflow-wrap:anywhere}
+.prop-who-acts{display:flex;gap:6px;flex-wrap:wrap}
+.prop-diff{font-size:12.5px;color:var(--gold-l);margin-top:6px}
+.prop-preview{border:1px solid var(--bd);border-radius:14px;overflow:hidden;background:var(--s1)}
+.prop-preview-hd{display:flex;flex-direction:column;gap:4px;padding:10px 14px;border-bottom:1px solid var(--bd);font-size:12.5px;color:var(--tx3)}
+.prop-preview-pend{color:var(--gold-l)}
+.prop-frame{display:block;width:100%;min-height:min(78vh,1100px);border:0;background:#fff}
+#leadPropArea .lp-sec.is-hl,#leadPropArea .prop-linkbox.is-hl,#leadPropArea .prop-review.is-hl,#leadPropArea .prop-estpick.is-hl{outline:2px solid var(--gold);outline-offset:4px;border-radius:12px}
+#leadPropArea .est-more button.is-quiet{color:var(--tx3)}
+#leadPropArea .est-more button svg{width:15px;height:15px}
+@media(max-width:760px){.prop-top-r{justify-content:flex-start;width:100%}.prop-frame{min-height:70vh}}
+
+/* ── Approval → Execution (§09) ── */
+.qa-note-ok{display:flex;flex-direction:column;gap:3px;color:var(--tx2)}
+.qa-note-ok b{color:var(--green);font-size:13.5px}
+.qa-note-warn{border-color:var(--gold-line);background:var(--gold-bg);color:var(--tx2)}
+.qa-opt-tx small em{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-l);margin-left:4px}
+.qa-later{width:100%;background:transparent;border:none;color:var(--tx3);font:inherit;font-size:13px;padding:10px;min-height:44px;cursor:pointer;border-radius:10px}
+.qa-later:hover{color:var(--tx1);background:var(--s2)}
+.gen-draft-hd{display:flex;flex-direction:column;gap:3px;padding:12px 18px;border-bottom:1px solid var(--bd)}
+.gen-draft-hd b{font-size:14px;color:var(--tx1)}
+.gen-draft-hd span{font-size:12px;color:var(--gold-l)}
+.gen-draft-hd small{font-size:12px;color:var(--tx3);line-height:1.45}
+.gen-ph{display:flex;align-items:center;gap:8px}
+.gen-chk{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;flex:0 0 auto}
+.gen-chk input{width:18px;height:18px;accent-color:var(--gold);cursor:pointer;margin:0}
+.gen-ph .gd-title{font-family:inherit;font-size:inherit;font-weight:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit}
+.gd-title{flex:1;min-width:0;background:transparent;border:1px solid transparent;border-radius:6px;padding:4px 6px;font:inherit;color:inherit;font-weight:inherit;font-size:inherit;transition:border-color .18s,background .18s}
+.gd-title:hover{border-color:var(--bd2)}
+.gd-title:focus{outline:none;border-color:var(--gold-line);background:var(--s1)}
+.gd-title-t{font-size:13px}
+.gen-n{font-size:11px;color:var(--tx3);font-variant-numeric:tabular-nums;min-width:18px;text-align:right}
+.gen-t.is-skip .gd-title,.gen-t.is-skip>span{text-decoration:line-through;color:var(--tx4)}
+.gen-ph.is-skip .gd-title{text-decoration:line-through;color:var(--tx4)}
+.gen-ph.is-mat{color:var(--tx2)}
+#genApplyBar .btn-gold:disabled{opacity:.5;cursor:not-allowed}
+
+/* ── Home (portada de la empresa, render de Dan) ── */
+.home-shell{display:block}
+#statsRow[hidden]{display:none}
+.home-shell .dash-wrap{margin:0 auto}
+.home-side{display:none}
+.home-shell .dash-wrap{max-width:1180px}
+.home-hero{position:relative;overflow:hidden;border-radius:18px;padding:22px 22px 20px;margin-bottom:18px;background:var(--s1);border:1px solid var(--bd);min-height:120px;align-items:flex-start}
+.home-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .4s}
+.home-hero-bg.has-img{opacity:.55}
+.home-hero-bg.has-img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,rgba(9,9,11,.85) 38%,rgba(9,9,11,.15) 100%)}
+:root[data-theme="light"] .home-hero-bg.has-img::after{background:linear-gradient(90deg,#f4f4f6 0%,rgba(244,244,246,.88) 38%,rgba(244,244,246,.2) 100%)}
+.home-hero-tx{position:relative;z-index:1;min-width:0}
+.home-hero .dash-top-acts{position:relative;z-index:1}
+#homeGreet{font-family:var(--ff-bc);font-size:clamp(34px,5vw,54px);font-weight:800;line-height:1;color:var(--tx);text-wrap:balance}
+#homeGreet em{font-style:normal;color:var(--gold)}
+.home-hero-sub{margin-top:8px;font-size:15px;color:var(--tx2)}
+.home-signals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:8px}
+.home-signals[hidden]{display:none}
+.home-sig{display:flex;align-items:center;gap:14px;text-align:left;padding:16px 16px 16px 14px;border-radius:14px;border:1px solid var(--bd);background:var(--s1);color:var(--tx);font:inherit;cursor:pointer;min-height:96px;transition:transform .16s cubic-bezier(.23,1,.32,1),border-color .18s}
+.home-sig:hover{border-color:var(--bd3)}
+.home-sig:active{transform:scale(.985)}
+.home-sig:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.home-sig.is-gold{background:linear-gradient(135deg,var(--gold-bg2),var(--s1) 70%);border-color:var(--gold-line)}
+.home-sig.is-blue{background:linear-gradient(135deg,rgba(87,168,255,.16),var(--s1) 70%)}
+.home-sig.is-violet{background:linear-gradient(135deg,rgba(207,134,245,.16),var(--s1) 70%)}
+.home-sig-ico{width:46px;height:46px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);border:1px solid var(--bd);flex:0 0 auto}
+.home-sig.is-gold .home-sig-ico{color:var(--gold);background:var(--gold-bg)}
+.home-sig.is-blue .home-sig-ico{color:var(--blue)}
+.home-sig.is-violet .home-sig-ico{color:var(--purple)}
+.home-sig-ico svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.home-sig-tx{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.home-sig-tx b{font-size:19px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.home-sig-tx small{font-size:13px;color:var(--tx3)}
+.home-sig-tx i{font-style:normal;font-size:13px;font-weight:600;color:var(--gold);margin-top:4px}
+.home-sig-chev{color:var(--tx4);flex:0 0 auto}
+.home-sig-chev svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;transform:rotate(-90deg)}
+.home-viewall{background:transparent;border:none;color:var(--gold);font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:6px 0;min-height:32px}
+.home-viewall:hover{text-decoration:underline}
+.home-quick{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.home-q{display:flex;align-items:center;gap:12px;padding:14px 16px;min-height:64px;border-radius:12px;border:1px solid var(--gold-line);background:var(--s1);color:var(--tx);font:inherit;font-size:15px;font-weight:600;cursor:pointer;text-align:left;transition:transform .16s cubic-bezier(.23,1,.32,1),background .18s}
+.home-q:hover{background:var(--gold-bg)}
+.home-q:active{transform:scale(.98)}
+.home-q>svg:first-child{width:22px;height:22px;color:var(--gold);flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.home-q>span{flex:1;min-width:0;text-align:center}
+.home-q>svg:last-child{width:15px;height:15px;color:var(--tx4);transform:rotate(-90deg);stroke:currentColor;fill:none;stroke-width:2}
+.home-q.is-hot{box-shadow:inset 0 0 0 1px var(--gold)}
+.home-alltools{display:block;margin:12px auto 0;background:transparent;border:none;color:var(--gold);font:inherit;font-size:14px;font-weight:600;cursor:pointer;padding:8px 14px;min-height:40px;border-radius:999px}
+.home-alltools:hover{background:var(--gold-bg)}
+.home-shell .dash-tiles{margin-top:14px}
+.home-shell .dash-tiles[hidden]{display:none}
+.home-pipe{display:flex;align-items:stretch;gap:6px;margin-bottom:26px}
+.home-pipe-i{flex:1;min-width:0;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;align-items:center;gap:4px 10px;padding:14px 16px;border-radius:14px;border:1px solid var(--bd);background:var(--s1);color:var(--tx);font:inherit;text-align:left;cursor:pointer;transition:border-color .18s,transform .16s cubic-bezier(.23,1,.32,1)}
+.home-pipe-i:hover{border-color:var(--bd3)}
+.home-pipe-i:active{transform:scale(.985)}
+.home-pipe-l{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.home-pipe-l i{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.home-pipe-i b{grid-row:2;font-family:var(--ff-bc);font-size:34px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.home-pipe-ico{grid-column:2;grid-row:1/3;width:44px;height:44px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;background:var(--gold-bg);color:var(--gold)}
+.home-pipe-ico svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.home-pipe-sep{align-self:center;color:var(--tx4);flex:0 0 auto}
+.home-pipe-sep svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;transform:rotate(-90deg)}
+/* Recientes en rejilla de tarjetas (escritorio); en teléfono sigue la tira */
+@media(min-width:900px){
+ .home-shell .recent-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;overflow:visible;padding:0}
+ .home-shell .recent-card{width:auto;aspect-ratio:auto;min-height:190px}
+ .home-shell .recent-card:nth-child(n+9){display:none}
+}
+/* Menú lateral de escritorio */
+@media(min-width:1100px){
+ .home-shell{display:grid;grid-template-columns:232px minmax(0,1fr);align-items:start;background:linear-gradient(90deg,transparent 231px,var(--bd) 231px,var(--bd) 232px,transparent 232px)}
+ .home-side{display:flex;flex-direction:column;gap:2px;position:sticky;top:64px;max-height:calc(100vh - 64px);overflow:auto;padding:22px 12px 24px}
+ .home-side-hd{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--tx4);padding:0 12px 10px}
+ .home-side-i{display:flex;align-items:center;gap:12px;padding:11px 12px;min-height:44px;border-radius:10px;border:none;background:transparent;color:var(--tx2);font:inherit;font-size:14.5px;font-weight:500;text-align:left;cursor:pointer;transition:background .16s,color .16s}
+ .home-side-i svg{width:20px;height:20px;flex:0 0 auto;color:var(--gold);stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+ .home-side-i:hover{background:var(--s2);color:var(--tx)}
+ .home-side-i.on{background:var(--s2);color:var(--tx);box-shadow:inset 3px 0 0 var(--gold)}
+ .home-side-i.is-hot span::after{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-left:8px;vertical-align:middle}
+ .home-side-i:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+ .home-shell .dash-wrap{padding-top:28px}
+}
+@media(max-width:899px){
+ .home-signals{grid-template-columns:1fr;gap:10px}
+ .home-sig{min-height:76px;padding:12px 14px}
+ .home-quick{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .home-q{min-height:56px;padding:12px 14px;font-size:14px}
+ .home-pipe{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .home-pipe-sep{display:none}
+ .home-pipe-l{white-space:normal}
+ .home-hero{padding:18px 16px}
+ .home-hero .dash-top-acts{width:100%}
+}
+@media(prefers-reduced-motion:reduce){.home-hero-bg{transition:none}}
 </style>
 </head>
 <body>
@@ -5684,27 +5854,30 @@ body.lt .mat-filter-btn.on .mfb-n{background:rgba(255,255,255,.72);color:inherit
   </div>
 
   <div id="mainDashContent">
+  <div class="home-shell">
+  <!-- Menú lateral (escritorio): Home + los accesos rápidos que no están en la portada -->
+  <aside class="home-side" id="homeSide" aria-label="Company menu"></aside>
   <div class="dash-wrap">
-    <!-- Header -->
-    <div class="dash-top">
-      <div>
-        <div class="dash-eye">Formo Renovation · Nashville, TN</div>
-        <div class="dash-top-title">Project <em>Manager</em></div>
+    <!-- Header / portada -->
+    <div class="dash-top home-hero" id="homeHero">
+      <div class="home-hero-bg" id="homeHeroBg" aria-hidden="true"></div>
+      <div class="home-hero-tx">
+        <div class="dash-eye" id="homeEye">Formo Renovation · Nashville, TN</div>
+        <div class="dash-top-title" id="homeGreet">Project <em>Manager</em></div>
+        <div class="home-hero-sub" id="homeHeroSub"></div>
       </div>
       <div class="dash-top-acts">
         <button class="btn btn-ghost btn-sm js-appsett" onclick="openAppSettings()">Settings</button>
         <button class="btn btn-gold js-newproj" onclick="startNewProject()">+ New Project</button>
       </div>
     </div>
-    <!-- Resumen: cuatro números en una tira, sin título (Dan) -->
-    <div class="stats-grid stats-strip" id="statsRow"></div>
+    <!-- Tres señales: tareas · por cobrar · solicitudes (solo lo que el rol puede ver) -->
+    <div class="home-signals" id="homeSignals"></div>
+    <!-- Resumen numérico anterior: lo sustituye el pipeline -->
+    <div class="stats-grid stats-strip" id="statsRow" hidden></div>
 
     <!-- Hoy: solo lo accionable, y solo cuando existe -->
     <div id="todayHome" class="today-home" style="display:none"></div>
-
-    <!-- Quick-access tiles -->
-    <div class="dash-tiles-title dash-tiles-qa">Quick Access</div>
-    <div class="dash-tiles" id="dashTiles"></div>
 
     <!-- Sin señal / subidas pendientes -->
     <div id="offBar" class="off-bar" style="display:none"></div>
@@ -5716,11 +5889,21 @@ body.lt .mat-filter-btn.on .mfb-n{background:rgba(255,255,255,.72);color:inherit
     <div id="fuHome" style="display:none"></div>
 
     <!-- Recientes -->
-    <div class="home-sec-hd"><span class="home-sec-t" id="recentHdTitle">Recent</span></div>
+    <div class="home-sec-hd"><span class="home-sec-t" id="recentHdTitle">Recent</span><button type="button" class="home-sec-act home-viewall" onclick="openAllProjects()">View all &rarr;</button></div>
     <div class="recent-strip" id="recentStrip"></div>
 
     <!-- Favoritos: los proyectos que el usuario fija -->
     <div id="favHome" class="fav-home" style="display:none"></div>
+
+    <!-- Accesos rápidos: los cinco de la portada; "All tools" despliega el resto -->
+    <div class="home-sec-hd"><span class="home-sec-t dash-tiles-title" id="qaHdTitle">Quick Access</span></div>
+    <div class="home-quick" id="homeQuick"></div>
+    <button type="button" class="home-alltools" id="homeAllTools" onclick="homeToolsToggle()" aria-expanded="false" aria-controls="dashTiles">All tools &rarr;</button>
+    <div class="dash-tiles" id="dashTiles" hidden></div>
+
+    <!-- Pipeline por etapa -->
+    <div class="home-sec-hd"><span class="home-sec-t" id="pipeHdTitle">Project Pipeline</span></div>
+    <div class="home-pipe" id="homePipe"></div>
 
     <!-- Carpetas / grid -->
     <div class="home-sec-hd">
@@ -5737,6 +5920,7 @@ body.lt .mat-filter-btn.on .mfb-n{background:rgba(255,255,255,.72);color:inherit
     <div class="proj-grid" id="projGrid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr));display:none"></div>
   </div>
 
+  </div><!-- /home-shell -->
   <div class="dash-footer"><div class="tagline" data-t="builton">Built on Quality · Driven by Integrity</div><span data-org-name>Formo Renovation</span></div>
   </div><!-- /mainDashContent -->
 
@@ -10494,7 +10678,7 @@ body.lt .sec-menu{box-shadow:0 18px 44px -18px rgba(0,0,0,.34)}
         </div>
         <div>
           <div class="card" style="position:sticky;top:100px">
-            <div class="card-hd"><span></span><h3>Generated Tasks</h3><span id="genCnt" style="font-size:11px;color:var(--tx3)"></span></div>
+            <div class="card-hd"><span></span><h3>Draft execution plan</h3><span id="genCnt" style="font-size:11px;color:var(--tx3)"></span></div>
             <div id="genPrev"><div class="prev-empty"><div class="prev-empty-ico"></div><p>Upload a PDF or paste your scope, then tap <b style="color:var(--gold)">Generate Tasks</b>.</p></div></div>
             <div class="apply-bar" id="genApplyBar">
               <span class="apply-note" id="genApplyNote"></span>
@@ -14044,6 +14228,7 @@ function renderDash(){
   /* "Hoy" y favoritos leen la misma lista ya filtrada por rol */
   try{if(typeof renderHomeToday==='function')renderHomeToday();}catch(e){console.warn('today',e);}
   try{if(typeof renderHomeFavs==='function')renderHomeFavs();}catch(e){console.warn('favs',e);}
+  try{if(typeof renderHomeShell==='function')renderHomeShell();}catch(e){console.warn('home shell',e);}
   applyLang();
   // Only drop in-project mode when we're actually on the home screen
   if(!_activeId)document.body.classList.remove('in-project');
@@ -17304,30 +17489,98 @@ async function runGenerate(){
   btn.innerHTML=''+t('generateTasks');btn.disabled=false;
 }
 function buildAIPrompt(extra){return 'You are a construction project manager for '+orgName()+(_esFormo()?', a premium painting and renovation company in Nashville, TN.':(orgVal('city')?', a renovation company in '+orgVal('city')+'.':', a renovation company.'))+'\nAnalyze the scope of work'+(_pdfB64?' from the attached PDF':'')+' and generate a complete task list in the CORRECT logical construction execution order.\nReturn ONLY valid JSON — no markdown, no text outside the JSON.'+extra+'\n{"projectName":"short name","phases":[{"name":"Phase Name","icon":"emoji","tasks":[{"text":"specific actionable task","visibility":"both"}]}],"materials":[{"name":"material","qty":"quantity","by":"contractor","category":"Category"}]}\nRules: visibility "both"|"client"|"contractor". by "contractor"|"owner"|"client". CORRECT order: Pre-Construction→Demo & Prep→Drywall & Repairs→Finish Carpentry→Wallpaper→Tile Work→Paint Prep→Interior Painting→Exterior Work→Fixtures & Finishes→Final Cleanup. Only needed phases. Specific actionable tasks. Extract all materials, colors, specs. EVERY material MUST include a "category" chosen from EXACTLY this list: Framing & Lumber, Drywall, Paint & Finishes, Electrical, Plumbing, Flooring & Tile, Trim & Doors, Roofing & Exterior, Concrete & Masonry, Insulation, Hardware & Fasteners, Fixtures & Appliances, Cleanup & Misc, Others. Use "Others" only when nothing else fits — never leave category blank.';}
-function showGenPreview(){
-  const r=_gen;if(!r)return;const tc=(r.phases||[]).reduce((s,ph)=>s+(ph.tasks||[]).length,0),mc=(r.materials||[]).length;
-  document.getElementById('genCnt').textContent=tc+' tasks · '+mc+' materials';
-  let h='<div class="prev-list">';
-  for(const ph of(r.phases||[])){h+='<div class="prev-ph">'+(ph.icon||'')+' '+X(ph.name)+' ('+(ph.tasks||[]).length+')</div>';h+=(ph.tasks||[]).map(tk=>'<div class="prev-t"><span class="prev-dot"></span><span style="flex:1">'+X(tk.text)+'</span>'+(tk.visibility!=='both'?'<span class="vis-tag">'+(tk.visibility==='client'?'':'')+'</span>':'')+'</div>').join('');}
-  if(mc){h+='<div class="prev-ph">Materials ('+mc+')</div>';for(const m of(r.materials||[]))h+='<div class="prev-t"><span class="prev-dot"></span>'+X(m.name)+(m.qty?' ('+X(m.qty)+')':'')+'</div>';}
-  h+='</div>';document.getElementById('genPrev').innerHTML=h;document.getElementById('genApplyBar').classList.add('show');document.getElementById('genApplyNote').textContent=tc+' tasks ready';
+/* §09 · Plan sugerido, revisable antes de confirmar: se pueden quitar
+   fases, tareas y materiales (casillas), editar títulos, y se dice de
+   dónde salió el alcance. Nada se asigna ni se programa aquí (EX-02). */
+var _genApplying=false;
+function _genCounts(r){
+  var ph=(r.phases||[]).filter(function(x){return !x._skip;});
+  var tc=ph.reduce(function(s,x){return s+(x.tasks||[]).filter(function(t){return !t._skip;}).length;},0);
+  var mc=(r.materials||[]).filter(function(m){return !m._skip;}).length;
+  return {phases:ph.length,tasks:tc,materials:mc};
 }
-async function applyGen(){
-  const p=CP();if(!p||!_gen)return;
-  const _hadT=(p.tasks&&p.tasks.length>0);
-  if(_hadT&&!confirm(L('This replaces the phases and task list. Your materials are KEPT (new ones are added). Continue?','Esto reemplaza las fases y la lista de tareas. Tus materiales SE CONSERVAN (los nuevos se agregan). ¿Continuar?')))return;
-  const nm=document.getElementById('gName').value.trim();if(nm)p.name=nm;
-  /* Se reemplaza la lista PRINCIPAL. Los bloques de change orders son
-     suyos y se quedan tal cual. */
-  p.phases=(p.phases||[]).filter(function(ph){return !!ph.coId;});
-  p.tasks=(p.tasks||[]).filter(function(t){return !!t.coId;});
-  /* NUNCA borramos materiales — solo agregamos los que no existan ya. */
-  if(!Array.isArray(p.materials))p.materials=[];
-  const _seenMat={};p.materials.forEach(function(m){_seenMat[String(m.name||'').trim().toLowerCase()]=1;});
-  const u=CU();
-  (_gen.phases||[]).forEach((ph,i)=>{const pid=ID();p.phases.push({id:pid,name:ph.name,icon:ph.icon||'',order:i});(ph.tasks||[]).forEach(tk=>{const task=mkTask(pid,tk.text,tk.visibility||'both');task.history.push({uid:META.curUser,name:u.name,action:'created',ts:Date.now()});p.tasks.push(task);});});
-  (_gen.materials||[]).forEach(m=>{if(_seenMat[String(m.name||'').trim().toLowerCase()])return;var _c=(m.category&&MAT_CATS.indexOf(m.category)>=0)?m.category:'Others';p.materials.push({id:ID(),name:m.name,qty:m.qty||'',category:_c,by:m.by||'contractor',assignee:'',note:'',status:'pending',createdAt:Date.now()});});
-  const bc=document.querySelector('.bc-cur');if(bc)bc.textContent=p.name;renderProject();switchTab('tasks');await fbSave(p);
+function _genSourceLabel(){
+  var src=window._genSource||'';
+  if(_pdfB64)return L('Source: uploaded PDF','Origen: PDF subido')+(document.getElementById('gScope').value.trim()?' + '+L('notes','notas'):'');
+  if(src==='sow')return L('Source: approved scope of work','Origen: alcance de trabajo aprobado');
+  return L('Source: pasted scope','Origen: alcance pegado');
+}
+function showGenPreview(){
+  const r=_gen;if(!r)return;
+  var c=_genCounts(r);
+  document.getElementById('genCnt').textContent=c.phases+' '+L('phases','fases')+' · '+c.tasks+' '+L('tasks','tareas')+' · '+c.materials+' '+L('materials','materiales');
+  let h='<div class="prev-list gen-draft">';
+  h+='<div class="gen-draft-hd"><b>'+L('Draft execution plan','Borrador del plan de ejecución')+'</b><span>'+_genSourceLabel()+'</span>'
+    +'<small>'+L('Untick what you do not want, edit titles, then confirm. Nothing is assigned or scheduled yet — that happens in Tasks and Schedule.','Desmarca lo que no quieras, edita títulos y confirma. Nada queda asignado ni programado todavía: eso se hace en Tareas y Calendario.')+'</small></div>';
+  (r.phases||[]).forEach(function(ph,i){
+    h+='<div class="prev-ph gen-ph'+(ph._skip?' is-skip':'')+'"><label class="gen-chk"><input type="checkbox" '+(ph._skip?'':'checked')+' onchange="genSkip('+i+',-1,!this.checked)" aria-label="'+L('Include phase','Incluir fase')+'"></label>'
+      +'<input class="gd-title" value="'+X(ph.name||'')+'" oninput="genEdit('+i+',-1,this.value)" aria-label="'+L('Phase name','Nombre de la fase')+'">'
+      +'<span class="gen-n">'+(ph.tasks||[]).filter(function(t){return !t._skip;}).length+'</span></div>';
+    (ph.tasks||[]).forEach(function(tk,j){
+      h+='<div class="prev-t gen-t'+(tk._skip||ph._skip?' is-skip':'')+'"><label class="gen-chk"><input type="checkbox" '+(tk._skip?'':'checked')+(ph._skip?' disabled':'')+' onchange="genSkip('+i+','+j+',!this.checked)" aria-label="'+L('Include task','Incluir tarea')+'"></label>'
+        +'<input class="gd-title gd-title-t" value="'+X(tk.text||'')+'" oninput="genEdit('+i+','+j+',this.value)" aria-label="'+L('Task','Tarea')+'">'
+        +(tk.visibility&&tk.visibility!=='both'?'<span class="vis-tag">'+(tk.visibility==='client'?L('client','cliente'):L('crew','equipo'))+'</span>':'')+'</div>';
+    });
+  });
+  if((r.materials||[]).length){
+    h+='<div class="prev-ph gen-ph is-mat">'+L('Materials','Materiales')+' <span class="gen-n">'+c.materials+'</span></div>';
+    (r.materials||[]).forEach(function(m,k){
+      h+='<div class="prev-t gen-t'+(m._skip?' is-skip':'')+'"><label class="gen-chk"><input type="checkbox" '+(m._skip?'':'checked')+' onchange="genSkipMat('+k+',!this.checked)" aria-label="'+L('Include material','Incluir material')+'"></label><span style="flex:1">'+X(m.name)+(m.qty?' <small>('+X(m.qty)+')</small>':'')+'</span>'+(m.category?'<span class="vis-tag">'+X(m.category)+'</span>':'')+'</div>';
+    });
+  }
+  h+='</div>';document.getElementById('genPrev').innerHTML=h;document.getElementById('genApplyBar').classList.add('show');
+  _genApplyNote();
+}
+function _genApplyNote(){
+  var c=_genCounts(_gen||{});var p=CP();var im=(p&&typeof _qaImpact==='function')?_qaImpact(p):{tasks:0,done:0};
+  var n=document.getElementById('genApplyNote');if(!n)return;
+  n.textContent=c.tasks+' '+L('tasks in','tareas en')+' '+c.phases+' '+L('phases','fases')+(im.tasks?' · '+L('replaces '+im.tasks+' current','sustituye '+im.tasks+' actuales')+(im.done?' ('+im.done+' '+L('completed','completadas')+')':''):'');
+  var b=document.querySelector('#genApplyBar .btn-gold');if(b){b.textContent='✓ '+L('Confirm plan','Confirmar plan');b.disabled=!c.tasks;}
+}
+function genSkip(i,j,skip){var ph=_gen&&_gen.phases&&_gen.phases[i];if(!ph)return;if(j<0)ph._skip=!!skip;else if(ph.tasks&&ph.tasks[j])ph.tasks[j]._skip=!!skip;showGenPreview();}
+function genSkipMat(k,skip){var m=_gen&&_gen.materials&&_gen.materials[k];if(!m)return;m._skip=!!skip;showGenPreview();}
+function genEdit(i,j,v){var ph=_gen&&_gen.phases&&_gen.phases[i];if(!ph)return;if(j<0)ph.name=v;else if(ph.tasks&&ph.tasks[j])ph.tasks[j].text=v;}
+/* Confirmar el plan. EX-01: un segundo toque mientras se procesa no
+   duplica. EX-03: si hay tareas completadas en la lista principal se
+   advierte cuántas y se pide decisión explícita. Devuelve una promesa
+   que se resuelve cuando la decisión se tomó (true = aplicado). */
+function applyGen(){
+  const p=CP();if(!p||!_gen||_genApplying)return Promise.resolve(false);
+  var im=(typeof _qaImpact==='function')?_qaImpact(p):{tasks:(p.tasks||[]).filter(function(t){return !t.coId;}).length,done:0};
+  var c=_genCounts(_gen);
+  if(!c.tasks){toast(L('Nothing left to confirm — tick at least one task','No queda nada por confirmar: marca al menos una tarea'),'err');return Promise.resolve(false);}
+  if(!im.tasks)return _applyGenInner(p);
+  var msg=im.done
+    ?L('This replaces the current list of '+im.tasks+' tasks, including '+im.done+' completed task'+(im.done===1?'':'s')+' that would be removed from the list. Materials are kept (new ones are added) and change-order blocks stay. Replace anyway?','Esto sustituye la lista actual de '+im.tasks+' tareas, incluidas '+im.done+' completada'+(im.done===1?'':'s')+' que se quitarían de la lista. Los materiales se conservan (los nuevos se agregan) y los bloques de change orders se quedan. ¿Sustituir de todos modos?')
+    :L('This replaces the current list of '+im.tasks+' tasks (none completed). Materials are kept (new ones are added) and change-order blocks stay. Continue?','Esto sustituye la lista actual de '+im.tasks+' tareas (ninguna completada). Los materiales se conservan (los nuevos se agregan) y los bloques de change orders se quedan. ¿Continuar?');
+  return new Promise(function(res){
+    if(typeof showConfirm==='function'){
+      var yes=document.getElementById('confirmYes');if(yes)yes.textContent=im.done?L('Replace, remove completed','Sustituir y quitar completadas'):L('Replace list','Sustituir lista');
+      showConfirm(msg,function(){_applyGenInner(p).then(function(){if(yes)yes.textContent=L('Yes','Sí');res(true);});},function(){if(yes)yes.textContent=L('Yes','Sí');res(false);});
+    }else{res(confirm(msg)?_applyGenInner(p):false);}
+  });
+}
+async function _applyGenInner(p){
+  if(_genApplying)return false;_genApplying=true;
+  var bar=document.querySelector('#genApplyBar .btn-gold');if(bar)bar.disabled=true;
+  try{
+    const nm=document.getElementById('gName').value.trim();if(nm)p.name=nm;
+    /* Se reemplaza la lista PRINCIPAL. Los bloques de change orders son
+       suyos y se quedan tal cual. */
+    p.phases=(p.phases||[]).filter(function(ph){return !!ph.coId;});
+    p.tasks=(p.tasks||[]).filter(function(t){return !!t.coId;});
+    /* NUNCA borramos materiales — solo agregamos los que no existan ya. */
+    if(!Array.isArray(p.materials))p.materials=[];
+    const _seenMat={};p.materials.forEach(function(m){_seenMat[String(m.name||'').trim().toLowerCase()]=1;});
+    const u=CU();var order=0;
+    (_gen.phases||[]).forEach(function(ph){if(ph._skip)return;const pid=ID();p.phases.push({id:pid,name:String(ph.name||'').trim()||L('Phase','Fase'),icon:ph.icon||'',order:order++});(ph.tasks||[]).forEach(function(tk){if(tk._skip||!String(tk.text||'').trim())return;const task=mkTask(pid,String(tk.text).trim(),tk.visibility||'both');task.history.push({uid:META.curUser,name:u.name,action:'created',ts:Date.now()});p.tasks.push(task);});});
+    (_gen.materials||[]).forEach(function(m){if(m._skip)return;if(_seenMat[String(m.name||'').trim().toLowerCase()])return;var _c=(m.category&&MAT_CATS.indexOf(m.category)>=0)?m.category:'Others';p.materials.push({id:ID(),name:m.name,qty:m.qty||'',category:_c,by:m.by||'contractor',assignee:'',note:'',status:'pending',createdAt:Date.now()});});
+    var c=_genCounts(_gen);
+    const bc=document.querySelector('.bc-cur');if(bc)bc.textContent=p.name;renderProject();switchTab('tasks');await fbSave(p);
+    _gen=null;window._genSource='';
+    toast(L('Plan confirmed · '+c.tasks+' tasks in '+c.phases+' phases. Assign and schedule them when you are ready.','Plan confirmado · '+c.tasks+' tareas en '+c.phases+' fases. Asígnalas y prográmalas cuando quieras.'));
+    return true;
+  }finally{_genApplying=false;if(bar)bar.disabled=false;}
 }
 function clearGen(){document.getElementById('gScope').value='';clearPdf();clearGenPreview();}
 function clearGenPreview(){_gen=null;document.getElementById('genPrev').innerHTML='<div class="prev-empty"><div class="prev-empty-ico"></div><p>Upload a PDF or paste your scope, then tap <b style="color:var(--gold)">'+t('generateTasks')+'</b>.</p></div>';document.getElementById('genApplyBar').classList.remove('show');document.getElementById('genCnt').textContent='';}
@@ -17782,7 +18035,7 @@ const E=window;
  'moveTask','openMoveTask','saveSched','clearSched','openSchedModal','calNav','calToday',
  'promptAddMat','saveMat','cycleMat','delMat','changeMatAssignee','changeAssignee',
  'openUserPicker','setUser','addUser','removeUser','openAppSettings','stab','saveAppSett',
- 'saveProjMeta','runGenerate','applyGen','clearGen','clearGenPreview','clearPdf',
+ 'saveProjMeta','runGenerate','applyGen','clearGen','clearGenPreview','clearPdf','genSkip','genSkipMat','genEdit','showGenPreview',
  'handlePdfSelect','handlePdfDrop','om','cm','setFilter','openCardCtx',
  'saveMeta','updateUserUI','renderUserList','buildAssigneeOptions',
  'toggleSub','addSub','delSub','editSub','saveSubEdit','generateSMS','setLang','reassignTaskDay','togglePhFilter','setPhaseFilter','setTaskFilter','setMatGroupFilter','matClearFilters','addTaskFrom','_addVisMark','visLabel','renderProg','selectCalDay','crewToday','crewNav','promptAddMat','saveMat','cycleMat','delMat','changeMatAssignee','unscheduleTask','syncSched','setSchedSearch','openSchedModalForItem','setMatSearch','setMatFilter',
@@ -20459,7 +20712,7 @@ async function quoteApproved(){
   var n=await _qaArchivePreCon(p);
   p.label='approved';p.status='active';p.quoteApprovedAt=Date.now();
   await fbSave(p);
-  if(typeof applyLeadGating==='function')applyLeadGating();
+  if(typeof stageTabsRefresh==='function')stageTabsRefresh();else if(typeof applyLeadGating==='function')applyLeadGating();
   if(btn)btn.disabled=false;
   toast(n?L(n+' document(s) saved to Files ✓',n+' documento(s) guardados en Files ✓'):L('Quote approved ✓','Cotización aprobada ✓'));
   openBuildChoice();
@@ -20479,22 +20732,39 @@ function _qaPrefillScope(p){
   }catch(e){}
   s.value=parts.join('\n');
 }
+/* §09 · Elección inicial tras la aprobación. Explica el resultado para
+   el PM (alcance y estimado de referencia listos), no "pestañas
+   desbloqueadas". Cerrar el diálogo no deshace la aprobación. En un
+   proyecto que ya tiene tareas, dice qué se añadiría o sustituiría. */
+function _qaImpact(p){
+  var main=(p.tasks||[]).filter(function(t){return !t.coId;});
+  var done=main.filter(function(t){return t.state==='done';}).length;
+  var phases=(p.phases||[]).filter(function(ph){return !ph.coId;}).length;
+  return {tasks:main.length,done:done,phases:phases,co:(p.tasks||[]).length-main.length};
+}
 function openBuildChoice(){
   var p=CP();if(!p)return;
   var hasSOW=!!((p.sowDraft||'').trim());
+  var im=_qaImpact(p);
+  var cats=(typeof _intakeCats==='function')?_intakeCats(p):[];
+  var ap=p.approval||{};
   var ov=document.getElementById('buildChoiceOv');
   if(!ov){ov=document.createElement('div');ov.id='buildChoiceOv';ov.className='ov';document.body.appendChild(ov);ov.onclick=function(e){if(e.target===ov)cm('buildChoiceOv');};}
   ov.innerHTML='<div class="modal" onclick="event.stopPropagation()">'
-    +'<div class="mhd"><h3>'+L('Prepare execution','Preparar ejecución')+'</h3><button class="mcls" onclick="cm(\'buildChoiceOv\')">&#10005;</button></div>'
+    +'<div class="mhd"><h3>'+L('Prepare execution','Preparar ejecución')+'</h3><button class="mcls" aria-label="'+L('Close','Cerrar')+'" onclick="cm(\'buildChoiceOv\')">&#10005;</button></div>'
     +'<div class="mbody">'
-      +'<div class="qa-note">'+L('Your SOW, estimate and questionnaire are saved in Files. Nothing is lost — the Project / SOW / Estimate tabs stay open so you can go back and edit them any time.','Tu SOW, estimado y cuestionario quedaron guardados en Files. No se pierde nada — las pestañas Proyecto / SOW / Estimado siguen disponibles para que vuelvas a editarlos cuando quieras.')+'</div>'
-      +'<button class="qa-opt" onclick="qaBuildAI()"><span class="qa-opt-ic">'+_I('bulb')+'</span>'
-        +'<span class="qa-opt-tx"><b>'+L('Build from approved scope · AI-assisted','Crear desde el alcance aprobado · Con IA')+'</b>'
-        +'<small>'+(hasSOW?L('Loads your SOW + questionnaire and generates tasks and materials','Carga tu SOW + cuestionario y genera tareas y materiales'):L('No SOW yet — paste the scope on the next screen','Sin SOW aún — pega el alcance en la siguiente pantalla'))+'</small></span></button>'
+      +'<div class="qa-note qa-note-ok"><b>'+L('Proposal approved','Propuesta aprobada')+(ap.source==='external'&&ap.byName?' · '+L('recorded by ','registrada por ')+X(ap.byName):'')+'</b>'
+        +L('The scope and the estimate of reference are ready to prepare the work. Your SOW, estimate and questionnaire were saved to Files. Closing this window does not undo the approval — you can come back from the project home.','El alcance y el estimado de referencia están listos para preparar el trabajo. Tu SOW, estimado y cuestionario quedaron guardados en Files. Cerrar esta ventana no deshace la aprobación: puedes volver desde el inicio del proyecto.')+'</div>'
+      +(im.tasks?'<div class="qa-note qa-note-warn">'+L('This project already has '+im.tasks+' task'+(im.tasks===1?'':'s')+' in '+im.phases+' phase'+(im.phases===1?'':'s')+(im.done?' ('+im.done+' completed)':'')+'. Building a plan replaces that main list; change-order blocks stay. You will review the impact before confirming.','Este proyecto ya tiene '+im.tasks+' tarea'+(im.tasks===1?'':'s')+' en '+im.phases+' fase'+(im.phases===1?'':'s')+(im.done?' ('+im.done+' completada'+(im.done===1?'':'s')+')':'')+'. Crear un plan sustituye esa lista principal; los bloques de change orders se conservan. Revisarás el impacto antes de confirmar.')+'</div>':'')
+      +'<button class="qa-opt" onclick="qaBuildAI()"><span class="qa-opt-ic">'+_I('layers')+'</span>'
+        +'<span class="qa-opt-tx"><b>'+L('Build from approved scope','Crear desde el alcance aprobado')+'</b>'
+        +'<small>'+(hasSOW?L('Phases, tasks and materials suggested from the approved work. You review and edit the draft before confirming.','Fases, tareas y materiales sugeridos desde el trabajo aprobado. Revisas y editas el borrador antes de confirmar.'):L('No scope of work yet — you can paste the scope on the next screen.','Aún no hay alcance de trabajo: puedes pegarlo en la siguiente pantalla.'))+' <em>'+L('AI-assisted','Con IA')+'</em></small></span></button>'
       +'<button class="qa-opt" onclick="qaBuildManual()"><span class="qa-opt-ic">'+_I('pencil')+'</span>'
-        +'<span class="qa-opt-tx"><b>'+L('Prepare tasks manually','Preparar tareas manualmente')+'</b>'
-        +'<small>'+L('Keeps existing phases, or suggests phases from your questionnaires','Conserva las fases existentes o sugiere fases según tus cuestionarios')+'</small></span></button>'
-      +'<button class="qa-back" onclick="cm(\'buildChoiceOv\');switchTab(\'leadsow\')">'+_I('chev')+' '+L('Go back and edit the SOW first','Volver y editar el SOW primero')+'</button>'
+        +'<span class="qa-opt-tx"><b>'+L('Prepare manually','Preparar manualmente')+'</b>'
+        +'<small>'+(im.phases?L('Opens Tasks keeping your existing '+im.phases+' phase'+(im.phases===1?'':'s')+' and tasks. Nothing is generated.','Abre Tareas conservando tus '+im.phases+' fase'+(im.phases===1?'':'s')+' y tareas actuales. No se genera nada.')
+          :L('Suggests empty phases from your questionnaire'+(cats.length?' ('+cats.map(function(c){var o=(typeof _intakeCat==='function')?_intakeCat(c):null;return o?L(o.en,o.es):c;}).join(', ')+')':'')+' so you can add tasks by hand. You can rename or remove them.','Sugiere fases vacías según tu cuestionario'+(cats.length?' ('+cats.map(function(c){var o=(typeof _intakeCat==='function')?_intakeCat(c):null;return o?L(o.en,o.es):c;}).join(', ')+')':'')+' para que agregues tareas a mano. Puedes renombrarlas o quitarlas.'))+'</small></span></button>'
+      +'<button class="qa-back" onclick="cm(\'buildChoiceOv\');switchTab(\'leadsow\')">'+_I('chev')+' '+L('Go back and edit the scope first','Volver y editar el alcance primero')+'</button>'
+      +'<button class="qa-later" onclick="cm(\'buildChoiceOv\')">'+L('Not now — the approval stays recorded','Ahora no: la aprobación queda registrada')+'</button>'
     +'</div></div>';
   om('buildChoiceOv');
 }
@@ -20503,6 +20773,7 @@ function qaBuildAI(){
   switchTab('gen');
   setTimeout(function(){
     _qaPrefillScope(p);
+    window._genSource=((p.sowDraft||'').trim())?'sow':'';
     if(typeof runGenerate==='function')runGenerate();
   },200);
 }
@@ -20545,7 +20816,7 @@ async function qaBuildManual(){
   toast(n?L(n+' suggested phases added — start adding your tasks',n+' fases sugeridas agregadas — empieza a añadir tus tareas')
          :L('Add your tasks here','Agrega tus tareas aquí'));
 }
-['quoteApproved','openBuildChoice','qaBuildAI','qaBuildManual','qaSeedPhases'].forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
+['quoteApproved','openBuildChoice','qaBuildAI','qaBuildManual','qaSeedPhases','_qaImpact'].forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
 
 function openProjectFromClient(pid){if(typeof openProj==='function'){showPage('mainDashContent');openProj(pid);}}
 var _clientEditId=null;
@@ -31621,7 +31892,7 @@ function renderProjDash(){
   } else {
     /* Estado vacío honesto: qué falta, por qué importa y la acción */
     h+='<div class="pd-empty pd-empty-act"><div>'+L('No tasks yet. Build the plan from the approved scope so the team knows what to do each day.','Aún no hay tareas. Arma el plan desde el alcance aprobado para que el equipo sepa qué hacer cada día.')+'</div>'
-      +'<button type="button" class="btn btn-ghost btn-sm" onclick="switchTab(\'gen\')">'+L('Prepare execution','Preparar ejecución')+'</button></div>';
+      +'<button type="button" class="btn btn-ghost btn-sm" onclick="pdPrepare()">'+L('Prepare execution','Preparar ejecución')+'</button></div>';
   }
   h+='</div>';
 
@@ -31898,6 +32169,9 @@ function togglePsumAcc(id){
 window.togglePsumAcc=togglePsumAcc;
 
 /* ── Expenses tab (split from Finance) ── */
+
+function pdPrepare(){if(typeof openBuildChoice==='function')openBuildChoice();else switchTab('gen');}
+window.pdPrepare=pdPrepare;
 function renderExpensesTab(){
   var p=CP();if(!p)return;
   if(!p.expenses)p.expenses=[];
@@ -41004,6 +41278,15 @@ function applyLeadGating(){
   if(document.body.classList.contains('in-project')&&typeof renderProjNav==='function')try{renderProjNav();}catch(e){}
 }
 
+/* Cuando el proyecto deja de ser lead DENTRO de la sesión (aprobación o
+   salto), las pestañas de ejecución seguían escondidas hasta reabrirlo:
+   el rol las gobierna y solo se aplicaba al abrir. Aquí se recalculan
+   las dos capas en orden: rol primero, etapa después. */
+function stageTabsRefresh(){
+  try{if(typeof applyRoleAccess==='function')applyRoleAccess();}catch(e){}
+  try{applyLeadGating();}catch(e){}
+}
+window.stageTabsRefresh=stageTabsRefresh;
 function _cssUrl(u){return '"'+String(u||'').replace(/["\\]/g,encodeURIComponent).replace(/\)/g,'%29')+'"';}
 
 /* ── Proyecto / Fotos ── */
@@ -43779,10 +44062,16 @@ try{['estClientRows','estIssues','estSetView','estSetGroup','estMoreToggle','est
 function leadSkipToExec(){
   var p=CP();if(!p)return;
   var k=(typeof projLabel==='function')?projLabel(p):p.label;
-  if(k==='lead'||k==='quoted'){p.label='approved';p.status='active';fbSave(p);}
-  if(typeof applyLeadGating==='function')applyLeadGating();
+  if(k==='lead'||k==='quoted'){
+    var u=(typeof CU==='function')?CU():null;
+    p.label='approved';p.status='active';p.quoteApprovedAt=Date.now();
+    /* Procedencia honesta: no hubo propuesta ni firma; alguien lo marcó */
+    p.approval={source:'skipped',by:(u&&u.id)||'',byName:(u&&u.name)||'',at:p.quoteApprovedAt,date:(typeof todayStr==='function')?todayStr():'',version:0,publishedAt:0,ref:'',note:''};
+    fbSave(p);
+  }
+  if(typeof stageTabsRefresh==='function')stageTabsRefresh();else if(typeof applyLeadGating==='function')applyLeadGating();
   switchTab('tasks');
-  toast(L('Jumped to execution — full tabs unlocked ✓','Saltaste a ejecución — pestañas completas desbloqueadas ✓'));
+  toast(L('Marked approved without a proposal · nothing was sent to the client','Marcado como aprobado sin propuesta · no se envió nada al cliente'));
 }
 window.leadSkipToExec=leadSkipToExec;
 function p_name(){var p=CP();return p?p.name:'';}
@@ -45118,11 +45407,13 @@ async function propLoad(){
   _PROP._pid=p.id;if(!_PROP.photoTags)_PROP.photoTags={};
   return _PROP;
 }
-function propSchedSave(){if(_propSaveTimer)clearTimeout(_propSaveTimer);_propSaveTimer=setTimeout(function(){propSave(true);},900);}
+function _propSavedUI(){var e=document.getElementById('propSaved');if(!e)return;e.textContent=_propSaveState==='saving'?L('Saving…','Guardando…'):_propSaveState==='dirty'?L('Unsaved changes','Cambios sin guardar'):_propSaveState==='error'?L('Changes not saved · retry','Cambios sin guardar · reintenta'):L('Saved','Guardado');e.classList.toggle('is-dirty',_propSaveState!=='saved');}
+function propSchedSave(){if(_PROP){_PROP.editedAt=Date.now();}_propSaveState='dirty';_propSavedUI();if(_propSaveTimer)clearTimeout(_propSaveTimer);_propSaveTimer=setTimeout(function(){propSave(true);},900);}
 async function propSave(silent){
   if(!_PROP)return;_PROP.updatedAt=Date.now();var t=Object.assign({},_PROP);delete t._pid;
-  try{await setDoc(D3('projects',_PROP._pid,'private','proposal'),t);if(!silent)toast(L('Proposal saved ✓','Propuesta guardada ✓'));}
-  catch(e){console.warn('prop save',e);if(!silent)toast(L('Could not save the proposal','No se pudo guardar la propuesta'),'err');}
+  _propSaveState='saving';_propSavedUI();
+  try{await setDoc(D3('projects',_PROP._pid,'private','proposal'),t);_propSaveState='saved';_propSavedUI();if(!silent)toast(L('Proposal saved ✓','Propuesta guardada ✓'));}
+  catch(e){console.warn('prop save',e);_propSaveState='error';_propSavedUI();if(!silent)toast(L('Could not save the proposal','No se pudo guardar la propuesta'),'err');}
 }
 async function _propEnsureTotal(){
   var p=CP();if(!p)return 0;
@@ -45143,61 +45434,169 @@ async function _propSyncAllowances(){
 }
 window._propSyncAllowances=_propSyncAllowances;
 
+/* ══ PROPOSAL (spec §08) ═══════════════════════════════════════════
+   Abre con lo que ya se sabe (cliente, alcance, estimado elegido), dice
+   en qué estado está y qué falta (bloqueante / por revisar /
+   recomendado), y separa Edit de Preview: la vista previa es EXACTAMENTE
+   el HTML que se publicaría, sin controles internos, y no publica ni
+   envía nada. La aprobación externa se registra con procedencia. La
+   publicación, el HTML del cliente y el registro de aprobación siguen
+   siendo las funciones de siempre. */
+var _propMode='edit';           /* 'edit' | 'preview' */
+var _propModePid='';
+var _propSaveState='saved';     /* 'saved' | 'saving' | 'dirty' */
+var _propMoreOpen=false;
+var _propEstChoice=null;        /* candidatos cuando no hay estimado elegido */
 async function renderLeadProp(){
   var area=document.getElementById('leadPropArea');if(!area)return;
   var p=CP();if(!p){area.innerHTML='<div class="lp-empty">'+L('Open a project.','Abre un proyecto.')+'</div>';return;}
-  if(!p.sowDraft){area.innerHTML='<div class="lp-empty">'+L('First generate the SOW and the Estimate.','Primero genera el SOW y el Estimado.')+'</div>';return;}
+  if(!p.sowDraft){
+    area.innerHTML='<div class="est-need"><div class="est-need-ic">'+_I('globe')+'</div>'
+      +'<div class="est-need-t">'+L('The proposal presents the scope and the estimate','La propuesta presenta el alcance y el estimado')+'</div>'
+      +'<div class="est-need-s">'+L('Write or generate the scope of work first; then choose the estimate that feeds the proposal.','Escribe o genera el alcance de trabajo primero; después elige el estimado que alimenta la propuesta.')+'</div>'
+      +'<button class="btn btn-gold" onclick="switchTab(\'leadsow\')">'+L('Go to scope of work','Ir al alcance de trabajo')+'</button></div>';
+    return;
+  }
   area.innerHTML='<div class="lp-empty">'+L('Loading…','Cargando…')+'</div>';
+  if(_propModePid!==p.id){_propMode='edit';_propModePid=p.id;_propMoreOpen=false;}
   await propLoad();
+  /* EXT-06: qué estimado alimenta la propuesta. Si hay varios y ninguno
+     elegido, se pide elegir mostrando nombre y total. */
+  _propEstChoice=null;
+  try{
+    var idx=(typeof estIndexLoad==='function')?await estIndexLoad(p.id):null;
+    var cands=((idx&&idx.items)||[]).filter(function(i){return !i.coId;});
+    var selId=idx&&idx.activeId&&cands.some(function(i){return i.id===idx.activeId;})?idx.activeId:'';
+    if(!selId&&cands.length>1)_propEstChoice=cands;
+    if(!selId&&!cands.length)_propEstChoice=[];
+  }catch(e){}
   _PROP.grandTotal=await _propEnsureTotal();
+  /* La duración sale del estimado elegido cuando la tiene (se puede editar) */
+  if(!String(_PROP.duration||'').trim()){try{var _se=(typeof estSelectedDoc==='function')?await estSelectedDoc(p.id):null;if(_se&&_se.estimatedDays)_PROP.duration=_se.estimatedDays+' '+L('days','días');}catch(e){}}
   _propRender();
+}
+/* Estado de presentación (§08, tabla de estados) */
+function _propState(p){
+  if(p&&p.quoteApprovedAt)return 'approved';
+  if(_PROP.publishedUrl){
+    if((_PROP.contentAt||0)>(_PROP.publishedAt||0)||(_PROP.editedAt||0)>(_PROP.publishedAt||0))return 'changed';
+    return 'published';
+  }
+  var rev=_propReview(p);
+  if(rev.blocking.length||rev.review.length)return 'draft';
+  return 'ready';
+}
+function _propStateLabel(st){
+  return {draft:L('Draft','Borrador'),ready:L('Ready for review','Lista para revisar'),published:L('Published','Publicada'),changed:L('Changes not published','Cambios sin publicar'),approved:L('Approval recorded','Aprobación registrada')}[st]||st;
+}
+/* Bloqueante · Por revisar · Recomendado */
+function _propReview(p){
+  var out={blocking:[],review:[],recommended:[]};
+  var lines=_PROP.lineItems||[],scopes=_PROP.scopeCategories||[];
+  var liTotal=lines.reduce(function(s,l){return s+(parseFloat(l.amount)||0);},0);
+  var selName=(typeof estSelectedName==='function')?estSelectedName():'';
+  if(_propEstChoice&&_propEstChoice.length>1)out.blocking.push({msg:L('Choose which estimate feeds this proposal','Elige qué estimado alimenta esta propuesta'),go:'propScrollTo(\'.prop-estpick\')'});
+  if(_propEstChoice&&_propEstChoice.length===0)out.blocking.push({msg:L('No estimate yet — the investment has nothing to draw from','Aún no hay estimado: la inversión no tiene de dónde salir'),go:'switchTab(\'leadest\')'});
+  if(!lines.length)out.blocking.push({msg:L('No investment lines yet (publish needs at least one)','Aún no hay líneas de inversión (publicar necesita al menos una)'),go:'propScrollTo(\'#propInvest\')'});
+  if(!scopes.length)out.review.push({msg:L('No scope sections written for the client','Sin secciones de alcance para el cliente'),go:'propScrollTo(\'#propScope\')'});
+  if(lines.length&&_PROP.grandTotal&&Math.abs(liTotal-_PROP.grandTotal)>0.5)out.review.push({msg:L('Investment lines total '+estFmt(liTotal)+' but the estimate says '+estFmt(_PROP.grandTotal),'Las líneas suman '+estFmt(liTotal)+' pero el estimado dice '+estFmt(_PROP.grandTotal)),go:'propScrollTo(\'#propInvest\')'});
+  if(p&&p.sowUpdatedAt&&_PROP.contentAt&&p.sowUpdatedAt>_PROP.contentAt)out.review.push({msg:L('The scope of work changed after this content was written','El alcance cambió después de escribir este contenido'),go:'switchTab(\'leadsow\')'});
+  if(_PROP.publishedUrl&&((_PROP.editedAt||0)>(_PROP.publishedAt||0)||(_PROP.contentAt||0)>(_PROP.publishedAt||0)))out.review.push({msg:L('Edited after publishing — the client still sees the published version','Editada después de publicar: el cliente sigue viendo la versión publicada'),go:'propScrollTo(\'.prop-linkbox\')'});
+  var imgs=_propImagesFromTags();
+  if(!imgs.some(function(i){return i.category==='project';}))out.recommended.push({msg:L('No cover photo selected','Sin foto de portada elegida'),go:'propScrollTo(\'#propPhotos\')'});
+  if(!imgs.length&&((p&&p.photos)||[]).length)out.recommended.push({msg:L('Photos exist but none is selected for the client — "suggested" is not "included"','Hay fotos pero ninguna elegida para el cliente: "sugerida" no es "incluida"'),go:'propScrollTo(\'#propPhotos\')'});
+  var email=String((p&&p.customer&&p.customer.email)||'').trim();
+  if(!email)out.recommended.push({msg:L('Client email missing — only needed to send by email; the link works without it','Falta el correo del cliente: solo hace falta para enviar por correo; el enlace funciona sin él'),go:'propEditClient()'});
+  if(!String(_PROP.duration||'').trim())out.recommended.push({msg:L('Duration not stated','Duración sin indicar'),go:'propScrollTo(\'#propDetails\')'});
+  return out;
 }
 function _propRender(){
   var area=document.getElementById('leadPropArea');if(!area||!_PROP)return;
   var p=CP();var photos=(p&&p.photos)||[];
+  var rev=_propReview(p);var st=_propState(p);
+  var selName=(typeof estSelectedName==='function')?estSelectedName():'';
+  var sowSt=(typeof _sowStatus==='function')?_sowStatus(p,''):'';
+  var ver=(_PROP.versions||[]).length;
   var h='';
-  h+='<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap"><button class="home-back" style="margin:0" onclick="switchTab(\'leadest\')">'+_I('chev')+' '+L('Estimator','Estimador')+'</button>'
-    +'<button class="btn btn-ghost btn-xs" onclick="leadSkipToExec()">'+L('Skip proposal','Saltar propuesta')+' &#8594; '+L('Tasks','Tareas')+'</button></div>';
-  h+='<div class="est-top"><div><div style="text-transform:uppercase;letter-spacing:.08em;font-size:10px;color:var(--tx4);font-weight:700">'+L('Client proposal','Propuesta al cliente')+'</div><h2 class="ls-title">'+X(_PROP.projectTitle||p.name)+'</h2></div>'
-    +'<div class="est-top-act">'
-    +'<button class="btn btn-ghost btn-sm" onclick="propGenAI()">'+_I('bulb')+' '+L('AI content','Contenido IA')+'</button>'
-    +'<button class="btn btn-ghost btn-sm" onclick="propSave(false)">'+L('Save','Guardar')+'</button>'
-    +'<button class="btn btn-gold btn-sm" onclick="propPublish()">'+_I('globe')+' '+L('Publish','Publicar')+'</button>'
+  /* ── Encabezado ── */
+  h+='<div class="prop-top"><div class="prop-top-l">'
+    +'<div class="lp-sec-t intk-eyebrow">'+L('Proposal','Propuesta')+'</div>'
+    +'<h2 class="ls-title">'+X(_PROP.projectTitle||p.name)+'</h2>'
+    +'<div class="ls-meta"><span class="ls-status is-'+(st==='approved'?'reviewed':st==='changed'?'review':st==='published'?'reviewed':st==='ready'?'draft':'draft')+' prop-st-'+st+'" id="propStatus">'+_propStateLabel(st)+'</span>'
+    +'<span class="ls-saved" id="propSaved">'+(_propSaveState==='saving'?L('Saving…','Guardando…'):_propSaveState==='dirty'?L('Unsaved changes','Cambios sin guardar'):L('Saved','Guardado'))+'</span>'
+    +(ver?'<span class="prop-ver">'+L('Version ','Versión ')+ver+'</span>':'')+'</div>'
+    +'<div class="prop-based">'+L('Based on: ','Basada en: ')+'<button type="button" class="formo-link" onclick="switchTab(\'leadsow\')">'+L('Scope','Alcance')+(sowSt?' · '+((typeof _sowStatusLabel==='function')?_sowStatusLabel(sowSt):sowSt):'')+'</button> · '
+      +(selName?'<button type="button" class="formo-link" onclick="estVolverALista();switchTab(\'leadest\')">'+L('Estimate ','Estimado ')+'<b>'+X(selName)+'</b></button>':'<b class="is-warn">'+L('no estimate selected','sin estimado elegido')+'</b>')+'</div>'
+    +'</div>'
+    +'<div class="prop-top-r">'
+    +'<div class="intk-modes" role="tablist"><button type="button" role="tab" class="intk-mode'+(_propMode==='edit'?' on':'')+'" aria-selected="'+(_propMode==='edit')+'" onclick="propMode(\'edit\')">'+L('Edit','Editar')+'</button><button type="button" role="tab" class="intk-mode'+(_propMode==='preview'?' on':'')+'" aria-selected="'+(_propMode==='preview')+'" onclick="propMode(\'preview\')">'+L('Preview as client','Vista previa como cliente')+'</button></div>'
+    +_propPrimaryHTML(st,rev)
+    +'<div class="est-more-wrap"><button type="button" class="btn btn-ghost btn-sm est-more-btn" aria-haspopup="menu" aria-expanded="'+_propMoreOpen+'" onclick="propMoreToggle()">'+L('More','Más')+' &#8943;</button>'
+    +'<div class="est-more" role="menu"'+(_propMoreOpen?'':' hidden')+'>'
+      +'<button role="menuitem" onclick="propMoreToggle();propGenAI()">'+_I('bulb')+' '+L('Draft content from scope · AI-assisted','Redactar contenido desde el alcance · con IA')+'</button>'
+      +'<button role="menuitem" onclick="propMoreToggle();propSave(false)">'+_I('tick')+' '+L('Save now','Guardar ahora')+'</button>'
+      +(_PROP.publishedUrl?'<button role="menuitem" onclick="propMoreToggle();propCopyLink()">'+_I('globe')+' '+L('Copy link','Copiar enlace')+'</button>':'')
+      +(_PROP.publishedUrl&&st!=='approved'?'<button role="menuitem" onclick="propMoreToggle();propPublish()">'+_I('upload')+' '+L('Publish new version','Publicar nueva versión')+'</button>':'')
+      +'<div class="est-more-sep"></div>'
+      +(st!=='approved'?'<button role="menuitem" onclick="propMoreToggle();openRecordApproval()">'+_I('check')+' '+L('Record external approval','Registrar aprobación externa')+'</button>':'')
+      +(st!=='approved'?'<button role="menuitem" class="is-quiet" onclick="propMoreToggle();propSkipConfirm()">'+_I('arrow')+' '+L('Skip proposal — mark approved and go to Tasks','Saltar la propuesta: marcar aprobado e ir a Tareas')+'</button>':'')
+    +'</div></div>'
     +'</div></div>';
-  h+='<div class="qa-bar"><div class="qa-bar-txt"><b>'+L('Client approved the quote?','¿El cliente aprobó la cotización?')+'</b><span>'+L('Saves the SOW, estimate & questionnaire into Files, unlocks the execution tabs, and builds tasks + materials — with AI or manually.','Guarda el SOW, estimado y cuestionario en Files, desbloquea las pestañas de ejecución, y arma tareas + materiales — con IA o manual.')+'</span></div>'
-    +'<button class="btn btn-gold qa-bar-btn" onclick="quoteApproved()">'+_I('check')+' '+L('Quote approved','Cotización aprobada')+' &#8594;</button></div>';
-  h+='<div class="ls-sub" style="margin-bottom:14px">'+L('Turns the estimate into a premium client-facing proposal (photos, scope & total) with a shareable link and open-tracking.','Convierte el estimado en una propuesta premium para el cliente (fotos, alcance y total) con link para compartir y tracking de aperturas.')+'</div>';
-  if(_PROP.publishedUrl){
-    h+='<div class="prop-linkbox"><div class="prop-link-t">'+L('Live proposal link','Link de la propuesta')+'</div>'
-      +'<div class="prop-link-row"><a href="'+X(_PROP.publishedUrl)+'" target="_blank" class="prop-link-a">'+X(_PROP.publishedUrl)+'</a></div>'
-      +'<div class="prop-link-actions"><button class="btn btn-ghost btn-sm" onclick="propCopyLink()">'+L('Copy link','Copiar link')+'</button>'
-      +'<a class="btn btn-gold btn-sm" href="'+X(_PROP.publishedUrl)+'" target="_blank">'+L('Open','Abrir')+'</a></div>'
-      +'<div id="propEngage" class="prop-engage">'+L('Loading engagement…','Cargando actividad…')+'</div></div>';
+  /* ── Aprobación registrada: procedencia (PR-03) ── */
+  if(st==='approved'){
+    var ap=p.approval||{};
+    h+='<div class="prop-approved"><b>'+(ap.source==='skipped'?L('Marked approved without a proposal','Marcado como aprobado sin propuesta'):L('Proposal approved','Propuesta aprobada'))+'</b><span>'+(ap.source==='skipped'?L('Marked by ','Marcado por ')+X(ap.byName||'')+' · '+X(new Date(ap.at||p.quoteApprovedAt).toLocaleDateString(LANG==='es'?'es-US':'en-US',{month:'short',day:'numeric',year:'numeric'}))+' · '+L('nothing was sent to the client','no se envió nada al cliente'):ap.source==='external'?L('External approval recorded by ','Aprobación externa registrada por ')+X(ap.byName||'')+' · '+X(new Date(ap.at||p.quoteApprovedAt).toLocaleDateString(LANG==='es'?'es-US':'en-US',{month:'short',day:'numeric',year:'numeric'}))+(ap.version?' · '+L('version ','versión ')+ap.version:'')+(ap.ref?' · '+X(ap.ref):''):L('Approval recorded on ','Aprobación registrada el ')+X(new Date(p.quoteApprovedAt).toLocaleDateString(LANG==='es'?'es-US':'en-US',{month:'short',day:'numeric',year:'numeric'})))+'</span>'
+      +'<span class="prop-approved-note">'+L('Scope and estimate of reference are ready to prepare the work.','El alcance y el estimado de referencia están listos para preparar el trabajo.')+'</span></div>';
   }
-  // Content fields
-  h+='<div class="lp-sec"><div class="lp-sec-t">'+L('Proposal details','Detalles de la propuesta')+'</div><div class="lp-cust">'
-    +'<input class="lp-inp" value="'+X(_PROP.clientName||'')+'" placeholder="'+L('Client name','Nombre del cliente')+'" oninput="propField(\'clientName\',this.value)">'
-    +'<input class="lp-inp" value="'+X(_PROP.projectTitle||'')+'" placeholder="'+L('Project title','Título del proyecto')+'" oninput="propField(\'projectTitle\',this.value)">'
-    +'<input class="lp-inp" value="'+X(_PROP.projectAddress||'')+'" placeholder="'+L('Address','Dirección')+'" oninput="propField(\'projectAddress\',this.value)">'
-    +'<input class="lp-inp" value="'+X(_PROP.duration||'')+'" placeholder="'+L('Duration (e.g. 10 days)','Duración (ej. 10 días)')+'" oninput="propField(\'duration\',this.value)">'
-    +'</div></div>';
+  if(_propMode==='preview'){h+=_propPreviewHTML(p);area.innerHTML=h;_propPreviewMount();return;}
+  /* ── Elegir estimado (EXT-06) ── */
+  if(_propEstChoice&&_propEstChoice.length>1){
+    h+='<div class="prop-estpick"><b>'+L('Which estimate feeds this proposal?','¿Qué estimado alimenta esta propuesta?')+'</b><small>'+L('Nothing is assumed from the last one you opened.','No se asume el último que abriste.')+'</small><div class="prop-estpick-list">'
+      +_propEstChoice.map(function(f){return '<button type="button" class="prop-estpick-b" onclick="propPickEstimate(\''+X(f.id)+'\')"><span><b>'+X(f.name||'')+'</b>'+(f.subtitle?'<small>'+X(f.subtitle)+'</small>':'')+'</span><b>'+estFmt(f.total||0)+'</b></button>';}).join('')+'</div></div>';
+  }
+  /* ── Revisión ── */
+  var nAll=rev.blocking.length+rev.review.length+rev.recommended.length;
+  h+='<div class="prop-review" id="propReview"><div class="prop-review-hd"><b>'+L('Review','Revisión')+'</b>'+(nAll?'':'<span class="formo-badge is-ok">'+L('Nothing pending','Nada pendiente')+'</span>')+'</div>'
+    +[['blocking',L('Blocking','Bloqueante'),rev.blocking],['review',L('Needs review','Por revisar'),rev.review],['recommended',L('Recommended','Recomendado'),rev.recommended]].map(function(g){
+      if(!g[2].length)return '';
+      return '<div class="prop-rv-g is-'+g[0]+'"><span class="prop-rv-k">'+g[1]+'</span>'+g[2].map(function(i){return '<button type="button" class="formo-link" onclick="'+i.go+'">'+X(i.msg)+'</button>';}).join('')+'</div>';
+    }).join('')+'</div>';
+  if(_PROP.publishedUrl){
+    h+='<div class="prop-linkbox"><div class="prop-link-t">'+L('Published version','Versión publicada')+(_PROP.publishedAt?' · '+X(new Date(_PROP.publishedAt).toLocaleDateString(LANG==='es'?'es-US':'en-US',{month:'short',day:'numeric'})):'')+'</div>'
+      +'<div class="prop-link-row"><a href="'+X(_PROP.publishedUrl)+'" target="_blank" class="prop-link-a">'+X(_PROP.publishedUrl)+'</a></div>'
+      +'<div class="prop-link-actions"><button class="btn btn-ghost btn-sm" onclick="propCopyLink()">'+L('Copy link','Copiar enlace')+'</button>'
+      +'<a class="btn btn-ghost btn-sm" href="'+X(_PROP.publishedUrl)+'" target="_blank">'+L('Open published version','Abrir versión publicada')+'</a></div>'
+      +'<div class="prop-link-note">'+L('Copying the link is not sending it; opening it is not approving it.','Copiar el enlace no es enviarlo; abrirlo no es aprobarlo.')+'</div>'
+      +'<div id="propEngage" class="prop-engage">'+L('Loading activity…','Cargando actividad…')+'</div></div>';
+  }
+  /* ── Cliente y proyecto: resumen con "Edit" ── */
+  var cust=(p&&p.customer)||{};
+  h+='<div class="lp-sec" id="propDetails"><div class="lp-sec-t">'+L('Client & project','Cliente y proyecto')+'</div>'
+    +'<div class="prop-who"><div class="prop-who-l"><b>'+X(_PROP.clientName||cust.name||p.client||L('No client yet','Aún sin cliente'))+'</b><small>'+X([cust.phone,cust.email].filter(Boolean).join(' · ')||L('No phone or email on file','Sin teléfono ni correo'))+'</small><small>'+X(_PROP.projectAddress||p.address||'')+'</small></div>'
+    +'<div class="prop-who-acts"><button type="button" class="btn btn-ghost btn-xs" onclick="propEditClient()">'+L('Edit client','Editar cliente')+'</button><button type="button" class="btn btn-ghost btn-xs" onclick="switchTab(\'leadproj\')">'+L('Edit project','Editar proyecto')+'</button></div></div>'
+    +'<div class="lp-cust">'
+    +'<input class="lp-inp" value="'+X(_PROP.clientName||'')+'" placeholder="'+L('Client name as shown to the client','Nombre del cliente como se muestra')+'" oninput="propField(\'clientName\',this.value)" aria-label="'+L('Client name','Nombre del cliente')+'">'
+    +'<input class="lp-inp" value="'+X(_PROP.projectTitle||'')+'" placeholder="'+L('Project title','Título del proyecto')+'" oninput="propField(\'projectTitle\',this.value)" aria-label="'+L('Project title','Título del proyecto')+'">'
+    +'<input class="lp-inp" value="'+X(_PROP.projectAddress||'')+'" placeholder="'+L('Address','Dirección')+'" oninput="propField(\'projectAddress\',this.value)" aria-label="'+L('Address','Dirección')+'">'
+    +'<input class="lp-inp" value="'+X(_PROP.duration||'')+'" placeholder="'+L('Duration (e.g. 10 days)','Duración (ej. 10 días)')+'" oninput="propField(\'duration\',this.value)" aria-label="'+L('Duration','Duración')+'">'
+    +'</div><div class="lp-hint">'+L('Duration comes from the estimate when it has one. A desired start date is not a delivery commitment.','La duración sale del estimado cuando la tiene. La fecha deseada de inicio no es un compromiso de entrega.')+'</div></div>';
   // Scope cards
-  h+='<div class="lp-sec"><div class="lp-sec-t">'+L('Scope categories','Categorías de alcance')+'<button class="btn btn-xs btn-gold" style="margin-left:auto" onclick="propAddScope()">'+L('+ Category','+ Categoría')+'</button></div>';
-  if(!(_PROP.scopeCategories||[]).length)h+='<div class="est-none">'+L('Tap "AI content" to build these from the SOW, or add manually.','Toca "Contenido IA" para armarlas del SOW, o agrégalas manualmente.')+'</div>';
+  h+='<div class="lp-sec" id="propScope"><div class="lp-sec-t">'+L('Scope sections','Secciones de alcance')+'<button class="btn btn-xs btn-gold" style="margin-left:auto" onclick="propAddScope()">'+L('+ Section','+ Sección')+'</button></div>';
+  if(!(_PROP.scopeCategories||[]).length)h+='<div class="est-none">'+L('Draft them from the scope (More ⋯ → Draft content) or add them by hand.','Redáctalas desde el alcance (Más ⋯ → Redactar contenido) o agrégalas a mano.')+'</div>';
   h+=(_PROP.scopeCategories||[]).map(function(sc,i){return _propScopeHTML(sc,i);}).join('')+'</div>';
   // Line items
   var totLi=(_PROP.lineItems||[]).reduce(function(s,l){return s+(parseFloat(l.amount)||0);},0);
-  h+='<div class="lp-sec"><div class="lp-sec-t">'+L('Investment breakdown','Desglose de inversión')+'<button class="btn btn-xs btn-gold" style="margin-left:auto" onclick="propAddLine()">'+L('+ Line','+ Línea')+'</button></div>';
+  h+='<div class="lp-sec" id="propInvest"><div class="lp-sec-t">'+L('Investment','Inversión')+'<button class="btn btn-xs btn-gold" style="margin-left:auto" onclick="propAddLine()">'+L('+ Line','+ Línea')+'</button></div>';
   h+=(_PROP.lineItems||[]).map(function(li,i){return _propLineHTML(li,i);}).join('');
-  var _selN=(typeof estSelectedName==='function')?estSelectedName():'';
   h+='<div class="prop-total"><span>'+L('Total shown to client','Total mostrado al cliente')+'</span><b>'+estFmt(totLi||_PROP.grandTotal||0)+'</b></div>'
-    +'<div class="prop-est-src">'+(_selN?L('Investment from estimate ','Inversión del estimado ')+'<b>'+X(_selN)+'</b>':'<b class="is-warn">'+L('No estimate selected for this proposal','Ningún estimado elegido para esta propuesta')+'</b>')+' <button type="button" class="btn btn-ghost btn-xs" onclick="estVolverALista();switchTab(\'leadest\')">'+(_selN?L('Change','Cambiar'):L('Choose','Elegir'))+'</button></div>';
-  h+='<div class="lp-hint">'+L('If left empty, the estimator total is used: ','Si lo dejas vacío, se usa el total del estimador: ')+estFmt(_PROP.grandTotal||0)+'</div></div>';
+    +'<div class="prop-est-src">'+(selName?L('Investment from estimate ','Inversión del estimado ')+'<b>'+X(selName)+'</b>'+' · '+estFmt(_PROP.grandTotal||0):'<b class="is-warn">'+L('No estimate selected for this proposal','Ningún estimado elegido para esta propuesta')+'</b>')+' <button type="button" class="btn btn-ghost btn-xs" onclick="estVolverALista();switchTab(\'leadest\')">'+(selName?L('Change','Cambiar'):L('Choose','Elegir'))+'</button></div>'
+    +((_PROP.lineItems||[]).length&&_PROP.grandTotal&&Math.abs(totLi-_PROP.grandTotal)>0.5?'<div class="prop-diff">'+L('These lines are manual values and differ from the estimate by ','Estas líneas son valores manuales y difieren del estimado en ')+estFmt(Math.abs(totLi-_PROP.grandTotal))+'</div>':'')
+    +'<div class="lp-hint">'+L('If left empty, the estimator total is used: ','Si lo dejas vacío, se usa el total del estimador: ')+estFmt(_PROP.grandTotal||0)+'</div></div>';
   // Photos
-  h+='<div class="lp-sec"><div class="lp-sec-t">'+L('Photos','Fotos')+'</div>';
+  h+='<div class="lp-sec" id="propPhotos"><div class="lp-sec-t">'+L('Photos','Fotos')+'</div>';
   if(!photos.length)h+='<div class="est-none">'+L('No project photos. Add them in Project / Photos.','Sin fotos del proyecto. Agrégalas en Proyecto / Fotos.')+'</div>';
   else{
-    h+='<div class="lp-hint" style="margin-top:0;margin-bottom:12px">'+L('Group each photo into a section, reorder with the arrows, and it shows that way in the proposal. Before/After pair up in order (1st with 1st, 2nd with 2nd…). The first Hero photo becomes the cover.','Agrupa cada foto en una sección, reordénalas con las flechas, y así se muestran en la propuesta. Antes/Después se emparejan en orden (1ª con 1ª, 2ª con 2ª…). La primera foto de Portada es la portada.')+'</div>';
+    h+='<div class="lp-hint" style="margin-top:0;margin-bottom:12px">'+L('Only photos you place in a section are published — "suggested" is not "included". Reorder with the arrows. Before/After pair up in order. The first Cover photo is the hero.','Solo se publican las fotos que pongas en una sección: "sugerida" no es "incluida". Reordena con las flechas. Antes/Después se emparejan en orden. La primera foto de Portada es la portada.')+'</div>';
     h+=_propPhotoManagerHTML(p);
   }
   h+='</div>';
@@ -45207,6 +45606,61 @@ function _propRender(){
   if(typeof _lazyScan==='function')_lazyScan();
   if(_PROP.publishedUrl)_propLoadEngagement();
 }
+function _propPrimaryHTML(st,rev){
+  if(st==='approved')return '<button class="btn btn-gold btn-sm" onclick="openBuildChoice()">'+_I('check')+' '+L('Prepare execution','Preparar ejecución')+'</button>';
+  if(st==='published')return '<a class="btn btn-gold btn-sm" href="'+X(_PROP.publishedUrl)+'" target="_blank">'+_I('globe')+' '+L('Open published version','Abrir versión publicada')+'</a>';
+  if(st==='changed')return '<button class="btn btn-gold btn-sm" onclick="propScrollTo(\'#propReview\')">'+L('Review changes','Revisar cambios')+'</button>';
+  if(rev.blocking.length)return '<button class="btn btn-gold btn-sm" onclick="propScrollTo(\'#propReview\')">'+L('Review issues','Revisar pendientes')+' <b class="intk-mode-b">'+rev.blocking.length+'</b></button>';
+  if(_propMode==='preview')return '<button class="btn btn-gold btn-sm prop-publish" onclick="propPublish()">'+_I('globe')+' '+L('Publish','Publicar')+'</button>';
+  return '<button class="btn btn-gold btn-sm" onclick="propMode(\'preview\')">'+L('Preview as client','Vista previa como cliente')+'</button>';
+}
+/* Vista previa: el mismo HTML que se publica, en un marco aislado */
+function _propPreviewHTML(p){
+  var pend=_propSaveState!=='saved';
+  return '<div class="prop-preview"><div class="prop-preview-hd"><span>'+L('Exactly what the client would see for the current content. Preview does not publish, send or record anything.','Exactamente lo que vería el cliente con el contenido actual. La vista previa no publica, envía ni registra nada.')+'</span>'
+    +(pend?'<span class="prop-preview-pend">'+L('Includes changes that are still saving','Incluye cambios que aún se están guardando')+'</span>':'')+'</div>'
+    +'<iframe class="prop-frame" id="propFrame" title="'+L('Proposal preview','Vista previa de la propuesta')+'" sandbox="allow-scripts allow-same-origin"></iframe></div>';
+}
+function _propPreviewMount(){
+  var f=document.getElementById('propFrame');if(!f||!_PROP)return;
+  try{f.srcdoc=_proposalHtml(_PROP,_propImagesFromTags(),_PROP.proposalId,{preview:true});}catch(e){console.warn('preview',e);}
+}
+function propMode(m){_propMode=(m==='preview')?'preview':'edit';_propMoreOpen=false;_propRender();var a=document.getElementById('leadPropArea');if(a)a.scrollIntoView({block:'start'});}
+function propMoreToggle(){_propMoreOpen=!_propMoreOpen;var m=document.querySelector('#leadPropArea .est-more');var b=document.querySelector('#leadPropArea .est-more-btn');if(m)m.hidden=!_propMoreOpen;if(b)b.setAttribute('aria-expanded',String(_propMoreOpen));}
+function propScrollTo(sel){if(_propMode!=='edit'){_propMode='edit';_propRender();}var el=document.querySelector('#leadPropArea '+sel);if(el){el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.add('is-hl');setTimeout(function(){el.classList.remove('is-hl');},1600);}}
+function propEditClient(){switchTab('leadproj');setTimeout(function(){var el=document.querySelector('#leadProjArea #lpCustName');if(el){el.scrollIntoView({block:'center'});try{el.focus({preventScroll:true});}catch(e){}}},80);}
+async function propPickEstimate(id){if(typeof estUsarPropuesta==='function')await estUsarPropuesta(id);_propEstChoice=null;if(typeof formoFactsForget==='function')try{formoFactsForget(CP().id);}catch(e){}renderLeadProp();}
+/* Saltar la propuesta: sigue permitido, pero con su consecuencia a la vista */
+function propSkipConfirm(){
+  showConfirm(L('Skip the proposal? The project is marked approved and Tasks opens. Nothing is sent to the client and no proposal link is created.','¿Saltar la propuesta? El proyecto se marca aprobado y se abre Tareas. No se envía nada al cliente ni se crea un enlace.'),function(){leadSkipToExec();});
+}
+/* Aprobación externa (PR-03): quién la registra, cuándo, qué versión, referencia */
+function openRecordApproval(){
+  var p=CP();if(!p)return;
+  var ov=document.getElementById('approvalOv');
+  if(!ov){ov=document.createElement('div');ov.id='approvalOv';ov.className='ov';document.body.appendChild(ov);ov.onclick=function(e){if(e.target===ov)cm('approvalOv');};}
+  var u=(typeof CU==='function')?CU():null;var ver=(_PROP&&_PROP.versions||[]).length;
+  ov.innerHTML='<div class="modal sm" onclick="event.stopPropagation()"><div class="mhd"><h3>'+L('Record external approval','Registrar aprobación externa')+'</h3><button class="mcls" onclick="cm(\'approvalOv\')">&#10005;</button></div>'
+    +'<div class="mbody">'
+    +'<p class="ls-sub">'+L('For an approval received outside Formo (email, text, in person). This is not a client signature captured in the portal.','Para una aprobación recibida fuera de Formo (correo, mensaje, en persona). No es una firma del cliente capturada en el portal.')+'</p>'
+    +'<div class="f"><label>'+L('Recorded by','Registrada por')+'</label><input id="apBy" value="'+X((u&&u.name)||'')+'" readonly></div>'
+    +'<div class="f"><label>'+L('Date received','Fecha en que se recibió')+'</label><input id="apDate" type="date" value="'+todayStr()+'"></div>'
+    +'<div class="f"><label>'+L('Version approved','Versión aprobada')+'</label><input id="apVer" value="'+(ver?L('Version ','Versión ')+ver+(_PROP.publishedAt?' · '+new Date(_PROP.publishedAt).toLocaleDateString():''):L('Not published — approved from the estimate / quote','Sin publicar: aprobada desde el estimado / cotización'))+'" readonly></div>'
+    +'<div class="f"><label>'+L('Reference (optional)','Referencia (opcional)')+'</label><input id="apRef" placeholder="'+L('e.g. Email from Ana, Sep 26 · signed quote PDF','p. ej. Correo de Ana, 26 sep · cotización firmada')+'"></div>'
+    +'<div class="f"><label>'+L('Note (optional)','Nota (opcional)')+'</label><textarea id="apNote" rows="2"></textarea></div>'
+    +'</div><div class="mfoot"><button class="btn btn-ghost" onclick="cm(\'approvalOv\')">'+L('Cancel','Cancelar')+'</button><button class="btn btn-gold" id="apGo" onclick="recordExternalApproval()">'+L('Record approval','Registrar aprobación')+'</button></div></div>';
+  om('approvalOv');
+}
+var _apBusy=false;
+async function recordExternalApproval(){
+  var p=CP();if(!p||_apBusy)return;_apBusy=true;
+  var g=function(id){var e=document.getElementById(id);return e?String(e.value||'').trim():'';};
+  var u=(typeof CU==='function')?CU():null;
+  p.approval={source:'external',by:(u&&u.id)||'',byName:(u&&u.name)||g('apBy'),at:Date.now(),date:g('apDate'),version:(_PROP&&_PROP.versions||[]).length||0,publishedAt:(_PROP&&_PROP.publishedAt)||0,ref:g('apRef'),note:g('apNote')};
+  cm('approvalOv');
+  try{await quoteApproved();}finally{_apBusy=false;}
+}
+['renderLeadProp','_propRender','propMode','propMoreToggle','propScrollTo','propEditClient','propPickEstimate','propSkipConfirm','openRecordApproval','recordExternalApproval','_propReview','_propState'].forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
 function _propSvcIdx(tag){var m=/^service_(\d+)$/.exec(tag||'');return m?m[1]:'-1';}
 function _propScopeHTML(sc,i){
   var iconOpts=PROP_ICON_KEYS.map(function(k){return '<option value="'+k+'"'+(sc.icon===k?' selected':'')+'>'+(PROP_CATLABEL[k]||k)+'</option>';}).join('');
@@ -45496,6 +45950,7 @@ function propPhotoMove(id,dir,cat){
 }
 function propCopyLink(){if(!_PROP||!_PROP.publishedUrl)return;var ta=document.createElement('textarea');ta.value=_PROP.publishedUrl;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast(L('Link copied ✓','Link copiado ✓'));}catch(e){}document.body.removeChild(ta);}
 
+var _propGenConfirmed=false;
 async function propGenAI(){
   if(!_PROP)await propLoad();if(!_PROP)return;
   var k=localStorage.getItem('formo_api');
@@ -45505,7 +45960,12 @@ async function propGenAI(){
   var sow=(p.sowDraft||(est&&est.sow)||'').trim();
   var phaseList=(est&&est.phases||[]).map(function(ph){return ph.name;}).filter(Boolean).join(', ');
   var material='Client: '+(_PROP.clientName||'')+'\nProject title: '+(p.name||'')+'\nAddress: '+(p.address||'')+'\nEstimated duration: '+(_PROP.duration||(est&&est.estimatedDays?est.estimatedDays+' days':''))+'\nGrand total (client price): '+total+'\nPhases: '+(phaseList||'(none)')+'\n\nSCOPE OF WORK:\n'+sow;
-  var area=document.getElementById('leadPropArea');if(area)area.innerHTML='<div class="lp-empty">'+L('AI is building the proposal content…','La IA está armando el contenido de la propuesta…')+'</div>';
+  /* PR-04: si ya hay contenido, se pide confirmación antes de reemplazarlo */
+  if((_PROP.scopeCategories||[]).length||(_PROP.lineItems||[]).length){
+    if(!_propGenConfirmed){showConfirm(L('Replace the current sections and investment lines with a new draft from the scope? Your edits will be lost.','¿Reemplazar las secciones y líneas de inversión actuales con un borrador nuevo desde el alcance? Tus ediciones se perderán.'),function(){_propGenConfirmed=true;propGenAI();});return;}
+  }
+  _propGenConfirmed=false;
+  var area=document.getElementById('leadPropArea');if(area)area.innerHTML='<div class="lp-empty">'+L('Drafting the client content from your scope and estimate…','Redactando el contenido para el cliente desde tu alcance y estimado…')+'</div>';
   var prompt='You are building a premium client renovation proposal for Formo Renovation. From the project info below, return ONLY raw JSON (no markdown, no backticks):\n'
     +'{"clientName":"","projectTitle":"","projectAddress":"","duration":"","scopeCategories":[{"title":"","description":"","icon":"general"}],"lineItems":[{"label":"","amount":0}]}\n'
     +'Rules: group the scope into 3-6 client-facing SERVICE categories with a warm 1-2 sentence description each. icon must be one of: general, countertop, cabinet, paint, plumbing, trim, flooring, cleanup, demo. lineItems are named after SERVICES (e.g. "Interior Painting", "Framing") NOT cost types, and their amounts MUST sum to the grand total ('+total+'). Never mention internal cost, markup or profit. Keep it elegant and client-facing.\n\n=== PROJECT INFO ===\n'+material;
@@ -45520,7 +45980,7 @@ async function propGenAI(){
     if(parsed.duration)_PROP.duration=parsed.duration;
     _PROP.scopeCategories=parsed.scopeCategories||[];
     _PROP.lineItems=parsed.lineItems||[];
-    _PROP.grandTotal=total;
+    _PROP.grandTotal=total;_PROP.contentAt=Date.now();
     await _propSyncAllowances();
     await propSave(true);_propRender();toast(L('Proposal content ready ✓','Contenido de la propuesta listo ✓'));
   }catch(err){console.error('prop ai',err);toast('Error: '+(err&&err.message||'error'),'err');_propRender();}
@@ -45538,11 +45998,11 @@ function _propImagesFromTags(){
 async function propPublish(){
   if(_propBusy)return;if(!_PROP)await propLoad();if(!_PROP)return;
   _propBusy=true;
-  var btn=document.querySelector('.est-top-act .btn-gold');if(btn)btn.disabled=true;
+  var btn=document.querySelector('#leadPropArea .prop-publish');if(btn)btn.disabled=true;
   try{
     _PROP.grandTotal=await _propEnsureTotal();
     await _propSyncAllowances();
-    if(!(_PROP.lineItems||[]).length){toast(L('Generate content first (AI content)','Genera el contenido primero (Contenido IA)'),'err');_propBusy=false;if(btn)btn.disabled=false;return;}
+    if(!(_PROP.lineItems||[]).length){toast(L('Add at least one investment line before publishing','Agrega al menos una línea de inversión antes de publicar'),'err');_propBusy=false;if(btn)btn.disabled=false;return;}
     var images=_propImagesFromTags();
     var html=_proposalHtml(_PROP,images,_PROP.proposalId);
     var path=SP('proposals/')+_PROP.proposalId+'.html';
@@ -45550,6 +46010,8 @@ async function propPublish(){
     await uploadBytes(ref,new Blob([html],{type:'text/html; charset=utf-8'}),{contentType:'text/html; charset=utf-8'});
     var url=await getDownloadURL(ref);
     _PROP.publishedUrl=url;_PROP.publishedPath=path;_PROP.publishedAt=Date.now();
+    /* EXT-07: cada publicación queda numerada; la aprobación apunta a una */
+    _PROP.versions=(_PROP.versions||[]).concat([{n:(_PROP.versions||[]).length+1,at:_PROP.publishedAt,url:url,total:(_PROP.lineItems||[]).reduce(function(s,l){return s+(parseFloat(l.amount)||0);},0)||_PROP.grandTotal||0}]);
     var liTotal=(_PROP.lineItems||[]).reduce(function(s,l){return s+(parseFloat(l.amount)||0);},0)||_PROP.grandTotal||0;
     try{await setDoc(D('proposals',_PROP.proposalId),{proposalId:_PROP.proposalId,projectId:_PROP._pid,clientName:_PROP.clientName||'',projectAddress:_PROP.projectAddress||'',projectTitle:_PROP.projectTitle||'',totalAmount:liTotal,url:url,createdAt:Date.now()});}catch(e){console.warn('prop meta',e);}
     await propSave(true);
@@ -45578,7 +46040,7 @@ async function _propLoadEngagement(){
     var sids=Object.keys(sessions);var totalSec=sids.reduce(function(s,k){return s+sessions[k];},0);
     var mins=Math.floor(totalSec/60),secs=totalSec%60;
     el.innerHTML='<span class="prop-eng-i"><b>'+sids.length+'</b> '+L('opens','aperturas')+'</span><span class="prop-eng-i"><b>'+(mins?mins+'m ':'')+secs+'s</b> '+L('total time','tiempo total')+'</span>'+(sids.length?'':'<span class="prop-eng-i" style="color:var(--tx3)">'+L('Not opened yet','Aún no la abren')+'</span>');
-  }catch(e){el.textContent=L('Engagement unavailable (publish rules pending)','Actividad no disponible (faltan reglas)');}
+  }catch(e){el.textContent=L('Activity unavailable (publish the Firestore rules)','Actividad no disponible (publica las reglas de Firestore)');}
 }
 
 /* Carrusel deslizable para la propuesta publicada: scroll-snap nativo (funciona
@@ -45663,7 +46125,9 @@ var _FX_JS='<'+'script>'
 +'<'+'/script>';
 
 /* ── Premium proposal HTML (portado de buildHtml del server) ── */
-function _proposalHtml(data,images,proposalId){
+/* opts.preview: mismo HTML, sin el registro de visitas (la vista previa
+   interna no es una apertura del cliente y no debe contarse). */
+function _proposalHtml(data,images,proposalId,opts){opts=opts||{};
   var clientName=data.clientName||'',projectTitle=data.projectTitle||'',projectAddress=data.projectAddress||'',duration=data.duration||'',scopeCategories=data.scopeCategories||[],lineItems=data.lineItems||[],grandTotal=Number(data.grandTotal)||0;
   var heroImgs=images.filter(function(i){return i.category==='project';});
   var baImgs=images.filter(function(i){return i.category==='before_after';});
@@ -45747,7 +46211,7 @@ function _proposalHtml(data,images,proposalId){
     +'<section style="padding:100px 0;text-align:center"><div style="max-width:1100px;margin:0 auto;padding:0 6%"><div class="p-eyebrow" style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#C9A96E;margin-bottom:14px">Begin Your Renovation</div><h2 class="p-title" style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(28px,4vw,52px);font-weight:300;color:#F8F4EF;margin-bottom:12px">Ready to transform your space?</h2><p class="p-lede" style="font-size:14px;color:#b8b0a2;max-width:480px;margin:0 auto 48px;line-height:1.7">We\'d love to schedule a walkthrough and lock in your start date.</p>'
     +'<div class="cb" style="display:inline-block;text-align:left;border:1px solid rgba(201,169,110,0.28);padding:36px 52px;background:rgba(255,255,255,0.02)"><div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E;margin-bottom:14px">Your Project Lead</div><div class="p-ctitle" style="font-family:\'Cormorant Garamond\',serif;font-size:28px;font-weight:600;color:#F8F4EF;margin-bottom:20px">Dan Lares</div>'
     +'<div style="font-size:15px;color:#b8b0a2;margin-bottom:10px"><a href="tel:6156081220">615-608-1220</a></div><div style="font-size:15px;color:#b8b0a2;margin-bottom:10px"><a href="mailto:dan@formorenovation.com">dan@formorenovation.com</a></div><div style="font-size:15px;color:#b8b0a2"><a href="https://formorenovation.com" target="_blank">formorenovation.com</a></div></div></div></section>'
-    +_FX_JS+trackScript+'</body></html>';
+    +_FX_JS+(opts.preview?'':trackScript)+'</body></html>';
 }
 window.__propHtml=function(d,i,id){return _proposalHtml(d,i,id);};
 ['propLoad','estLoad','renderLeadProp','propGenAI','propPublish','propSave','propField','propScopeField','propAddScope','propDelScope','propAddLine','propDelLine','propLineField','propTagPhoto','propCopyLink','propPhotoMove'
@@ -45829,7 +46293,9 @@ function formoProjectFacts(project){
   tasks,phases:(p.schedulePhases||[]).filter(ph=>ph&&ph.name).length,
   cos:(p.changeOrders||[]),
   contractPrice:+((p.contract||{}).price||0),
-  houseCode:String(p.houseCode||'').trim()
+  houseCode:String(p.houseCode||'').trim(),
+  approvedAt:+(p.quoteApprovedAt||0),
+  approval:(p.approval&&typeof p.approval==='object')?p.approval:null
  };
 }
 function formoProjectModel(project,label,today,facts){
@@ -45892,8 +46358,13 @@ function formoProjectModel(project,label,today,facts){
   }
  }else if(!f.tasks.length){
   state='prepare';
-  title=['Prepare execution','Prepara la ejecución'];
-  description=['Approval recorded. Build the task plan from the approved scope, then schedule it.','Aprobación registrada. Arma el plan de tareas desde el alcance aprobado y prográmalo.'];
+  const skipped=!!(f.approval&&f.approval.source==='skipped');
+  title=skipped?['Approved without a proposal','Aprobado sin propuesta']:['Proposal approved','Propuesta aprobada'];
+  const apWho=f.approval&&(f.approval.source==='external'||skipped)&&f.approval.byName?f.approval.byName:'';
+  const apDay=f.approvedAt?[new Date(f.approvedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}),new Date(f.approvedAt).toLocaleDateString('es-US',{month:'short',day:'numeric'})]:['',''];
+  const lead0=skipped?('Marked approved'+(apWho?' by '+apWho:'')+(apDay[0]?' on '+apDay[0]:'')+' — no proposal was sent. '):(apWho?'External approval recorded by '+apWho+(apDay[0]?' on '+apDay[0]:'')+'. ':(apDay[0]?'Approval recorded '+apDay[0]+'. ':'Approval recorded. '));
+  const lead1=skipped?('Marcado como aprobado'+(apWho?' por '+apWho:'')+(apDay[1]?' el '+apDay[1]:'')+': no se envió propuesta. '):(apWho?'Aprobación externa registrada por '+apWho+(apDay[1]?' el '+apDay[1]:'')+'. ':(apDay[1]?'Aprobación registrada el '+apDay[1]+'. ':'Aprobación registrada. '));
+  description=[lead0+'The scope and estimate of reference are ready — build the task plan, then schedule it.',lead1+'El alcance y el estimado de referencia están listos: arma el plan de tareas y prográmalo.'];
   actions=['prepare','schedule','crew'];
  }else{
   state='work';
@@ -45924,6 +46395,7 @@ function formoProjectModel(project,label,today,facts){
  if(f.sow)summary.push({key:'scope',label:['Scope','Alcance'],value:[f.sow.split(/\s+/).length+' words · draft',f.sow.split(/\s+/).length+' palabras · borrador'],tab:'leadsow'});
  if(finance&&est.loaded&&est.count)summary.push({key:'estimate',label:['Estimate','Estimado'],value:[(est.activeName?est.activeName+' · ':'')+(est.activeTotal?'$'+Math.round(est.activeTotal).toLocaleString('en-US'):est.count+' saved'),(est.activeName?est.activeName+' · ':'')+(est.activeTotal?'$'+Math.round(est.activeTotal).toLocaleString('en-US'):est.count+' guardados')],tab:'leadest'});
  if(finance&&prop.loaded&&prop.published)summary.push({key:'proposal',label:['Proposal','Propuesta'],value:['Published '+new Date(prop.publishedAt||0).toLocaleDateString('en-US',{month:'short',day:'numeric'}),'Publicada '+new Date(prop.publishedAt||0).toLocaleDateString('es-US',{month:'short',day:'numeric'})],tab:'leadprop'});
+ if(f.approvedAt&&(label==='approved'||label==='active'||label==='done'||f.tasks.length))summary.push({key:'approval',label:['Approval','Aprobación'],value:[(f.approval&&f.approval.source==='external'?'External · ':f.approval&&f.approval.source==='skipped'?'No proposal · ':'')+new Date(f.approvedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'})+(f.approval&&f.approval.byName?' · '+f.approval.byName:''),(f.approval&&f.approval.source==='external'?'Externa · ':f.approval&&f.approval.source==='skipped'?'Sin propuesta · ':'')+new Date(f.approvedAt).toLocaleDateString('es-US',{month:'short',day:'numeric'})+(f.approval&&f.approval.byName?' · '+f.approval.byName:'')],tab:'leadprop'});
  if(finance&&f.contractPrice)summary.push({key:'contract',label:['Contract','Contrato'],value:'$'+Math.round(f.contractPrice).toLocaleString('en-US'),tab:'finance'});
  const coApproved=f.cos.filter(c=>c.status==='approved'||c.status==='billed').length;
  if(f.cos.length)summary.push({key:'cos',label:['Change orders','Órdenes de cambio'],value:[coApproved+' approved of '+f.cos.length,coApproved+' aprobadas de '+f.cos.length],tab:'finance'});
@@ -46145,7 +46617,7 @@ function formoHomeEnhance(area,p,isConsultation){
   proposal:{tab:'leadprop',label:facts.proposal.published?L('Open proposal','Abrir propuesta'):L('Review proposal','Revisar propuesta')},
   copylink:{tab:'leadprop',label:L('Copy link','Copiar enlace'),run:()=>{if(typeof propLoad==='function')Promise.resolve(propLoad()).then(()=>{if(typeof propCopyLink==='function')propCopyLink();});},only:facts.proposal.published},
   project:{tab:'leadproj',label:L('Review project','Revisar proyecto')},
-  prepare:{tab:'gen',label:L('Prepare execution','Preparar ejecución')},
+  prepare:{tab:'gen',label:L('Prepare execution','Preparar ejecución'),run:()=>{if(typeof openBuildChoice==='function')openBuildChoice();else switchTab('gen');}},
   today:{tab:'tasks',label:L('View today’s work','Ver el trabajo de hoy')},
   tasks:{tab:'tasks',label:L('Review closeout','Revisar cierre')},
   schedule:{tab:'sched',label:L('Plan schedule','Planificar calendario')},
@@ -46204,25 +46676,16 @@ function formoOpenStage(){
  sec.scrollIntoView({block:'center',behavior:'smooth'});
  const on=sec.querySelector('.lp-chip.on')||sec.querySelector('.lp-chip');if(on)on.focus({preventScroll:true});
 }
+/* §08: la revisión vive en la propia pantalla (#propReview, bloqueante /
+   por revisar / recomendado), así que aquí solo se pliegan las secciones
+   largas. "Client & project" queda abierta: es el resumen con "Edit". */
 function formoProposalEnhance(area,p,proposal){
  if(!p||!proposal)return;
- const checks=[
-  [!!String(proposal.clientName||'').trim(),L('Client name','Nombre del cliente')],
-  [!!(proposal.scopeCategories||[]).length,L('Proposal scope sections','Secciones de alcance de la propuesta')],
-  [!!(proposal.lineItems||[]).length||!!proposal.grandTotal,L('Investment entered — verify the amount','Inversión ingresada — verifica el importe')]
- ];
- const card=formoElement('section','formo-next');
- card.append(formoElement('h2','',L('Review before sharing','Revisa antes de compartir')));
- card.append(formoElement('p','',L('These checks are a guide. Review the scope, amounts and photos before publishing.','Estas comprobaciones son una guía. Revisa alcance, importes y fotos antes de publicar.')));
- const list=formoElement('ul','formo-readiness');
- checks.forEach(([ok,label])=>list.append(formoElement('li','',(ok?'✓ ':'○ ')+label)));
- list.append(formoElement('li','',L('Project photos: ','Fotos del proyecto: ')+(p.photos||[]).length));
- card.append(list);area.prepend(card);
  const sections=Array.from(area.children).filter(el=>el.classList.contains('lp-sec'));
  sections.forEach((section,i)=>{
   const title=section.querySelector('.lp-sec-t');
   const caption=title?Array.from(title.childNodes).filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim():L('Details','Detalles');
-  formoDisclosure(section,caption,p.id+':proposal:'+i,i===1||i===2);
+  formoDisclosure(section,caption,p.id+':proposal:'+i,i<=2);
  });
 }
 try{window.formoOpenStage=formoOpenStage;window.formoFactsForget=formoFactsForget;}catch(e){}
@@ -46397,6 +46860,114 @@ function openFavPicker(){
 function closeFavPicker(){const ov=document.getElementById('favPickOv');if(ov)ov.classList.remove('on');if(typeof _syncModalFlag==='function')_syncModalFlag();}
 try{['formoProjSignal','formoProjSignalHTML','renderHomeToday','homeTodayToggle','homeTodayGo','homeTodayOpenTask','homeFavs','homeFavIs','homeFavToggle','homeFavMove','renderHomeFavs','openFavPicker','closeFavPicker']
  .forEach(fn=>{window[fn]=eval(fn);});}catch(e){}
+/* ══ HOME (portada de la empresa) — render de Dan ═══════════════════
+   Menú lateral en escritorio con Home + los accesos rápidos que NO están
+   en la portada; saludo con portada; tres señales (tareas · por cobrar ·
+   solicitudes); recientes en rejilla; cinco accesos rápidos y "All tools"
+   para el resto; pipeline por etapa. Todo sale de las mismas listas ya
+   filtradas por rol (_dashTilesLast, _projsVisible): no se abre nada que
+   el rol no tenga. Solo presentación: no escribe datos. */
+var HOME_QUICK_PAGES=['calendarPage','invoicesPage','workersPage','requestsPage'];
+var _homeToolsOpen=false;
+function _homeTileGo(t){return t.action?t.action:"showPage('"+t.page+"')";}
+function _homeGreeting(){
+ var h=new Date().getHours();
+ var g=h<12?L('Good morning','Buenos días'):h<18?L('Good afternoon','Buenas tardes'):L('Good evening','Buenas noches');
+ var u=(typeof CU==='function')?CU():null;var n=(u&&u.name)?String(u.name).split(' ')[0]:'';
+ return g+(n?', <em>'+X(n)+'</em>':'');
+}
+function renderHomeHero(){
+ var g=document.getElementById('homeGreet');if(!g)return;
+ g.innerHTML=_homeGreeting();
+ var sub=document.getElementById('homeHeroSub');if(sub)sub.textContent=L("Here's what's happening across your projects.",'Esto es lo que pasa en tus proyectos.');
+ var eye=document.getElementById('homeEye');if(eye){var on=(typeof orgName==='function')?orgName():'';var city=(typeof orgVal==='function')?orgVal('city'):'';eye.textContent=on+(city?' · '+city:'');}
+ /* Portada: la foto del proyecto tocado más recientemente que tenga una */
+ var bg=document.getElementById('homeHeroBg');
+ if(bg){var withPhoto=_homeProjects().filter(function(p){return p.photo;}).sort(function(a,b){return (b.updatedAt||b.createdAt||0)-(a.updatedAt||a.createdAt||0);})[0];
+  bg.style.backgroundImage=withPhoto?'url("'+String(withPhoto.photo).replace(/["\\]/g,encodeURIComponent)+'")':'';
+  bg.classList.toggle('has-img',!!withPhoto);}
+}
+/* Tres señales. Cada tarjeta dice el número, dónde y lleva a la acción.
+   Si el rol no puede ver una (finanzas, solicitudes), se sustituye por la
+   siguiente señal disponible; si no hay señales, la fila no aparece. */
+function renderHomeSignals(){
+ var host=document.getElementById('homeSignals');if(!host)return;
+ var cards=[];
+ var overdue=_homeTaskRows('overdue'),due=_homeTaskRows('due');
+ var projs=_homeProjects();var active=projs.filter(function(p){return p.status==='active';}).length;
+ var nT=overdue.length+due.length;
+ var pids={};overdue.concat(due).forEach(function(r){pids[r.p.id]=1;});var nP=Object.keys(pids).length;
+ cards.push({cls:'is-gold',ico:'check',
+  title:nT?nT+' '+L(nT>1?'Tasks Due':'Task Due',nT>1?'Tareas para hoy':'Tarea para hoy'):L('No tasks due','Sin tareas para hoy'),
+  sub:nT?(overdue.length?overdue.length+' '+L('overdue','atrasadas')+' · ':'')+L('Across '+nP+(nP>1?' projects':' project'),'En '+nP+(nP>1?' proyectos':' proyecto')):L(active+' active project'+(active===1?'':'s'),active+' proyecto'+(active===1?'':'s')+' activo'+(active===1?'':'s')),
+  go:nT?"homeTodayToggle('"+(overdue.length?'overdue':'due')+"')":"openAllProjects()",link:nT?L('Review','Revisar'):''});
+ if(typeof canFinance==='function'&&canFinance()&&_homePageAllowed('invoicesPage')&&typeof projFacturas==='function'){
+  var falta=0,nInv=0,ip={};
+  projs.forEach(function(p){projFacturas(p).forEach(function(iv){var r=invPorCobrar(iv);if(r>0.005){falta+=r;nInv++;ip[p.id]=1;}});});
+  var nip=Object.keys(ip).length;
+  cards.push({cls:'is-blue',ico:'dollar',title:falta>0.005?_homeMoney(falta)+' '+L('Outstanding','Por cobrar'):L('Nothing outstanding','Nada por cobrar'),
+   sub:falta>0.005?nInv+' '+L(nInv>1?'invoices across':'invoice across',nInv>1?'facturas en':'factura en')+' '+nip+' '+L(nip>1?'projects':'project',nip>1?'proyectos':'proyecto'):L('All invoices collected','Todas las facturas cobradas'),
+   go:"showPage('invoicesPage')",link:falta>0.005?L('Review','Revisar'):''});
+ }
+ if(_homePageAllowed('requestsPage')&&typeof ikNewCount==='function'){
+  var nr=ikNewCount();
+  cards.push({cls:'is-violet',ico:'message',title:nr?nr+' '+L(nr>1?'Requests':'Request',nr>1?'Solicitudes':'Solicitud'):L('No new requests','Sin solicitudes nuevas'),
+   sub:nr?L('Client decisions needed','Decisiones del cliente pendientes'):L('Inbox is clear','Bandeja al día'),go:"showPage('requestsPage')",link:''});
+ }
+ if(cards.length<3&&_homePageAllowed('clientsPage')&&typeof fuTodayCount==='function'){
+  var nf=fuTodayCount();
+  cards.push({cls:'is-violet',ico:'phone',title:nf?nf+' '+L(nf>1?'Follow-ups':'Follow-up',nf>1?'Seguimientos':'Seguimiento'):L('No follow-ups','Sin seguimientos'),sub:nf?L('Clients to call today','Clientes por llamar hoy'):L('No calls due today','Sin llamadas para hoy'),go:"showPage('clientsPage')",link:''});
+ }
+ if(cards.length<3&&_homePageAllowed('calendarPage')&&typeof MEETINGS!=='undefined'){
+  var nm=(MEETINGS||[]).filter(function(m){return m.date===todayStr();}).length;
+  cards.push({cls:'is-blue',ico:'calendar',title:nm?nm+' '+L(nm>1?'Meetings today':'Meeting today',nm>1?'Reuniones hoy':'Reunión hoy'):L('No meetings today','Sin reuniones hoy'),sub:L('Calendar','Calendario'),go:"showPage('calendarPage')",link:''});
+ }
+ host.innerHTML=cards.slice(0,3).map(function(c){
+  return '<button type="button" class="home-sig '+c.cls+'" onclick="'+c.go+'"><span class="home-sig-ico">'+_I(c.ico)+'</span><span class="home-sig-tx"><b>'+c.title+'</b><small>'+c.sub+'</small>'+(c.link?'<i>'+c.link+' &rarr;</i>':'')+'</span><span class="home-sig-chev">'+_I('chev')+'</span></button>';
+ }).join('');
+ host.hidden=!cards.length;
+}
+function _homeMoney(v){v=Math.round(v);return v>=1000?'$'+(v/1000).toFixed(v>=10000?0:1).replace(/\.0$/,'')+'K':'$'+v.toLocaleString('en-US');}
+/* Menú lateral + accesos de la portada, de la misma lista filtrada por rol */
+function renderHomeSide(){
+ var side=document.getElementById('homeSide');var quick=document.getElementById('homeQuick');
+ var tiles=(typeof _dashTilesLast!=='undefined'&&_dashTilesLast)||[];
+ var inHome=tiles.filter(function(t){return HOME_QUICK_PAGES.indexOf(t.page)>=0;}).sort(function(a,b){return HOME_QUICK_PAGES.indexOf(a.page)-HOME_QUICK_PAGES.indexOf(b.page);});
+ var rest=tiles.filter(function(t){return HOME_QUICK_PAGES.indexOf(t.page)<0;});
+ if(side){
+  var h='<div class="home-side-hd">'+L('Menu','Menú')+'</div><button type="button" class="home-side-i on" onclick="showPage(\'mainDashContent\')">'+_I('house')+'<span>'+L('Home','Inicio')+'</span></button>';
+  h+=rest.map(function(t){return '<button type="button" class="home-side-i'+(t.hot?' is-hot':'')+'" onclick="'+_homeTileGo(t)+'">'+t.ico+'<span>'+t.name+'</span></button>';}).join('');
+  side.innerHTML=h;
+ }
+ if(quick){
+  var q='<button type="button" class="home-q" onclick="openAllProjects()">'+_I('folder')+'<span>'+L('Projects','Proyectos')+'</span>'+_I('chev')+'</button>';
+  q+=inHome.map(function(t){return '<button type="button" class="home-q'+(t.hot?' is-hot':'')+'" onclick="'+_homeTileGo(t)+'">'+t.ico+'<span>'+t.name+'</span>'+_I('chev')+'</button>';}).join('');
+  quick.innerHTML=q;
+ }
+ var qh=document.getElementById('qaHdTitle');if(qh)qh.textContent=L('Quick Access','Accesos rápidos');
+ var at=document.getElementById('homeAllTools');if(at){at.innerHTML=(_homeToolsOpen?L('Fewer tools','Menos herramientas'):L('All tools','Todas las herramientas'))+' &rarr;';at.setAttribute('aria-expanded',String(_homeToolsOpen));}
+ var grid=document.getElementById('dashTiles');if(grid)grid.hidden=!_homeToolsOpen;
+}
+function homeToolsToggle(){_homeToolsOpen=!_homeToolsOpen;renderHomeSide();}
+/* Pipeline: cuenta por etapa, tocar abre la carpeta filtrada */
+function renderHomePipe(){
+ var host=document.getElementById('homePipe');if(!host)return;
+ var projs=(typeof _projsVisible==='function')?_projsVisible():Object.values(PROJECTS||{});
+ var stages=[{k:'lead',ico:'users'},{k:'quoted',ico:'filetext'},{k:'approved',ico:'check'},{k:'active',ico:'hammer'},{k:'done',ico:'archive'}];
+ var counts={};projs.forEach(function(p){var k=projLabel(p);counts[k]=(counts[k]||0)+1;});
+ var ph=document.getElementById('pipeHdTitle');if(ph)ph.textContent=L('Project Pipeline','Pipeline de proyectos');
+ host.innerHTML=stages.map(function(s,i){var m=(typeof projLabelMeta==='function')?projLabelMeta(s.k):{lbl:s.k,c:'#c9a84c'};
+  return (i?'<span class="home-pipe-sep" aria-hidden="true">'+_I('chev')+'</span>':'')+'<button type="button" class="home-pipe-i" onclick="openAllProjects(\''+s.k+'\')"><span class="home-pipe-l"><i style="background:'+m.c+'"></i>'+X(L(m.lbl,m.es||m.lbl))+'</span><b>'+(counts[s.k]||0)+'</b><span class="home-pipe-ico">'+(_I(s.ico)||_I('house'))+'</span></button>';}).join('');
+}
+function renderHomeShell(){
+ try{renderHomeHero();}catch(e){console.warn('hero',e);}
+ try{renderHomeSignals();}catch(e){console.warn('signals',e);}
+ try{renderHomeSide();}catch(e){console.warn('side',e);}
+ try{renderHomePipe();}catch(e){console.warn('pipe',e);}
+ var rh=document.getElementById('recentHdTitle');if(rh&&!/archived|archivad/.test(rh.textContent))rh.firstChild&&(rh.firstChild.nodeValue=L('Recent Projects','Proyectos recientes'));
+ var va=document.querySelector('#mainDashContent .home-viewall');if(va)va.innerHTML=L('View all','Ver todos')+' &rarr;';
+}
+['renderHomeShell','renderHomeSide','renderHomeSignals','renderHomePipe','renderHomeHero','homeToolsToggle'].forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
 </script>
 <div class="ov" id="workerOv">
   <div class="modal">
