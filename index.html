@@ -19,7 +19,7 @@
 /* Sello de versión: para saber, mirando la pantalla, qué build está
    corriendo ese iPad. Sin esto, "ya lo arreglé" y "sigue igual" son
    dos frases imposibles de reconciliar. */
-window.FORMO_BUILD='2026-09-26c';
+window.FORMO_BUILD='2026-09-26d';
 function _swAviso(reg){
   if(document.getElementById('swBar'))return;
   var esp=(navigator.language||'').toLowerCase().indexOf('es')===0
@@ -5343,6 +5343,131 @@ body.lt .mat-filter-btn.on .mfb-n{background:rgba(255,255,255,.72);color:inherit
 @media(max-width:600px){.intk-top{align-items:stretch}.intk-top-r{justify-content:space-between}.intk-search{margin-left:0;flex-basis:100%}.intk-q-st{margin-left:0;flex-basis:100%}}
 @media(prefers-reduced-motion:reduce){#intkDictate.rec{animation:none}}
 @media print{.intk-side,.intk-modes,.intk-finish,.intk-foot{display:none}}
+
+/* ── Scope of Work (§06) ── */
+.ls-top{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:6px 0 16px}
+.ls-top .ls-title{margin:0}
+.ls-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px;font-size:12.5px;color:var(--tx3)}
+.ls-status{font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid var(--bd);color:var(--tx2);background:var(--s2)}
+.ls-status.is-review{color:var(--gold-l);border-color:var(--gold-line);background:var(--gold-bg)}
+.ls-status.is-reviewed{color:var(--green);border-color:rgba(48,209,88,.3)}
+.ls-saved.is-dirty{color:var(--gold-l);font-weight:600}
+.ls-top-r{display:flex;gap:8px;flex-wrap:wrap}
+.ls-prep{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.ls-prep-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.ls-prep-hd h3{margin:0;font-size:15px;font-weight:700;color:var(--tx1)}
+.ls-prep-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.ls-prep-item{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;min-height:56px;color:var(--tx1);font:inherit;cursor:pointer;min-width:0;transition:border-color .2s}
+.ls-prep-item:hover{border-color:var(--gold-line)}
+.ls-prep-item b{font-size:13px}
+.ls-prep-item small{font-size:12px;color:var(--tx3);line-height:1.35;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.ls-prep-acts{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px}
+.ls-prep-note{font-size:12.5px;color:var(--tx3);flex:1 1 260px;line-height:1.45}
+.ls-material{margin-top:12px;border-top:1px solid var(--bd);padding-top:6px}
+.ls-material>summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--tx2);padding:8px 0;min-height:40px;display:flex;align-items:center}
+.ls-material>summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ls-material .ls-src{margin-top:8px}
+.ls-gen{flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:12px 14px;min-height:56px}
+.ls-gen-t{display:inline-flex;align-items:center;gap:8px;font-weight:700}
+.ls-gen small{font-weight:400;font-size:12px;opacity:.75}
+.ls-editor{display:grid;grid-template-columns:200px minmax(0,1fr) 240px;gap:14px;align-items:start}
+.ls-editor-main{min-width:0}
+.ls-editor-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.ls-progress{font-size:12.5px;color:var(--gold-l);animation:lsPulse 1.4s ease-in-out infinite}
+@keyframes lsPulse{0%,100%{opacity:1}50%{opacity:.5}}
+.ls-index,.ls-attn{position:sticky;top:12px;background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:12px;min-width:0;max-height:70vh;overflow:auto}
+.ls-index-t{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);margin-bottom:8px}
+.ls-index-empty{font-size:12.5px;color:var(--tx3);line-height:1.45}
+.ls-index-b{display:block;width:100%;text-align:left;background:transparent;border:none;color:var(--tx1);font:inherit;font-size:13px;padding:7px 8px;border-radius:8px;cursor:pointer;min-height:36px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ls-index-b.lvl-2{padding-left:18px;color:var(--tx2);font-size:12.5px}
+.ls-index-b:hover{background:var(--s2)}
+.ls-attn-g{border-top:1px solid var(--bd);padding:8px 0}
+.ls-attn-g:first-of-type{border-top:none;padding-top:0}
+.ls-attn-g b{display:block;font-size:13px;color:var(--tx1);margin-bottom:4px}
+.ls-attn-g small{display:block;font-size:12px;color:var(--tx3);line-height:1.4}
+.ls-attn-b{display:block;width:100%;text-align:left;background:transparent;border:none;color:var(--tx2);font:inherit;font-size:12.5px;padding:5px 0;cursor:pointer;min-height:32px;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px}
+.ls-attn-b:hover{color:var(--tx1);text-decoration-color:var(--gold-line)}
+.ls-compare{margin-bottom:10px;border:1px solid var(--gold-line);border-radius:12px;background:var(--gold-bg);padding:12px 14px}
+.ls-cmp-hd{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}
+.ls-cmp-hd small{color:var(--tx3);font-size:12.5px}
+.ls-cmp-txt{max-height:260px;overflow:auto;white-space:pre-wrap;font:inherit;font-size:13.5px;line-height:1.5;background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin:0;color:var(--tx1)}
+.ls-cmp-acts{display:flex;gap:8px;margin-top:10px}
+#lsSaveBtn.is-dirty{box-shadow:0 0 0 3px var(--gold-bg)}
+.intk-return{margin-bottom:8px}
+@media(max-width:1100px){.ls-editor{grid-template-columns:minmax(0,1fr) 220px}.ls-index{display:none}}
+@media(max-width:760px){.ls-prep-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ls-editor{grid-template-columns:1fr}.ls-attn{position:static;max-height:none}}
+
+/* ── Estimate (§07) ── */
+.est-eye{text-transform:uppercase;letter-spacing:.08em;font-size:10px;color:var(--tx4);font-weight:700}
+.est-selrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
+.est-notsel{font-size:12.5px;color:var(--tx3)}
+.estl-badge.estl-sel{color:var(--green);background:rgba(48,209,88,.12);display:inline-flex;align-items:center;gap:4px}
+.estl-badge.estl-sel svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.estl-act.estl-use{width:auto;padding:0 10px;font-size:12px;font-weight:600}
+.estl-nosel{font-style:normal;color:var(--gold-l)}
+.est-seg{display:inline-flex;background:var(--s1);border:1px solid var(--bd);border-radius:999px;padding:2px}
+.est-seg-b{border:none;background:transparent;color:var(--tx2);font:inherit;font-size:12.5px;font-weight:600;padding:6px 12px;min-height:32px;border-radius:999px;cursor:pointer;transition:background .18s,color .18s}
+.est-seg-b.on{background:var(--gold-fill);color:var(--on-gold)}
+.est-seg-b:focus-visible,.est-more button:focus-visible,.est-pg-row:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.est-more-wrap{position:relative}
+.est-more{position:absolute;right:0;top:calc(100% + 6px);z-index:50;min-width:280px;background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:6px;box-shadow:0 12px 32px rgba(0,0,0,.35);display:flex;flex-direction:column}
+.est-more[hidden]{display:none}
+.est-more button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;border:none;color:var(--tx1);font:inherit;font-size:13.5px;padding:10px 12px;min-height:44px;border-radius:8px;cursor:pointer}
+.est-more button:hover{background:var(--s2)}
+.est-more button svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.est-more-sep{height:1px;background:var(--bd);margin:4px 6px}
+.est-banner{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--gold-bg);border:1px solid var(--gold-line);border-radius:12px;padding:12px 14px;margin:0 0 12px;color:var(--tx1);font-size:13.5px}
+.est-banner span{color:var(--tx2);flex:1 1 240px}
+.est-banner-acts{display:flex;gap:6px;flex:0 0 auto!important}
+.est-sticky{position:sticky;top:8px;z-index:20;display:flex;align-items:center;gap:18px;flex-wrap:wrap;background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;margin:0 0 12px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.est-sticky span{display:flex;flex-direction:column;gap:1px}
+.est-sticky small{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3)}
+.est-sticky b{font-size:16px;font-variant-numeric:tabular-nums;color:var(--tx1)}
+.est-sticky b.is-green{color:var(--green)}
+.est-sticky b.is-amber{color:var(--amber)}
+.est-sticky-total b{font-size:20px;color:var(--gold-l)}
+.est-sticky-attn{margin-left:auto;border:1px solid var(--bd);background:var(--s2);color:var(--tx2);font:inherit;font-size:12.5px;font-weight:600;padding:6px 12px;min-height:36px;border-radius:999px;cursor:pointer}
+.est-sticky-attn.is-warn{color:var(--gold-l);border-color:var(--gold-line)}
+.est-sticky-attn.is-err{color:var(--red);border-color:rgba(255,69,58,.4)}
+.est-groupbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px;font-size:12.5px;color:var(--tx3)}
+.est-groupbar small{flex:1 1 200px}
+.est-hd-note{font-weight:400;font-size:11.5px;color:var(--tx3);text-transform:none;letter-spacing:0;margin-left:6px}
+.est-li-wrap.is-hl{outline:2px solid var(--gold);outline-offset:4px;border-radius:10px}
+.est-attn .est-attn-n{font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;border:1px solid var(--bd);color:var(--tx2)}
+.est-attn .est-attn-n.is-err{color:var(--red);border-color:rgba(255,69,58,.4);background:var(--red-bg)}
+.est-attn .est-attn-n.is-warn{color:var(--gold-l);border-color:var(--gold-line);background:var(--gold-bg)}
+.est-attn .est-attn-n.is-ok{color:var(--green)}
+.est-attn-body{padding:4px 14px 10px}
+.est-attn-row{display:flex;align-items:center;gap:10px;border-top:1px solid var(--bd);min-height:40px}
+.est-attn-row:first-child{border-top:none}
+.est-attn-row.is-error .formo-sev{background:var(--red)}
+.est-attn-row .formo-link{font-size:13.5px}
+.est-attn-desc{color:var(--tx3)}
+.est-client{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:16px 18px;margin-bottom:12px}
+.est-client-hd{display:flex;flex-direction:column;gap:2px;margin-bottom:12px}
+.est-client-hd small{color:var(--tx3);font-size:12.5px}
+.est-client-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--bd);font-size:14.5px;color:var(--tx1)}
+.est-client-row:first-child{border-top:none}
+.est-client-row b{font-variant-numeric:tabular-nums}
+.est-client-row small{color:var(--tx3);margin-left:6px}
+.est-client-alw{margin-top:14px;border-top:1px dashed var(--bd);padding-top:8px}
+.est-client-alw-t{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);margin-bottom:4px}
+.est-client-total{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:2px solid var(--gold-line);font-size:15px;font-weight:700;color:var(--tx1)}
+.est-client-total b{font-size:24px;color:var(--gold-l);font-variant-numeric:tabular-nums}
+.est-pg-card.is-un{border-color:var(--gold-line)}
+.est-pg-row{display:grid;grid-template-columns:110px minmax(0,1fr) auto auto;gap:12px;align-items:center;width:100%;text-align:left;background:transparent;border:none;border-top:1px solid var(--bd);color:var(--tx1);font:inherit;padding:10px 14px;min-height:44px;cursor:pointer}
+.est-pg-row:hover{background:var(--s2)}
+.est-pg-cat{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.est-pg-desc{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}
+.est-pg-num{font-size:12.5px;color:var(--tx3);font-variant-numeric:tabular-nums}
+.est-start-card.is-rec{border-color:var(--gold-line)}
+.est-rec{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--gold-l);border:1px solid var(--gold-line);border-radius:999px;padding:2px 7px;margin-left:6px;vertical-align:middle}
+.lead-nextbtn small{font-weight:400;opacity:.75;font-size:12px;margin-left:6px}
+.prop-est-src{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.5px;color:var(--tx3);margin-top:6px}
+.prop-est-src b{color:var(--tx1)}
+.prop-est-src b.is-warn{color:var(--gold-l)}
+@media(max-width:760px){.est-sticky{position:static;box-shadow:none;gap:12px}.est-sticky-attn{margin-left:0;flex-basis:100%}.est-pg-row{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:'d t' 'c n'}.est-pg-cat{grid-area:c}.est-pg-desc{grid-area:d}.est-pg-num{grid-area:n;text-align:right}.est-pg-row b{grid-area:t}}
+@media(prefers-reduced-motion:reduce){.ls-progress{animation:none}}
 </style>
 </head>
 <body>
@@ -13668,7 +13793,7 @@ function openProj(id){
   _calOffset=0;loadProjSettForm();if(typeof applyLeadGating==='function')applyLeadGating();switchTab((typeof isLeadStage==='function'&&isLeadStage(p))?'leadproj':'dash');renderProject();
   if(typeof renderClientFeedback==='function')renderClientFeedback();
 }
-function goHome(){_activeId=null;document.body.classList.remove('lead-stage','has-sow','in-project');document.getElementById('dashView').style.display='block';document.getElementById('projView').style.display='none';document.getElementById('bcArea').innerHTML='';_mode='all';renderDash();}
+function goHome(){_activeId=null;try{window._intkReturnTo='';}catch(e){}document.body.classList.remove('lead-stage','has-sow','in-project');document.getElementById('dashView').style.display='block';document.getElementById('projView').style.display='none';document.getElementById('bcArea').innerHTML='';_mode='all';renderDash();}
 async function deleteCurProj(){const p=CP();if(!p)return;showConfirm('Delete "'+p.name+'"?',async function(){const id=p.id;delete PROJECTS[id];goHome();await fbDel(id);toast('Project deleted');});}
 async function quickDeleteProj(id){const p=PROJECTS[id];if(!p)return;showConfirm('Delete "'+p.name+'"?',async()=>{delete PROJECTS[id];renderDash();await fbDel(id);toast('Deleted');});}
 async function setProjStatus(id,status){const p=PROJECTS[id];if(!p)return;p.status=status;renderDash();await fbSave(p);}
@@ -24553,7 +24678,7 @@ async function coEstNuevo(id){
   e.sow=String(co.sow||co.description||'');
   e.coId=co.id;
   _EST=e;_EST._pid=p.id;
-  _estIdx.activeId=e.id;
+  /* un estimado de change order nunca alimenta la propuesta */
   _estTocarFicha(e);
   try{await setDoc(_estRef(p.id,e.id),Object.assign({},e,{_pid:undefined}));}catch(x){}
   await estIndexSave(p.id);
@@ -31639,7 +31764,7 @@ function syncBottomNav(tab){
 var MORE_TABS=[
   {tab:'leadproj', ico:'house',    en:'Project',       es:'Proyecto',      lead:1},
   {tab:'leadintk', ico:'route',    en:'Consultation',  es:'Consulta',      lead:1},
-  {tab:'leadsow',  ico:'filetext', en:'Generate SOW',  es:'Generar SOW',   lead:1},
+  {tab:'leadsow',  ico:'filetext', en:'Scope of Work', es:'Alcance (SOW)', lead:1},
   {tab:'leadest',  ico:'calc',     en:'Estimator',     es:'Estimador',     lead:1},
   {tab:'leadprop', ico:'receipt',  en:'Proposal',      es:'Proposal',      lead:1},
   {tab:'dash',     ico:'grid',     en:'Dashboard',     es:'Dashboard'},
@@ -41580,8 +41705,10 @@ function renderLeadIntake(){
   var lista=_intakes(p);
   var ess=_intkEssMissingAll(p),unk=_intkUnknowns(p),conf=_intkConflicts(p),sugs=_intkPendingSugs(p),unrev=_intkUnreviewed(p);
   var h='';
+  var volver=(window._intkReturnTo==='leadsow');
   h+='<div class="intk-top">'
-    +'<div class="intk-top-l"><div class="lp-sec-t intk-eyebrow">'+L('Consultation','Consulta')+'</div>'
+    +'<div class="intk-top-l">'+(volver?'<button type="button" class="home-back intk-return" onclick="intkReturn()">'+_I('chev')+' '+L('Back to scope','Volver al alcance')+'</button>':'')
+    +'<div class="lp-sec-t intk-eyebrow">'+L('Consultation','Consulta')+'</div>'
     +'<div class="intk-title">'+X(p.name||'')+'</div>'
     +'<div class="intk-saved" id="intkSaved">'+_I('tick')+'<span>'+L('Saved as you type','Se guarda mientras escribes')+'</span></div></div>'
     +'<div class="intk-top-r">'
@@ -41739,6 +41866,7 @@ function _intkReviewHTML(p,lista,ess,unk,conf,sugs,unrev){
   return h;
 }
 /* ── Acciones ── */
+function intkReturn(){var t=window._intkReturnTo||'leadsow';window._intkReturnTo='';switchTab(t);}
 function intkMode(m){_intkMode=(m==='review')?'review':'capture';renderLeadIntake();var a=document.getElementById('leadIntkArea');if(a)a.scrollIntoView({block:'start'});}
 function intkFinish(){
   /* "Terminar" no cierra nada ni cambia el estado: abre el resumen */
@@ -41913,7 +42041,7 @@ function _leadConsultCardHTML(p){
     +'</button></div>';
   return h;
 }
-['renderLeadIntake','intkMode','intkFinish','intkToScope','intkJump','intkSearch','intkAddNote','intkCapDelete','intkDictate','intkDictateStop','intkSuggest','intkSugAccept','intkSugEdit','intkSugDiscard','_leadConsultCardHTML','_intkEssMissingAll','_captures','_intkPendingSugs']
+['renderLeadIntake','intkReturn','intkMode','intkFinish','intkToScope','intkJump','intkSearch','intkAddNote','intkCapDelete','intkDictate','intkDictateStop','intkSuggest','intkSugAccept','intkSugEdit','intkSugDiscard','_leadConsultCardHTML','_intkEssMissingAll','_captures','_intkPendingSugs']
   .forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
 function renderLeadProject(){
   var p=CP();var area=document.getElementById('leadProjArea');if(!area)return;
@@ -42168,42 +42296,118 @@ function leadCoverSelect(files){
 }
 
 /* ── Generar SOW (borrador con IA — prompt base; §8.2 lo afina con las reglas del GPT de Dan) ── */
+/* ══ SCOPE OF WORK (spec §06) ═══════════════════════════════════════
+   Encabezado con estado del documento y guardado; fuentes con lo que
+   falta por revisar (y camino de ida y vuelta a la consulta); tres
+   formas de empezar que terminan en el mismo editor; índice del
+   documento a la izquierda y "Needs attention" a la derecha; y una
+   sola acción de salida: "Continue to estimate", que resuelve el
+   guardado pendiente antes de seguir. El texto del SOW, su PDF y su
+   sincronización con el estimado no cambian. */
+function _sowStatus(p,vivo){
+  var draft=String(p.sowDraft||'').trim();
+  if(!draft&&!vivo)return 'empty';
+  var pend=_sowPendientes(vivo||draft).length;
+  if(p.sowReviewedAt&&!(p.sowChangedAt&&p.sowChangedAt>p.sowReviewedAt))return 'reviewed';
+  if(pend||(p.sowReviewedAt&&p.sowChangedAt>p.sowReviewedAt))return 'review';
+  return 'draft';
+}
+function _sowStatusLabel(st){
+  return {empty:L('Empty','Vacío'),draft:L('Draft','Borrador'),review:L('Needs review','Por revisar'),reviewed:L('Reviewed','Revisado')}[st]||st;
+}
+/* Supuestos no confirmados dentro del texto (SW-01) */
+var _SOW_PEND_RE=/to be confirmed|to confirm|tbd|por confirmar|unknown|pending client|allowance/i;
+function _sowPendientes(text){
+  var out=[];String(text||'').split(/\r?\n/).forEach(function(l,i){var t=l.trim();if(t&&_SOW_PEND_RE.test(t))out.push({line:i,text:t});});
+  return out;
+}
+/* Índice: secciones numeradas y fases */
+function _sowIndice(text){
+  var out=[];String(text||'').split(/\r?\n/).forEach(function(l,i){
+    var t=l.trim();if(!t)return;
+    if(/^\d+\.\s+\S/.test(t))out.push({line:i,text:t.replace(/^\d+\.\s+/,''),lvl:1});
+    else if(/^phase\s+\d+/i.test(t)||/^fase\s+\d+/i.test(t))out.push({line:i,text:t,lvl:2});
+  });
+  return out;
+}
+function _sowDirty(p){
+  var o=document.getElementById('lsOut');if(!o)return false;
+  return String(o.value||'').trim()!==String(p.sowDraft||'').trim()&&String(o.value||'').trim()!=='';
+}
 function renderLeadSOW(){
   var p=CP();var area=document.getElementById('leadSowArea');if(!area)return;
   if(!p){area.innerHTML='<div class="lp-empty">'+L('Open a project to begin.','Abre un proyecto para empezar.')+'</div>';return;}
   var photos=p.photos||[];
   var notes=photos.map(function(ph){return (ph.caption||ph.transcript||'').trim();}).filter(Boolean);
-  var h='';
-  h+='<button class="home-back" style="margin-bottom:10px" onclick="switchTab(\'leadproj\')">'+_I('chev')+' '+L('Project / Photos','Proyecto / Fotos')+'</button>';
-  h+='<div class="ls-hd"><h2 class="ls-title">'+L('Generate SOW','Generar SOW')+'</h2><div class="ls-sub">'+L('Combines the project description and all photo notes (text only, no images) to draft the Scope of Work.','Junta la descripción del proyecto y las descripciones de todas las fotos (solo texto, sin imágenes) para redactar el borrador del Scope of Work.')+'</div></div>';
-  h+='<div class="lp-sec"><div class="lp-sec-t">'+L('Collected material','Material recabado')+'</div>';
-  if(p.sowSource){h+='<div class="ls-src"><div class="ls-src-lbl">'+L('Uploaded scope document','Documento de alcance cargado')+'</div>'
-    +'<div class="ls-src-file">'+_I('filetext')+X(p.sowSource)+'</div>'
-    +'<div class="ls-src-val" style="margin-top:6px;font-size:12px;color:var(--tx3)">'+L('This document is the SOW. It is saved in Files and feeds the estimator.','Este documento es el SOW. Está guardado en Files y alimenta el estimador.')+'</div></div>';}
-  h+='<div class="ls-src"><div class="ls-src-lbl">'+L('Project description','Descripción del proyecto')+'</div><div class="ls-src-val">'+(p.description?X(p.description):'<i>'+L('No description — add it in Project / Photos','Sin descripción — agrégala en Proyecto/Fotos')+'</i>')+'</div></div>';
-  h+='<div class="ls-src"><div class="ls-src-lbl">'+L('Photo notes','Notas de fotos')+' ('+notes.length+')</div>'+(notes.length?('<ul class="ls-notes">'+notes.map(function(n){return '<li>'+X(n)+'</li>';}).join('')+'</ul>'):'<div class="ls-src-val"><i>'+L('No photo has a description yet','Ninguna foto tiene descripción todavía')+'</i></div>')+'</div>';
+  var vivo=(_lsBorrador.pid===p.id&&_lsBorrador.txt)?_lsBorrador.txt:'';
+  var mostrar=vivo||p.sowDraft||'';
+  var st=_sowStatus(p,vivo);
+  var hasDraft=!!mostrar;
+  /* Lo que la consulta dejó pendiente */
+  var ess=(typeof _intkEssMissingAll==='function')?_intkEssMissingAll(p):[];
+  var unk=(typeof _intkUnknowns==='function')?_intkUnknowns(p):[];
+  var caps=(typeof _captures==='function')?_captures(p):[];
+  var capsPend=caps.filter(function(c){return c.status!=='reviewed';}).length;
+  var trades=(typeof _intakeCatLabel==='function')?_intakeCatLabel(p,false):'';
   var _ipairs=_intakePairs(p,false);var _icat=_intakeCatLabel(p,false);
-  /* La calculadora de drywall, cuando el trabajo la pide (obra nueva,
-     drywall, framing) o cuando ya tiene medidas */
   var _dwCats=(typeof _intakeCats==='function')?_intakeCats(p):[];
   var _dwAplica=p.projKind==='new'||_dwCats.some(function(k){return k==='drywall'||k==='new_construction'||k==='framing';})||!!(p.drywall&&(p.drywall.rows||[]).length);
   var _dwTxt=(typeof dwSowText==='function')?dwSowText(p):'';
-  if(_dwAplica){
-    h+='<div class="ls-src ls-src-dw"><div class="ls-src-lbl">'+L('Drywall take-off','Cálculo de drywall')+'</div>'
+  var h='';
+  /* ── Encabezado ── */
+  h+='<div class="ls-top"><div class="ls-top-l">'
+    +'<div class="lp-sec-t intk-eyebrow">'+L('Scope of work','Alcance de trabajo')+'</div>'
+    +'<h2 class="ls-title">'+(hasDraft?X(p.name||''):L('Create scope of work','Crear alcance de trabajo'))+'</h2>'
+    +'<div class="ls-meta"><span class="ls-status is-'+st+'" id="lsStatus">'+_sowStatusLabel(st)+'</span>'
+    +'<span class="ls-saved" id="lsSaved">'+(vivo&&vivo.trim()!==String(p.sowDraft||'').trim()?L('Unsaved changes','Cambios sin guardar'):(p.sowDraft?L('Saved','Guardado'):''))+'</span>'
+    +(p.sowSource?'<span class="ls-src-file">'+_I('filetext')+X(p.sowSource)+'</span>':'')
+    +'</div></div>'
+    +'<div class="ls-top-r">'
+    +(hasDraft&&st!=='reviewed'?'<button type="button" class="btn btn-ghost btn-sm" onclick="sowMarkReviewed()" title="'+L('The team reviewed this scope. This is not client approval.','El equipo revisó este alcance. No es aprobación del cliente.')+'">'+_I('tick')+' '+L('Mark reviewed','Marcar revisado')+'</button>':'')
+    +(hasDraft?'<button type="button" class="btn btn-gold btn-sm" id="lsContinue" onclick="sowContinue()">'+L('Continue to estimate','Continuar al estimado')+' &#8594;</button>':'')
+    +'</div></div>';
+  /* ── Fuentes y pendientes ── */
+  var pendN=ess.length+unk.length;
+  h+='<section class="ls-prep'+(hasDraft?' is-compact':'')+'">'
+    +'<div class="ls-prep-hd"><h3>'+L('Sources','Fuentes')+'</h3>'+(pendN?'<span class="formo-badge is-essential">'+pendN+' '+L('to review','por revisar')+'</span>':(trades?'<span class="formo-badge is-ok">'+L('Consultation complete','Consulta completa')+'</span>':''))+'</div>'
+    +'<div class="ls-prep-grid">'
+    +'<button type="button" class="ls-prep-item" onclick="switchTab(\'leadintk\')"><b>'+L('Consultation','Consulta')+'</b><small>'+(trades?X(trades)+(ess.length?' · '+ess.length+' '+L('essential missing','esencial'+(ess.length>1?'es':'')+' sin responder'):'')+(unk.length?' · '+unk.length+' '+L('to confirm','por confirmar'):''):L('No trade selected yet','Aún sin oficio'))+'</small></button>'
+    +'<button type="button" class="ls-prep-item" onclick="switchTab(\'leadintk\')"><b>'+L('Notes','Notas')+'</b><small>'+(caps.length?caps.length+' '+L(caps.length>1?'captures':'capture',caps.length>1?'capturas':'captura')+(capsPend?' · '+capsPend+' '+L('unreviewed','sin revisar'):''):L('None','Ninguna'))+'</small></button>'
+    +'<button type="button" class="ls-prep-item" onclick="switchTab(\'files\')"><b>'+L('Photos','Fotos')+'</b><small>'+photos.length+' · '+notes.length+' '+L('with notes','con notas')+'</small></button>'
+    +'<button type="button" class="ls-prep-item" onclick="switchTab(\'leadproj\')"><b>'+L('Description','Descripción')+'</b><small>'+(p.description?X(String(p.description).slice(0,60))+(p.description.length>60?'…':''):L('Empty','Vacía'))+'</small></button>'
+    +'</div>'
+    +(pendN?'<div class="ls-prep-acts"><button type="button" class="btn btn-ghost btn-sm" onclick="sowReviewMissing()">'+L('Review missing','Revisar faltantes')+'</button>'
+      +'<span class="ls-prep-note">'+L('Continuing with missing details is allowed: the draft will say "To be confirmed before work begins" instead of inventing them.','Se puede continuar con datos faltantes: el borrador dirá "To be confirmed before work begins" en vez de inventarlos.')+'</span></div>':'')
+    /* el material completo, plegado */
+    +'<details class="ls-material"'+(hasDraft?'':' open')+'><summary>'+L('Collected material','Material recabado')+'</summary>'
+    +(p.sowSource?'<div class="ls-src"><div class="ls-src-lbl">'+L('Uploaded scope document','Documento de alcance cargado')+'</div>'
+      +'<div class="ls-src-file">'+_I('filetext')+X(p.sowSource)+'</div>'
+      +'<div class="ls-src-val" style="margin-top:6px;font-size:12px;color:var(--tx3)">'+L('This document is the SOW. It is saved in Files and feeds the estimator.','Este documento es el SOW. Está guardado en Files y alimenta el estimador.')+'</div></div>':'')
+    +'<div class="ls-src"><div class="ls-src-lbl">'+L('Project description','Descripción del proyecto')+'</div><div class="ls-src-val">'+(p.description?X(p.description):'<i>'+L('No description — add it in Project','Sin descripción — agrégala en Proyecto')+'</i>')+'</div></div>'
+    +'<div class="ls-src"><div class="ls-src-lbl">'+L('Photo notes','Notas de fotos')+' ('+notes.length+')</div>'+(notes.length?('<ul class="ls-notes">'+notes.map(function(n){return '<li>'+X(n)+'</li>';}).join('')+'</ul>'):'<div class="ls-src-val"><i>'+L('No photo has a description yet','Ninguna foto tiene descripción todavía')+'</i></div>')+'</div>'
+    +(caps.length?'<div class="ls-src"><div class="ls-src-lbl">'+L('Consultation notes','Notas de la consulta')+' ('+caps.length+')</div><ul class="ls-notes">'+caps.slice(0,12).map(function(c){return '<li>'+X(c.text||'')+'</li>';}).join('')+'</ul></div>':'')
+    +(_dwAplica?'<div class="ls-src ls-src-dw"><div class="ls-src-lbl">'+L('Drywall take-off','Cálculo de drywall')+'</div>'
       +(_dwTxt?'<pre class="ls-pre">'+X(_dwTxt)+'</pre>':'<div class="ls-src-val"><i>'+L('No measurements yet — open the calculator and enter the rooms.','Sin medidas todavía — abre la calculadora y anota los cuartos.')+'</i></div>')
-      +'<button type="button" class="btn btn-ghost btn-sm" style="margin-top:8px" onclick="openDrywallCalc()">'+_I('calc')+' '+(_dwTxt?L('Edit drywall calculator','Editar calculadora de drywall'):L('Open drywall calculator','Abrir calculadora de drywall'))+'</button></div>';
-  }
-  h+='<div class="ls-src"><div class="ls-src-lbl">'+L('Questionnaire','Cuestionario')+(_icat?' — '+X(_icat):'')+'</div>'+(_ipairs.length?('<ul class="ls-notes">'+_ipairs.map(function(pr){return '<li><b>'+X(pr[0])+':</b> '+X(pr[1])+'</li>';}).join('')+'</ul>'):'<div class="ls-src-val"><i>'+L('No category selected / no answers yet — fill it in Project / Photos','Sin categoría o respuestas todavía — complétalo en Proyecto/Fotos')+'</i></div>')+'</div>';
-  h+='</div>';
-  h+='<div class="ls-gen-row"><button class="btn btn-gold ls-gen" onclick="leadGenSOW()">'+_I('bulb')+' '+L('Generate with AI','Generar con IA')+'</button>'
-    +'<button class="btn btn-ghost ls-gen ls-gen-manual" onclick="leadManualSOW()">'+_I('pencil')+' '+L('Write manually','Escribir manual')+'</button>'
-    +'<label class="btn btn-ghost ls-gen ls-gen-up">'+_I('filetext')+' '+L('Upload SOW document','Cargar documento SOW')
+      +'<button type="button" class="btn btn-ghost btn-sm" style="margin-top:8px" onclick="openDrywallCalc()">'+_I('calc')+' '+(_dwTxt?L('Edit drywall calculator','Editar calculadora de drywall'):L('Open drywall calculator','Abrir calculadora de drywall'))+'</button></div>':'')
+    +'<div class="ls-src"><div class="ls-src-lbl">'+L('Questionnaire','Cuestionario')+(_icat?' — '+X(_icat):'')+'</div>'+(_ipairs.length?('<ul class="ls-notes">'+_ipairs.map(function(pr){return '<li><b>'+X(pr[0])+':</b> '+X(pr[1])+'</li>';}).join('')+'</ul>'):'<div class="ls-src-val"><i>'+L('No trade or answers yet — fill it in Consultation','Sin oficio o respuestas todavía — complétalo en Consulta')+'</i></div>')+'</div>'
+    +'</details>'
+    +'</section>';
+  /* ── Formas de empezar: todas terminan en el mismo editor ── */
+  h+='<div class="ls-gen-row">'
+    +'<button class="btn '+(hasDraft?'btn-ghost':'btn-gold')+' ls-gen" onclick="leadGenSOW()"><span class="ls-gen-t">'+_I('bulb')+' '+(hasDraft?L('Rebuild from consultation','Rehacer desde la consulta'):L('Build from consultation','Crear desde la consulta'))+'</span><small>'+L('AI-assisted draft · you review it','Borrador asistido por IA · tú lo revisas')+'</small></button>'
+    +'<button class="btn btn-ghost ls-gen ls-gen-manual" onclick="leadManualSOW()"><span class="ls-gen-t">'+_I('pencil')+' '+L('Write manually','Escribir a mano')+'</span><small>'+L('Same editor, your words','El mismo editor, tus palabras')+'</small></button>'
+    +'<label class="btn btn-ghost ls-gen ls-gen-up"><span class="ls-gen-t">'+_I('filetext')+' '+L('Upload document','Cargar documento')+'</span><small>'+L('PDF, Word or text · saved in Files','PDF, Word o texto · se guarda en Files')+'</small>'
       +'<input type="file" accept=".pdf,.txt,.md,.doc,.docx,application/pdf,text/plain" style="display:none" onchange="leadUploadSOW(this.files)"></label></div>';
-  h+='<div class="lp-hint" style="margin-top:8px">'+L('Already have the scope written? Upload it (PDF, Word or text) and skip straight to the estimator — the document is saved in Files and used as the SOW.','¿Ya tienes el alcance escrito? Cárgalo (PDF, Word o texto) y salta directo al estimador — el documento se guarda en Files y se usa como el SOW.')+'</div>';
-  h+='<div class="ls-out-wrap" id="lsOutWrap" style="display:none"><div class="lp-sec-t" style="margin-top:0">'+L('Draft (editable)','Borrador (editable)')+'</div>'
-    +'<textarea class="ls-out" id="lsOut" data-rich="1" placeholder="'+L('The draft will appear here…','El borrador aparecerá aquí…')+'"></textarea>'
-    +'<div class="ls-actions"><button class="btn btn-ghost btn-sm" onclick="leadCopySOW()">'+L('Copy','Copiar')+'</button><button class="btn btn-ghost btn-sm" onclick="leadSowPdf()">'+_I('download')+' PDF</button><button class="btn btn-gold btn-sm" onclick="leadSaveSOW()">'+L('Save SOW','Guardar SOW')+'</button></div></div>';
-  if(p.sowDraft)h+='<button class="btn btn-gold lead-nextbtn" onclick="switchTab(\'leadest\')">'+_I('calc')+' '+L('Create Estimate','Realizar estimación')+' &#8594;</button>';
+  /* ── Editor: índice · texto · atención ── */
+  h+='<div class="ls-out-wrap" id="lsOutWrap" style="display:none">'
+    +'<div class="ls-editor">'
+    +'<nav class="ls-index" id="lsIndex" aria-label="'+L('Scope sections','Secciones del alcance')+'"></nav>'
+    +'<div class="ls-editor-main"><div class="ls-editor-hd"><span class="lp-sec-t" style="margin:0">'+L('Document','Documento')+'</span><span class="ls-progress" id="lsProgress" hidden></span></div>'
+    +'<div class="ls-compare" id="lsCompare" hidden></div>'
+    +'<textarea class="ls-out" id="lsOut" data-rich="1" placeholder="'+L('The draft will appear here…','El borrador aparecerá aquí…')+'"></textarea></div>'
+    +'<aside class="ls-attn" id="lsAttn"></aside>'
+    +'</div>'
+    +'<div class="ls-actions"><button class="btn btn-ghost btn-sm" onclick="leadCopySOW()">'+L('Copy','Copiar')+'</button><button class="btn btn-ghost btn-sm" onclick="leadSowPdf()">'+_I('download')+' PDF</button><button class="btn btn-gold btn-sm" id="lsSaveBtn" onclick="leadSaveSOW()">'+L('Save scope','Guardar alcance')+'</button></div></div>';
   /* Los change orders entran aquí, donde nace el alcance: cada uno con
      el suyo, que después alimenta su estimado y su bloque de tareas. */
   h+='<section class="cob-sec" id="lsCoSec"><div class="cob-sec-hd">'
@@ -42219,12 +42423,79 @@ function renderLeadSOW(){
      guardar — Dan: "cuando se descarga el PDF antes de guardar el SOW se
      reinicia el generador". El borrador vive en _lsBorrador hasta que
      el usuario pida otro o cambie de proyecto. */
-  var vivo=(_lsBorrador.pid===p.id&&_lsBorrador.txt)?_lsBorrador.txt:'';
-  var mostrar=vivo||p.sowDraft||'';
   if(mostrar){var w=document.getElementById('lsOutWrap');var o=document.getElementById('lsOut');if(w&&o){w.style.display='';o.value=mostrar;}}
   var oo=document.getElementById('lsOut');
-  if(oo)oo.addEventListener('input',function(){_lsBorrador={pid:p.id,txt:oo.value};});
+  if(oo)oo.addEventListener('input',function(){_lsBorrador={pid:p.id,txt:oo.value};_sowSideRefresh();});
+  _sowSideRefresh();
 }
+/* Índice, atención y guardado se refrescan al escribir, sin repintar */
+var _sowSideT=null;
+function _sowSideRefresh(){
+  var p=CP();if(!p)return;var o=document.getElementById('lsOut');if(!o)return;
+  var text=o.value||'';
+  var idx=document.getElementById('lsIndex');
+  if(idx){
+    var secs=_sowIndice(text);
+    idx.innerHTML=secs.length?('<div class="ls-index-t">'+L('Sections','Secciones')+'</div>'+secs.map(function(s){return '<button type="button" class="ls-index-b lvl-'+s.lvl+'" onclick="sowGoLine('+s.line+')">'+X(s.text.slice(0,48))+'</button>';}).join('')):'<div class="ls-index-t">'+L('Sections','Secciones')+'</div><div class="ls-index-empty">'+L('Numbered headings and phases will show up here.','Los títulos numerados y las fases aparecerán aquí.')+'</div>';
+  }
+  var at=document.getElementById('lsAttn');
+  if(at){
+    var pend=_sowPendientes(text);
+    var ess=(typeof _intkEssMissingAll==='function')?_intkEssMissingAll(p):[];
+    var unk=(typeof _intkUnknowns==='function')?_intkUnknowns(p):[];
+    var changed=p.sowReviewedAt&&p.sowChangedAt&&p.sowChangedAt>p.sowReviewedAt;
+    var estN=(typeof _estIdx!=='undefined'&&_estIdx&&_estIdxPid===p.id)?(_estIdx.items||[]).filter(function(i){return !i.coId;}).length:0;
+    var items='';
+    if(pend.length)items+='<div class="ls-attn-g"><b>'+pend.length+' '+L(pend.length>1?'unconfirmed assumptions':'unconfirmed assumption',pend.length>1?'supuestos sin confirmar':'supuesto sin confirmar')+'</b>'+pend.slice(0,6).map(function(x){return '<button type="button" class="ls-attn-b" onclick="sowGoLine('+x.line+')">'+X(x.text.slice(0,70))+'</button>';}).join('')+(pend.length>6?'<small>+'+(pend.length-6)+'</small>':'')+'</div>';
+    if(ess.length||unk.length)items+='<div class="ls-attn-g"><b>'+L('From the consultation','De la consulta')+'</b>'+(ess.length?'<button type="button" class="ls-attn-b" onclick="sowReviewMissing()">'+ess.length+' '+L('essential answer'+(ess.length>1?'s':'')+' missing','respuesta'+(ess.length>1?'s':'')+' esencial'+(ess.length>1?'es':'')+' sin responder')+'</button>':'')+(unk.length?'<button type="button" class="ls-attn-b" onclick="sowReviewMissing(true)">'+unk.length+' '+L('to confirm with the client','por confirmar con el cliente')+'</button>':'')+'</div>';
+    if(changed)items+='<div class="ls-attn-g"><b>'+L('Changed since review','Cambiado desde la revisión')+'</b><small>'+L('Mark it reviewed again when the team has read it.','Márcalo revisado otra vez cuando el equipo lo haya leído.')+'</small></div>';
+    if(estN&&_sowDirty(p))items+='<div class="ls-attn-g"><b>'+L('Estimate depends on this scope','El estimado depende de este alcance')+'</b><small>'+L('Saving will flag '+estN+' estimate'+(estN>1?'s':'')+' for review. Nothing is recalculated.','Al guardar se marcará'+(estN>1?'n':'')+' '+estN+' estimado'+(estN>1?'s':'')+' para revisar. Nada se recalcula.')+'</small></div>';
+    at.innerHTML='<div class="ls-index-t">'+L('Needs attention','Necesita atención')+'</div>'+(items||'<div class="ls-index-empty">'+L('No open assumptions in this draft.','Sin supuestos abiertos en este borrador.')+'</div>');
+  }
+  var sv=document.getElementById('lsSaved');var sb=document.getElementById('lsSaveBtn');var cont=document.getElementById('lsContinue');
+  var dirty=_sowDirty(p);
+  if(sv)sv.textContent=dirty?L('Unsaved changes','Cambios sin guardar'):(p.sowDraft?L('Saved','Guardado'):'');
+  if(sv)sv.classList.toggle('is-dirty',dirty);
+  if(sb)sb.classList.toggle('is-dirty',dirty);
+  if(cont)cont.classList.toggle('btn-ghost',dirty);
+  var stE=document.getElementById('lsStatus');if(stE){var st=_sowStatus(p,text);stE.textContent=_sowStatusLabel(st);stE.className='ls-status is-'+st;}
+}
+function sowGoLine(line){
+  var o=document.getElementById('lsOut');if(!o)return;
+  var lines=String(o.value||'').split(/\r?\n/);var pos=0;for(var i=0;i<line&&i<lines.length;i++)pos+=lines[i].length+1;
+  o.focus();try{o.setSelectionRange(pos,pos+(lines[line]||'').length);}catch(e){}
+  var lh=parseFloat(getComputedStyle(o).lineHeight)||20;o.scrollTop=Math.max(0,line*lh-o.clientHeight/3);
+}
+/* Ida y vuelta a la consulta: abre el pendiente exacto y deja el
+   camino de regreso al alcance (SW-02: el SOW no se descarta). */
+function sowReviewMissing(unknowns){
+  var p=CP();if(!p)return;
+  try{window._intkReturnTo='leadsow';}catch(e){}
+  var ess=(typeof _intkEssMissingAll==='function')?_intkEssMissingAll(p):[];
+  var unk=(typeof _intkUnknowns==='function')?_intkUnknowns(p):[];
+  var t=(unknowns&&unk[0])||ess[0]||unk[0];
+  switchTab('leadintk');
+  if(t&&typeof intkJump==='function')setTimeout(function(){intkJump(t.cat,t.q.id);},80);
+}
+/* "Reviewed" = el equipo lo leyó. No es aprobación del cliente. */
+async function sowMarkReviewed(){
+  var p=CP();if(!p)return;
+  if(_sowDirty(p)){toast(L('Save the scope first, then mark it reviewed','Guarda el alcance primero y después márcalo revisado'),'err');return;}
+  p.sowReviewedAt=Date.now();await fbSave(p);renderLeadSOW();
+  toast(L('Scope marked as reviewed by the team ✓','Alcance marcado como revisado por el equipo ✓'));
+}
+/* Salida: resuelve el guardado pendiente antes de seguir */
+function sowContinue(){
+  var p=CP();if(!p)return;
+  if(_sowDirty(p)){
+    showConfirm(L('Save the scope before continuing? The estimate reads the saved version.','¿Guardar el alcance antes de continuar? El estimado lee la versión guardada.'),
+      async function(){await leadSaveSOW(true);switchTab('leadest');},
+      function(){});
+    return;
+  }
+  switchTab('leadest');
+}
+['sowGoLine','sowReviewMissing','sowMarkReviewed','sowContinue','_sowStatus','_sowPendientes','_sowIndice','_sowSideRefresh'].forEach(function(fn){try{window[fn]=eval(fn);}catch(e){}});
 var _lsBorrador={pid:null,txt:''};
 function _lsRecordar(txt){var p=CP();_lsBorrador={pid:p?p.id:null,txt:txt||''};}
 
@@ -42316,7 +42587,14 @@ async function leadGenSOW(){
   var _dwT=(typeof dwSowText==='function')?dwSowText(p):'';
   if(!(p.description||'').trim()&&!notes.length&&!_ip.length&&!_dwT){toast(L('Add a description, photo notes, or fill the questionnaire first','Agrega una descripción, notas de fotos o llena el cuestionario primero'),'err');return;}
   var w=document.getElementById('lsOutWrap');var o=document.getElementById('lsOut');var btn=document.querySelector('.ls-gen');
-  if(w)w.style.display='';if(o)o.value=L('Generating draft…','Generando borrador…');if(btn)btn.disabled=true;
+  /* EXT-04: si ya hay texto, lo nuevo se propone al lado; lo escrito
+     no se reemplaza en silencio. */
+  var existente=o?String(o.value||'').trim():'';
+  var prog=document.getElementById('lsProgress');
+  if(w)w.style.display='';
+  if(prog){prog.hidden=false;prog.textContent=L('Preparing a draft from your consultation…','Preparando un borrador desde tu consulta…');}
+  if(o&&!existente)o.value=L('Preparing a draft from your consultation…','Preparando un borrador desde tu consulta…');
+  if(btn)btn.disabled=true;
   var material='Project name: '+(p.name||'Not provided')+'\nAddress: '+(p.address||'To be confirmed before work begins.')
     +'\n\nProject description / client request:\n'+((p.description||'').trim()||'Not provided')
     +'\n\nNotes from site photos (text only):\n'+(notes.length?notes.map(function(n){return '- '+n;}).join('\n'):'None provided')
@@ -42327,17 +42605,36 @@ async function leadGenSOW(){
     var d=await res.json();
     if(!res.ok)throw new Error((d&&d.error&&d.error.message)||('API error '+res.status));
     var txt=_aiText(d).trim();
-    if(o)o.value=txt;
-    _lsRecordar(txt);
+    if(existente&&txt&&txt!==existente){_sowPropose(txt);}
+    else{if(o)o.value=txt;_lsRecordar(txt);_sowSideRefresh();}
     if(_aiCut(d))toast(L('The draft was cut short — generate again or finish it by hand.','El borrador salió cortado — vuelve a generarlo o termínalo a mano.'),'err');
-  }catch(err){if(o)o.value=_lsBorrador.pid===p.id?_lsBorrador.txt:'';toast('Error: '+(err&&err.message||'error'),'err');}
+  }catch(err){
+    /* una generación fallida conserva el último texto válido */
+    if(o)o.value=existente||(_lsBorrador.pid===p.id?_lsBorrador.txt:'')||p.sowDraft||'';
+    toast(L('Could not prepare the draft: ','No se pudo preparar el borrador: ')+(err&&err.message||'error')+' · '+L('your text is intact','tu texto sigue intacto'),'err');
+  }
+  if(prog){prog.hidden=true;prog.textContent='';}
   if(btn)btn.disabled=false;
 }
+/* Borrador propuesto junto al actual: usar, o conservar el mío */
+var _sowPropuesta='';
+function _sowPropose(txt){
+  _sowPropuesta=txt;var c=document.getElementById('lsCompare');if(!c)return;
+  c.hidden=false;
+  c.innerHTML='<div class="ls-cmp-hd"><b>'+L('Proposed draft','Borrador propuesto')+'</b><small>'+L('Built from your consultation. Your current text stays until you decide.','Creado desde tu consulta. Tu texto actual se queda hasta que decidas.')+'</small></div>'
+    +'<pre class="ls-cmp-txt">'+X(txt)+'</pre>'
+    +'<div class="ls-cmp-acts"><button type="button" class="btn btn-gold btn-sm" onclick="sowUseProposed()">'+L('Use proposed draft','Usar el propuesto')+'</button>'
+    +'<button type="button" class="btn btn-ghost btn-sm" onclick="sowKeepMine()">'+L('Keep mine','Conservar el mío')+'</button></div>';
+  c.scrollIntoView({block:'start',behavior:'smooth'});
+}
+function sowUseProposed(){var o=document.getElementById('lsOut');if(!o||!_sowPropuesta)return;o.value=_sowPropuesta;_lsRecordar(_sowPropuesta);_sowPropuesta='';var c=document.getElementById('lsCompare');if(c){c.hidden=true;c.innerHTML='';}_sowSideRefresh();toast(L('Draft replaced — save when you are done reviewing','Borrador reemplazado — guarda cuando termines de revisar'));}
+function sowKeepMine(){_sowPropuesta='';var c=document.getElementById('lsCompare');if(c){c.hidden=true;c.innerHTML='';}toast(L('Kept your text','Se conservó tu texto'));}
+window.sowUseProposed=sowUseProposed;window.sowKeepMine=sowKeepMine;
 function leadManualSOW(){
   var w=document.getElementById('lsOutWrap');var o=document.getElementById('lsOut');
   if(w)w.style.display='';
   if(o){o.focus();try{o.scrollIntoView({behavior:'smooth',block:'center'});}catch(e){}}
-  toast(L('Type your Scope of Work, then Save','Escribe tu Scope of Work y guarda'));
+  toast(L('Type your scope of work, then save it','Escribe tu alcance de trabajo y guárdalo'));
 }
 window.leadManualSOW=leadManualSOW;
 /* Reglas del SOW de Formo (prompt fijo — GPT de Dan convertido) */
@@ -42790,9 +43087,11 @@ async function leadSowPdf(){
   }catch(err){console.error('sow pdf',err);toast(L('Could not create the PDF: ','No se pudo crear el PDF: ')+(err&&err.message||'error'),'err');}
 }
 function leadCopySOW(){var o=document.getElementById('lsOut');if(!o)return;o.select();try{document.execCommand('copy');toast('Copiado ✓');}catch(e){}}
-async function leadSaveSOW(){
+async function leadSaveSOW(silent){
   var p=CP();if(!p)return;var o=document.getElementById('lsOut');if(!o)return;
   var txt=(o.value||'').trim();if(!txt){toast(L('Nothing to save','Nada que guardar'),'err');return;}
+  var cambio=String(p.sowDraft||'').trim()!==txt;
+  if(cambio&&p.sowDraft){p.sowChangedAt=Date.now();p.sowUpdatedAt=Date.now();}
   p.sowDraft=txt;_lsRecordar(txt);await fbSave(p);
   try{await setDoc(D('sow_projects','sow_'+p.id),{id:'sow_'+p.id,projectId:p.id,name:p.name,address:p.address||'',client:(p.customer&&p.customer.name)||p.client||'',phone:(p.customer&&p.customer.phone)||'',email:(p.customer&&p.customer.email)||'',status:'draft',sow:txt,updatedAt:Date.now()},{merge:true});
   }catch(e){console.warn('sow_projects',e);}
@@ -42803,7 +43102,7 @@ async function leadSaveSOW(){
   if(_EST&&_EST._pid===p.id){_EST.sow=txt;try{await estSave(true);}catch(e){}}
   if(typeof applyLeadGating==='function')applyLeadGating();
   if(typeof renderLeadSOW==='function')renderLeadSOW();
-  toast(L('SOW saved ✓ — Estimator tab unlocked','SOW guardado ✓ — pestaña Estimador desbloqueada'));
+  if(!silent)toast(L('Scope saved ✓','Alcance guardado ✓'));
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -42997,7 +43296,10 @@ async function estLoad(eid){
   if(!id){_EST=blank;_EST._pid=p.id;return _EST;}
   try{var snap=await getDoc(_estRef(p.id,id));_EST=snap.exists()?snap.data():blank;}catch(e){_EST=blank;}
   if(_EST.id!==id)_EST.id=id;
-  if(idx.activeId!==id){idx.activeId=id;estIndexSave(p.id);}
+  /* Abrir un estimado NO lo elige para la propuesta (spec §07: "último
+     abierto" y "seleccionado" no son sinónimos). Solo el primero, cuando
+     no hay ninguno elegido, y nunca uno de change order. */
+  if(!idx.activeId&&!_EST.coId){idx.activeId=id;estIndexSave(p.id);}
   /* ── De quién es el alcance ────────────────────────────────────
      El estimado guarda su propia copia del Scope of Work, y antes solo
      la rellenaba cuando estaba VACÍA. Eso hacía que corregir el alcance
@@ -43051,7 +43353,7 @@ async function estNuevo(){
   var e=_estBlank(p,(p.name||L('Estimate','Estimado')),
     n?(L('Option ','Opción ')+String.fromCharCode(65+n)):L('Base estimate','Estimado base'));
   _EST=e;_EST._pid=p.id;
-  _estIdx.activeId=e.id;
+  /* nacer no lo elige para la propuesta: eso se hace a mano */
   _estTocarFicha(e);
   try{await setDoc(_estRef(p.id,e.id),Object.assign({},e,{_pid:undefined}));}catch(x){}
   await estIndexSave(p.id);
@@ -43091,11 +43393,14 @@ async function estDuplicar(eid){
 function estBorrar(eid){
   var p=CP();if(!p)return;
   var f=((_estIdx&&_estIdx.items)||[]).find(function(x){return x.id===eid;});
-  showConfirm(L('Delete “'+((f&&f.name)||'')+'”? This cannot be undone.',
-                '¿Eliminar “'+((f&&f.name)||'')+'”? Esto no se puede deshacer.'),async function(){
+  var esElegido=_estIdx&&_estIdx.activeId===eid;
+  var msg=L('Delete “'+((f&&f.name)||'')+'”? This cannot be undone.','¿Eliminar “'+((f&&f.name)||'')+'”? Esto no se puede deshacer.');
+  if(esElegido)msg+=' '+L('This estimate feeds the proposal: the proposal will have no estimate until you choose another one.','Este estimado alimenta la propuesta: la propuesta quedará sin estimado hasta que elijas otro.');
+  showConfirm(msg,async function(){
     try{await deleteDoc(_estRef(p.id,eid));}catch(e){console.warn('borrar est',e);}
     _estIdx.items=(_estIdx.items||[]).filter(function(x){return x.id!==eid;});
-    if(_estIdx.activeId===eid)_estIdx.activeId=((_estIdx.items[0]||{}).id)||'';
+    /* no se elige otro en silencio */
+    if(_estIdx.activeId===eid)_estIdx.activeId='';
     if(_EST&&_EST.id===eid)_EST=null;
     await estIndexSave(p.id);
     _estVista='lista';
@@ -43103,6 +43408,32 @@ function estBorrar(eid){
     toast(L('Estimate deleted','Estimado eliminado'));
   });
 }
+/* Elegir explícitamente cuál alimenta la propuesta */
+async function estUsarPropuesta(eid){
+  var p=CP();if(!p)return;await estIndexLoad(p.id);
+  var f=(_estIdx.items||[]).find(function(x){return x.id===eid;});if(!f||f.coId)return;
+  _estIdx.activeId=eid;await estIndexSave(p.id);
+  try{if(typeof formoFactsForget==='function')formoFactsForget(p.id);}catch(e){}
+  renderLeadEst();toast(L('“'+(f.name||'')+'” now feeds the proposal ✓','“'+(f.name||'')+'” ahora alimenta la propuesta ✓'));
+}
+/* El estimado elegido para la propuesta, leído aparte (no toca _EST).
+   Devuelve null si no hay uno elegido: la propuesta no adivina. */
+async function estSelectedDoc(pid){
+  var idx=await estIndexLoad(pid);
+  if(idx&&idx.v===1&&idx.legacy)return idx.legacy;
+  var items=(idx&&idx.items||[]).filter(function(i){return !i.coId;});
+  var id=idx&&idx.activeId;
+  if(!id||!items.some(function(i){return i.id===id;})){
+    if(items.length===1){idx.activeId=items[0].id;try{await estIndexSave(pid);}catch(e){}id=items[0].id;}
+    else return null;
+  }
+  if(_EST&&_EST._pid===pid&&_EST.id===id)return _EST;
+  try{var snap=await getDoc(_estRef(pid,id));return snap.exists()?snap.data():null;}catch(e){return null;}
+}
+function estSelectedName(){
+  var idx=_estIdx;if(!idx)return '';var f=(idx.items||[]).find(function(x){return x.id===idx.activeId&&!x.coId});return f?(f.name||''):'';
+}
+try{window.estUsarPropuesta=estUsarPropuesta;window.estSelectedDoc=estSelectedDoc;window.estSelectedName=estSelectedName;}catch(e){}
 /* El título y el subtítulo se editan desde el propio estimado */
 function estSetName(v){if(!_EST)return;_EST.name=String(v||'').slice(0,80);estSchedSave();_estTocarFicha(_EST);}
 function estSetSubtitle(v){if(!_EST)return;_EST.subtitle=String(v||'').slice(0,90);estSchedSave();_estTocarFicha(_EST);}
@@ -43155,7 +43486,7 @@ function _estRenderLista(idx){
     +'<div class="estl-hd-t"><span class="estl-eye">'+L('Estimates','Estimados')+'</span>'
       +'<h2>'+X(p.name||'')+'</h2>'
       +'<small>'+(items.length
-          ? (items.length+' '+(items.length===1?L('estimate','estimado'):L('estimates','estimados')))
+          ? (items.length+' '+(items.length===1?L('estimate','estimado'):L('estimates','estimados'))+(estSelectedName()?' · '+L('proposal uses ','la propuesta usa ')+'<b>'+X(estSelectedName())+'</b>':(items.some(function(i){return !i.coId;})?' · <i class="estl-nosel">'+L('none selected for the proposal','ninguno elegido para la propuesta')+'</i>':'')))
           : L('None yet','Ninguno todavía'))+'</small></div>'
     +'<button class="estl-new" onclick="estNuevo()">'+_I('plus')+'<span>'+L('New estimate','Nuevo estimado')+'</span></button>'
   +'</header>';
@@ -43176,11 +43507,13 @@ function _estRenderLista(idx){
   h+='<div class="estl-grid">'+items.map(function(f){
     var m=_estStatMeta(f.status);
     var jid=JSON.stringify(f.id).replace(/"/g,'&quot;');
-    return '<article class="estl-card'+(f.id===idx.activeId?' is-active':'')+'">'
+    var sel=f.id===idx.activeId&&!f.coId;
+    return '<article class="estl-card'+(sel?' is-active':'')+'">'
       +'<button type="button" class="estl-open" onclick="estAbrir('+jid+')">'
         +'<span class="estl-top">'
           +'<span class="estl-badge" style="color:'+m.c+';background:'+m.b+'">'+L(m.en,m.es)+'</span>'
           +(f.coId?'<span class="estl-badge estl-co">CO</span>':'')
+          +(sel?'<span class="estl-badge estl-sel">'+_I('tick')+' '+L('Selected for proposal','Elegido para la propuesta')+'</span>':'')
           +'<span class="estl-when">'+_estCuando(f.updatedAt)+'</span>'
         +'</span>'
         +'<span class="estl-name">'+X(f.name||L('Untitled','Sin título'))+'</span>'
@@ -43188,6 +43521,7 @@ function _estRenderLista(idx){
         +'<span class="estl-total">'+estFmt(f.total||0)+'</span>'
       +'</button>'
       +'<div class="estl-acts">'
+        +(!sel&&!f.coId?'<button class="estl-act estl-use" onclick="estUsarPropuesta('+jid+')" title="'+L('Use for proposal','Usar para la propuesta')+'">'+L('Use for proposal','Usar para propuesta')+'</button>':'')
         +'<button class="estl-act" onclick="estDuplicar('+jid+')" aria-label="'+L('Duplicate','Duplicar')+'" title="'+L('Duplicate','Duplicar')+'">'+_I('layers')+'</button>'
         +'<button class="estl-act del" onclick="estBorrar('+jid+')" aria-label="'+L('Delete','Eliminar')+'" title="'+L('Delete','Eliminar')+'">'+_I('trash')+'</button>'
       +'</div>'
@@ -43221,91 +43555,226 @@ function _estRenderStart(){
     +'<div class="est-start-eye">'+L('Build the estimate','Arma el estimado')+'</div>'
     +'<div class="est-start-title">'+L('How do you want to start?','¿Cómo quieres empezar?')+'</div>'
     +'<div class="est-start-grid">'
-    +'<button class="est-start-card" onclick="estStartAI()"><div class="est-start-ic">'+_I('bulb')+'</div><div class="est-start-h">'+L('Auto-build with AI','Armar con IA')+'</div><div class="est-start-p">'+L('Reads your SOW and drafts every line item, phase and markup for you to review.','Lee tu SOW y redacta todas las partidas, fases y ganancia para que las revises.')+'</div></button>'
-    +'<button class="est-start-card" onclick="estStartManual()"><div class="est-start-ic">'+_I('pencil')+'</div><div class="est-start-h">'+L('Enter manually','Ingresar manual')+'</div><div class="est-start-p">'+L('Start from a blank estimate and add categories, line items and rates yourself.','Empieza en blanco y agrega tú las categorías, partidas y tarifas.')+'</div></button>'
+    +'<button class="est-start-card is-rec" onclick="estStartAI()"><div class="est-start-ic">'+_I('filetext')+'</div><div class="est-start-h">'+L('Build from scope','Crear desde el alcance')+' <span class="est-rec">'+L('Recommended','Recomendado')+'</span></div><div class="est-start-p">'+L('Drafts line items, phases and markup from the saved scope of work — AI-assisted. Every quantity and price is a suggestion to review.','Redacta partidas, fases y markup desde el alcance guardado, con ayuda de IA. Cada cantidad y precio es una sugerencia por revisar.')+'</div></button>'
+    +'<button class="est-start-card" onclick="estStartManual()"><div class="est-start-ic">'+_I('pencil')+'</div><div class="est-start-h">'+L('Start manually','Empezar a mano')+'</div><div class="est-start-p">'+L('Start from a blank estimate and add categories, line items and rates yourself. Same screen either way.','Empieza en blanco y agrega tú las categorías, partidas y tarifas. La pantalla es la misma.')+'</div></button>'
     +'</div></div>';
   area.innerHTML=h;
 }
 function estStartAI(){var p=CP();if(p)_estAIran[p.id]=true;estAI(false);}
-function estStartManual(){var p=CP();if(p)_estAIran[p.id]=true;if(_EST){if(!_EST.categories||!_EST.categories.length)_EST.categories=[{cat:'Labor',lines:[{desc:'',unit:'',qty:0,unitPrice:0}]}];}estSchedSave();_estRender();}
+function estStartManual(){var p=CP();if(p)_estAIran[p.id]=true;if(_EST){if(!_EST.categories||!_EST.categories.length)_EST.categories=[{cat:'Labor',lines:[{desc:'',unit:'',qty:0,unitPrice:0}]}];_EST.linesAt=Date.now();}estSchedSave();_estRender();}
 window._estRenderStart=_estRenderStart;window.estStartAI=estStartAI;window.estStartManual=estStartManual;
 
+/* ══ DETALLE DEL ESTIMADO (spec §07) ═══════════════════════════════
+   Encabezado que dice cuál se edita y cuál alimenta la propuesta;
+   Cost view / Client view (cambiar de vista no cambia un número);
+   agrupar por fase sin tocar la categoría económica; resumen visible;
+   "Needs attention" con errores y avisos separados; menús con nombres
+   explícitos. Las fórmulas son las de siempre (CON-01). */
+var _estView='cost';      /* 'cost' | 'client' */
+var _estGroup='cat';      /* 'cat' | 'phase' */
+var _estMoreOpen=false;
+/* Desglose para el cliente: el mismo reparto proporcional que usa el
+   PDF de cotización (por fase; si no, por categoría). Sin tarifas. */
+function estClientRows(est){
+  var cats=est.categories||[],adjs=est.adjustments||[],prof=est.profitRows||[],misc=est.miscItems||[],phases=est.phases||[];
+  var COST=estCostTotal(cats,adjs),GRAND=COST+estProfitTotal(cats,prof)+estMiscTotal(misc);
+  var totalBase=cats.reduce(function(s,c){return s+estCatTot(c.lines);},0);
+  var rows=[];
+  var activePhases=phases.filter(function(ph){return ph.active!==false;});
+  if(activePhases.length&&totalBase>0){
+    activePhases.forEach(function(ph){
+      var pRaw=0;cats.forEach(function(cat){(cat.lines||[]).forEach(function(ln){if(ln.phaseId===ph.id)pRaw+=(+(ln.qty||0))*(+(ln.unitPrice||0));});});
+      if(pRaw<=0)return;
+      rows.push({name:ph.name||'Phase',amt:GRAND*(pRaw/totalBase)});
+    });
+  }
+  if(!rows.length&&totalBase>0){
+    cats.forEach(function(cat){var b=estCatTot(cat.lines);if(b>0)rows.push({name:cat.cat,amt:GRAND*(b/totalBase)});});
+  }
+  return {rows:rows,grand:GRAND,cost:COST};
+}
+/* Errores (impiden) y avisos (revisar) de las partidas */
+function estIssues(est,p){
+  var out=[];var cats=est.categories||[];var phases=(est.phases||[]);
+  cats.forEach(function(cat,ci){(cat.lines||[]).forEach(function(ln,li){
+    var ref={ci:ci,li:li,desc:ln.desc||L('(no description)','(sin descripción)')};
+    if(!String(ln.desc||'').trim())out.push(Object.assign({kind:'error',code:'desc',msg:L('Line without description','Partida sin descripción')},ref));
+    if(!(+ln.qty)&&!ln.zeroOk)out.push(Object.assign({kind:'warn',code:'qty',msg:L('Quantity missing','Cantidad faltante')},ref));
+    if(!String(ln.unit||'').trim())out.push(Object.assign({kind:'warn',code:'unit',msg:L('Unit missing','Unidad faltante')},ref));
+    if(!(+ln.unitPrice)&&!ln.zeroOk)out.push(Object.assign({kind:'warn',code:'price',msg:L('Price empty','Precio vacío')},ref));
+    if(phases.length&&!ln.phaseId)out.push(Object.assign({kind:'warn',code:'phase',msg:L('Not assigned to a phase','Sin fase asignada')},ref));
+  });});
+  if(p&&p.sowUpdatedAt&&!est.coId){
+    var base=est.linesAt||est.updatedAt||0;
+    if(p.sowUpdatedAt>base&&!(est.sowReviewedAt&&est.sowReviewedAt>=p.sowUpdatedAt))out.push({kind:'warn',code:'sow',msg:L('Scope changed since these line items were prepared','El alcance cambió desde que se prepararon las partidas')});
+  }
+  return out;
+}
 function _estRender(){
   var area=document.getElementById('leadEstArea');if(!area||!_EST)return;
+  var p=CP();
   var cats=_EST.categories||[],adjs=_EST.adjustments||[],profRows=_EST.profitRows||[],misc=_EST.miscItems||[],phases=_EST.phases||[];
   var COST=estCostTotal(cats,adjs),PROF=estProfitTotal(cats,profRows),MISC=estMiscTotal(misc),GRAND=COST+PROF+MISC;
+  var idx=(_estIdx&&_estIdxPid===(p&&p.id))?_estIdx:null;
+  var esSel=!!(idx&&idx.activeId===_EST.id&&!_EST.coId);
+  var selName=estSelectedName();
+  var fin=canFinance();
+  if(!fin&&_estView==='cost')_estView='client';
+  var issues=estIssues(_EST,p);var errs=issues.filter(function(i){return i.kind==='error';}),warns=issues.filter(function(i){return i.kind==='warn';});
+  var jid=JSON.stringify(_EST.id||'').replace(/"/g,'&quot;');
   var h='';
-  /* El botón de volver ya no salta al SOW: vuelve a la lista, que es de
-     donde se entró. Saltar dos pantallas hacia atrás desorienta. */
   h+='<button class="home-back" style="margin-bottom:10px" onclick="estVolverALista()">'+_I('chev')+' '+L('All estimates','Todos los estimados')+'</button>';
+  /* ── Encabezado ── */
   h+='<div class="est-top"><div class="est-top-id">'
-    +'<div class="ls-sub" style="text-transform:uppercase;letter-spacing:.08em;font-size:10px;color:var(--tx4);font-weight:700">'+L('Estimate','Estimado')+'</div>'
+    +'<div class="ls-sub est-eye">'+(_EST.coId?L('Change order estimate','Estimado de change order'):L('Editing estimate','Editando estimado'))+'</div>'
     +'<input class="est-name-inp" value="'+X(_EST.name||'')+'" placeholder="'+L('Estimate name','Nombre del estimado')+'" onchange="estSetName(this.value)" aria-label="'+L('Estimate name','Nombre del estimado')+'">'
     +'<input class="est-sub-inp" value="'+X(_EST.subtitle||'')+'" placeholder="'+L('Subtitle — e.g. without the kitchen','Subtítulo — ej. sin la cocina')+'" onchange="estSetSubtitle(this.value)" aria-label="'+L('Subtitle','Subtítulo')+'">'
-    +'</div>'
+    +'<div class="est-selrow">'
+    +(_EST.coId?'<span class="estl-badge estl-co">CO</span>':(esSel?'<span class="estl-badge estl-sel">'+_I('tick')+' '+L('Selected for proposal','Elegido para la propuesta')+'</span>'
+      :'<span class="est-notsel">'+(selName?L('Proposal uses ','La propuesta usa ')+'<b>'+X(selName)+'</b>':L('No estimate selected for the proposal','Ningún estimado elegido para la propuesta'))+'</span><button type="button" class="btn btn-ghost btn-xs" onclick="estUsarPropuesta('+jid+')">'+L('Use this one for the proposal','Usar este para la propuesta')+'</button>'))
+    +'</div></div>'
     +'<div class="est-top-act">'
-    +'<select class="est-mini" onchange="estSetStatus(this.value)"><option value="draft"'+(_EST.status==='draft'?' selected':'')+'>Draft</option><option value="sent"'+(_EST.status==='sent'?' selected':'')+'>Sent</option><option value="won"'+(_EST.status==='won'?' selected':'')+'>Won</option><option value="lost"'+(_EST.status==='lost'?' selected':'')+'>Lost</option></select>'
-    +'<input class="est-mini" type="number" min="1" placeholder="'+L('Days','Días')+'" value="'+(_EST.estimatedDays||'')+'" onchange="estSetDays(this.value)" style="width:64px" title="'+L('Estimated days','Días estimados')+'">'
-    +'<button class="btn btn-ghost btn-sm" onclick="estAI(false)">'+_I('bulb')+' '+L('AI','IA')+'</button>'
-    +'<button class="btn btn-ghost btn-sm" onclick="estSaveRates()" title="'+L('Save these rates to the price library','Guardar estas tarifas en la librería')+'">'+_I('calc')+' '+L('Save rates','Guardar tarifas')+'</button>'
+    +'<select class="est-mini" onchange="estSetStatus(this.value)" aria-label="'+L('Status','Estado')+'"><option value="draft"'+(_EST.status==='draft'?' selected':'')+'>Draft</option><option value="sent"'+(_EST.status==='sent'?' selected':'')+'>Sent</option><option value="won"'+(_EST.status==='won'?' selected':'')+'>Won</option><option value="lost"'+(_EST.status==='lost'?' selected':'')+'>Lost</option></select>'
+    +'<input class="est-mini" type="number" min="1" placeholder="'+L('Days','Días')+'" value="'+(_EST.estimatedDays||'')+'" onchange="estSetDays(this.value)" style="width:64px" title="'+L('Estimated days','Días estimados')+'" aria-label="'+L('Estimated days','Días estimados')+'">'
+    +(fin?'<div class="est-seg" role="tablist"><button type="button" role="tab" class="est-seg-b'+(_estView==='cost'?' on':'')+'" aria-selected="'+(_estView==='cost')+'" onclick="estSetView(\'cost\')">'+L('Cost view','Vista de costos')+'</button><button type="button" role="tab" class="est-seg-b'+(_estView==='client'?' on':'')+'" aria-selected="'+(_estView==='client')+'" onclick="estSetView(\'client\')">'+L('Client view','Vista del cliente')+'</button></div>':'')
     +'<button class="btn btn-ghost btn-sm" onclick="estSave(false)">'+L('Save','Guardar')+'</button>'
-    +(canFinance()?('<button class="btn btn-ghost btn-sm est-costpdf" onclick="estCostPdf()" title="'
-        +L('Detailed costs — unit, quantity and unit price','Costos detallados — unidad, cantidad y precio unitario')+'">'
-        +_I('calc')+' '+L('Costs','Costos')+'</button>'):'')
-    +'<button class="btn btn-gold btn-sm" onclick="estPdf()">'+_I('download')+' '+L('Quote','Cotización')+'</button>'
+    +'<div class="est-more-wrap"><button type="button" class="btn btn-ghost btn-sm est-more-btn" aria-haspopup="menu" aria-expanded="'+_estMoreOpen+'" onclick="estMoreToggle()">'+L('More','Más')+' &#8943;</button>'
+    +'<div class="est-more" role="menu"'+(_estMoreOpen?'':' hidden')+'>'
+      +'<button role="menuitem" onclick="estMoreToggle();estAI(false)">'+_I('bulb')+' '+L('Rebuild from scope (AI)','Rehacer desde el alcance (IA)')+'</button>'
+      +'<button role="menuitem" onclick="estMoreToggle();estSaveRates()">'+_I('calc')+' '+L('Save these rates to the price library','Guardar estas tarifas en la librería')+'</button>'
+      +'<button role="menuitem" onclick="estMoreToggle();estDuplicar('+jid+')">'+_I('layers')+' '+L('Duplicate estimate','Duplicar estimado')+'</button>'
+      +'<div class="est-more-sep"></div>'
+      +'<button role="menuitem" onclick="estMoreToggle();estPdf()">'+_I('download')+' '+L('Client estimate (PDF)','Estimado para el cliente (PDF)')+'</button>'
+      +'<button role="menuitem" onclick="estMoreToggle();estGcQuotePdf()">'+_I('filetext')+' '+L('Quote with scope, for GCs (PDF)','Cotización con alcance, para GCs (PDF)')+'</button>'
+      +'<button role="menuitem" onclick="estMoreToggle();estSubPdf()">'+_I('filetext')+' '+L('Work order for subs — Spanish, no prices (PDF)','Orden de trabajo para subs — español, sin precios (PDF)')+'</button>'
+      +(fin?'<button role="menuitem" class="est-costpdf" onclick="estMoreToggle();estCostPdf()">'+_I('calc')+' '+L('Internal cost breakdown (PDF)','Desglose interno de costos (PDF)')+'</button>':'')
+    +'</div></div>'
     +'</div></div>';
   h+=_estDatalists();
   if(_EST.summary)h+='<div class="est-summary">'+X(_EST.summary)+(_EST.estimatedDays?'  <span class="est-days">'+_EST.estimatedDays+' '+L('day','día')+(_EST.estimatedDays!=1?'s':'')+'</span>':'')+'</div>';
-  // Add category buttons
-  h+='<div class="est-addcats"><span class="est-add-lbl">'+L('ADD:','AGREGAR:')+'</span>'+EST_CATS.map(function(c){return '<button class="btn btn-xs btn-dim" onclick="estAddCat(\''+c.replace(/[^A-Za-z]/g,'')+'\')" data-cat="'+c+'">'+(c==='Debris/Dumpster'?'Debris':c==='Subcontractor'?'Sub':c)+'</button>';}).join('')+'</div>';
-  // Categories
-  h+='<div id="estCats">'+cats.map(function(cat,ci){return _estCatHTML(cat,ci,phases);}).join('')+(cats.length?'':'<div class="est-empty-note">'+L('No line items. Tap <b>AI</b> to extract them from the SOW or add a category.','Sin partidas. Toca <b>IA</b> para extraerlas del SOW o agrega una categoría.')+'</div>')+'</div>';
-  // Adjustments
-  h+='<div class="est-card"><div class="est-card-hd"><span>'+L('Adjustments & factors','Ajustes y factores')+'</span><button class="btn btn-xs btn-gold" onclick="estAddAdj()">'+L('+ Add','+ Agregar')+'</button></div><div id="estAdj">'+(adjs.length?adjs.map(function(a,ai){return _estAdjHTML(a,ai);}).join(''):'<div class="est-none">'+L('No adjustments','Sin ajustes')+'</div>')+'</div></div>';
-  // Summary bar
-  h+='<div class="est-sumbar">'
-    +_estSumItem('Labor','var(--gold)','sb-lab',estCatSum(cats,'Labor'))
-    +_estSumItem('Materials','var(--blue)','sb-mat',estCatSum(cats,'Materials'))
-    +_estSumItem('Supplies','var(--green)','sb-sup',estCatSum(cats,'Supplies'))
-    +_estSumItem('Subs','#bf5af2','sb-sub',estCatSum(cats,'Subcontractor'))
-    +_estSumItem('Debris','var(--amber)','sb-deb',estCatSum(cats,'Debris/Dumpster'))
-    +'<div class="est-sum-item est-sum-cost"><div class="est-sum-lbl">'+L('COST','COSTO')+'</div><div class="est-sum-val" style="color:var(--gold);font-size:20px" id="sb-cost">'+estFmt(COST)+'</div></div>'
-    +'</div>';
-  // Profit
-  h+='<div class="est-card"><div class="est-card-hd est-hd-green"><span>'+L('Profit (markup)','Ganancia (markup)')+'</span><button class="btn btn-xs btn-green" onclick="estAddProf()">'+L('+ Row','+ Fila')+'</button></div>'
-    +'<div id="estProf">'+(profRows.length?profRows.map(function(r,ri){return _estProfHTML(r,ri,cats);}).join(''):'<div class="est-none">'+L('No profit yet — add a row and set your % by category','Sin ganancia — agrega una fila y define tu % por categoría')+'</div>')+'</div></div>';
-  // Misc
-  h+='<div class="est-card"><div class="est-card-hd est-hd-amber"><span>'+L('Miscellaneous','Misceláneos')+'</span><button class="btn btn-xs btn-dim" onclick="estAddMisc()">'+L('+ Add','+ Agregar')+'</button></div>'
-    +'<div id="estMisc">'+(misc.length?misc.map(function(m,mi){return _estMiscHTML(m,mi);}).join(''):'<div class="est-none">'+L('No misc expenses','Sin gastos misceláneos')+'</div>')+'</div></div>';
-  // Grand total
-  h+='<div class="est-grand"><div class="est-grand-break"><div class="est-grand-lbl">'+L('BREAKDOWN','DESGLOSE')+'</div><div class="est-grand-nums">'
-    +'<div><div class="est-gn-l">'+L('COST','COSTO')+'</div><div class="est-gn-v" style="color:var(--gold)" id="gt-cost">'+estFmt(COST)+'</div></div><div class="est-plus">+</div>'
-    +'<div><div class="est-gn-l">'+L('PROFIT','GANANCIA')+'</div><div class="est-gn-v" style="color:var(--green)" id="gt-prof">'+estFmt(PROF)+'</div></div><div class="est-plus">+</div>'
-    +'<div><div class="est-gn-l">MISC</div><div class="est-gn-v" style="color:var(--amber)" id="gt-misc">'+estFmt(MISC)+'</div></div>'
-    +'</div></div><div class="est-grand-total"><div class="est-grand-lbl" style="color:var(--green)">'+L('TOTAL','TOTAL')+'</div><div class="est-grand-v" id="gt-grand">'+estFmt(GRAND)+'</div></div></div>';
-  // Phase breakdown with % (portado del estimador)
-  h+=estPhasesPanel();
-  // Notes + SOW
-  var _alw=estAllowRows(cats,adjs,profRows),_alwT=0;_alw.forEach(function(r){_alwT+=r.client;});
-  if(_alw.length){
-    h+='<div class="est-alw-sum"><span>'+_alw.length+' '+(_alw.length===1?L('allowance item','partida de allowance'):L('allowance items','partidas de allowance'))
-      +' \u00b7 '+L('what the client can spend, profit included','lo que el cliente puede gastar, con ganancia')+'</span><b>'+estFmt(_alwT)+'</b></div>';
+  /* ── Alcance cambiado (SW-03): se avisa, no se recalcula ── */
+  var sowW=issues.find(function(i){return i.code==='sow';});
+  if(sowW)h+='<div class="est-banner"><b>'+L('The scope of work changed after these line items were prepared.','El alcance de trabajo cambió después de preparar estas partidas.')+'</b><span>'+L('Nothing was recalculated. Review the lines against the new scope, then mark it reviewed.','No se recalculó nada. Revisa las partidas contra el nuevo alcance y márcalo revisado.')+'</span>'
+    +'<span class="est-banner-acts"><button type="button" class="btn btn-ghost btn-xs" onclick="switchTab(\'leadsow\')">'+L('Open scope','Abrir alcance')+'</button><button type="button" class="btn btn-gold btn-xs" onclick="estSowReviewed()">'+L('Mark reviewed','Marcar revisado')+'</button></span></div>';
+  /* ── Resumen siempre a la vista ── */
+  if(fin){
+    h+='<div class="est-sticky" id="estSticky">'
+      +'<span><small>'+L('Cost','Costo')+'</small><b id="st-cost">'+estFmt(COST)+'</b></span>'
+      +'<span><small>'+L('Markup','Markup')+'</small><b id="st-prof" class="is-green">'+estFmt(PROF)+'</b></span>'
+      +'<span><small>'+L('Additional costs','Costos adicionales')+'</small><b id="st-misc" class="is-amber">'+estFmt(MISC)+'</b></span>'
+      +'<span class="est-sticky-total"><small>'+L('Client total','Total al cliente')+'</small><b id="st-grand">'+estFmt(GRAND)+'</b></span>'
+      +'<button type="button" class="est-sticky-attn'+(errs.length?' is-err':warns.length?' is-warn':'')+'" id="st-attn" onclick="var e=document.getElementById(\'estAttn\');if(e)e.scrollIntoView({block:\'center\',behavior:\'smooth\'})">'+(issues.length?(issues.length+' '+L('to review','por revisar')):L('Nothing to review','Nada por revisar'))+'</button>'
+      +'</div>';
   }
-  h+='<div class="est-card"><div class="est-card-hd"><span>'+L('Internal notes','Notas internas')+'</span></div><div style="padding:12px 14px"><textarea class="lp-desc" placeholder="'+L('Internal notes, margin targets…','Notas internas, objetivos de margen…')+'" onchange="estSetNotes(this.value)">'+X(_EST.notes||'')+'</textarea></div></div>';
+  if(_estView==='client'){
+    h+=_estClientViewHTML();
+  }else{
+    /* ── Agrupar: por categoría (edita) o por fase (lee) ── */
+    if(phases.length)h+='<div class="est-groupbar"><span>'+L('Group by','Agrupar por')+'</span><div class="est-seg"><button type="button" class="est-seg-b'+(_estGroup==='cat'?' on':'')+'" onclick="estSetGroup(\'cat\')">'+L('Category','Categoría')+'</button><button type="button" class="est-seg-b'+(_estGroup==='phase'?' on':'')+'" onclick="estSetGroup(\'phase\')">'+L('Scope / phase','Alcance / fase')+'</button></div><small>'+L('Grouping never changes a category or a total.','Agrupar nunca cambia una categoría ni un total.')+'</small></div>';
+    if(_estGroup==='phase'&&phases.length){
+      h+=_estPhaseGroupHTML(cats,phases);
+    }else{
+      // Add category buttons
+      h+='<div class="est-addcats"><span class="est-add-lbl">'+L('ADD:','AGREGAR:')+'</span>'+EST_CATS.map(function(c){return '<button class="btn btn-xs btn-dim" onclick="estAddCat(\''+c.replace(/[^A-Za-z]/g,'')+'\')" data-cat="'+c+'">'+(c==='Debris/Dumpster'?'Debris':c==='Subcontractor'?'Sub':c)+'</button>';}).join('')+'</div>';
+      // Categories
+      h+='<div id="estCats">'+cats.map(function(cat,ci){return _estCatHTML(cat,ci,phases);}).join('')+(cats.length?'':'<div class="est-empty-note">'+L('No line items yet. Build from the scope (More ⋯) or add a category.','Aún sin partidas. Créalas desde el alcance (Más ⋯) o agrega una categoría.')+'</div>')+'</div>';
+    }
+    // Project factors (adjustments): base + effect
+    h+='<div class="est-card"><div class="est-card-hd"><span>'+L('Project factors','Factores del proyecto')+'</span><button class="btn btn-xs btn-gold" onclick="estAddAdj()">'+L('+ Add','+ Agregar')+'</button></div><div id="estAdj">'+(adjs.length?adjs.map(function(a,ai){return _estAdjHTML(a,ai);}).join(''):'<div class="est-none">'+L('No factors — e.g. height premium on labor, or a fixed permit fee','Sin factores — p. ej. recargo por altura sobre mano de obra, o un permiso fijo')+'</div>')+'</div></div>';
+    // Summary bar
+    h+='<div class="est-sumbar">'
+      +_estSumItem('Labor','var(--gold)','sb-lab',estCatSum(cats,'Labor'))
+      +_estSumItem('Materials','var(--blue)','sb-mat',estCatSum(cats,'Materials'))
+      +_estSumItem('Supplies','var(--green)','sb-sup',estCatSum(cats,'Supplies'))
+      +_estSumItem('Subs','#bf5af2','sb-sub',estCatSum(cats,'Subcontractor'))
+      +_estSumItem('Debris','var(--amber)','sb-deb',estCatSum(cats,'Debris/Dumpster'))
+      +'<div class="est-sum-item est-sum-cost"><div class="est-sum-lbl">'+L('COST','COSTO')+'</div><div class="est-sum-val" style="color:var(--gold);font-size:20px" id="sb-cost">'+estFmt(COST)+'</div></div>'
+      +'</div>';
+    // Markup
+    h+='<div class="est-card"><div class="est-card-hd est-hd-green"><span>'+L('Markup','Markup')+' <small class="est-hd-note">'+L('% on each category’s cost','% sobre el costo de cada categoría')+'</small></span><button class="btn btn-xs btn-green" onclick="estAddProf()">'+L('+ Row','+ Fila')+'</button></div>'
+      +'<div id="estProf">'+(profRows.length?profRows.map(function(r,ri){return _estProfHTML(r,ri,cats);}).join(''):'<div class="est-none">'+L('No markup yet — add a row and set your % by category','Sin markup — agrega una fila y define tu % por categoría')+'</div>')+'</div></div>';
+    // Additional project costs
+    h+='<div class="est-card"><div class="est-card-hd est-hd-amber"><span>'+L('Additional project costs','Costos adicionales del proyecto')+'</span><button class="btn btn-xs btn-dim" onclick="estAddMisc()">'+L('+ Add','+ Agregar')+'</button></div>'
+      +'<div id="estMisc">'+(misc.length?misc.map(function(m,mi){return _estMiscHTML(m,mi);}).join(''):'<div class="est-none">'+L('No additional costs (fuel, permits, small items)','Sin costos adicionales (gasolina, permisos, menudencias)')+'</div>')+'</div></div>';
+    // Grand total
+    h+='<div class="est-grand"><div class="est-grand-break"><div class="est-grand-lbl">'+L('BREAKDOWN','DESGLOSE')+'</div><div class="est-grand-nums">'
+      +'<div><div class="est-gn-l">'+L('COST','COSTO')+'</div><div class="est-gn-v" style="color:var(--gold)" id="gt-cost">'+estFmt(COST)+'</div></div><div class="est-plus">+</div>'
+      +'<div><div class="est-gn-l">'+L('MARKUP','MARKUP')+'</div><div class="est-gn-v" style="color:var(--green)" id="gt-prof">'+estFmt(PROF)+'</div></div><div class="est-plus">+</div>'
+      +'<div><div class="est-gn-l">'+L('ADDITIONAL','ADICIONALES')+'</div><div class="est-gn-v" style="color:var(--amber)" id="gt-misc">'+estFmt(MISC)+'</div></div>'
+      +'</div></div><div class="est-grand-total"><div class="est-grand-lbl" style="color:var(--green)">'+L('CLIENT TOTAL','TOTAL AL CLIENTE')+'</div><div class="est-grand-v" id="gt-grand">'+estFmt(GRAND)+'</div></div></div>';
+    // Phase breakdown with % (portado del estimador)
+    h+=estPhasesPanel();
+    // Allowances
+    var _alw=estAllowRows(cats,adjs,profRows),_alwT=0;_alw.forEach(function(r){_alwT+=r.client;});
+    if(_alw.length){
+      h+='<div class="est-alw-sum"><span>'+_alw.length+' '+(_alw.length===1?L('allowance item','partida de allowance'):L('allowance items','partidas de allowance'))
+        +' · '+L('what the client can spend, markup included','lo que el cliente puede gastar, con markup')+'</span><b>'+estFmt(_alwT)+'</b></div>';
+    }
+  }
+  /* ── Needs attention ── */
+  h+='<div class="est-card est-attn" id="estAttn"><div class="est-card-hd"><span>'+L('Needs attention','Necesita atención')+'</span><span class="est-attn-n'+(errs.length?' is-err':warns.length?' is-warn':' is-ok')+'">'+(errs.length?errs.length+' '+L('error'+(errs.length>1?'s':''),'error'+(errs.length>1?'es':'')):'')+(errs.length&&warns.length?' · ':'')+(warns.length?warns.length+' '+L('to review','por revisar'):'')+(!issues.length?'✓':'')+'</span></div>'
+    +'<div class="est-attn-body">'+(issues.length?issues.slice(0,40).map(function(i){
+      var go=i.ci!=null?'estGoLine('+i.ci+','+i.li+')':'switchTab(\'leadsow\')';
+      return '<div class="est-attn-row is-'+i.kind+'"><i class="formo-sev"></i><button type="button" class="formo-link" onclick="'+go+'">'+X(i.msg)+(i.desc?' · <span class="est-attn-desc">'+X(i.desc)+'</span>':'')+'</button>'
+        +((i.code==='qty'||i.code==='price')?'<button type="button" class="btn btn-ghost btn-xs" onclick="estZeroOk('+i.ci+','+i.li+')" title="'+L('This zero is intentional (e.g. included at no charge)','Este cero es intencional (p. ej. incluido sin cargo)')+'">'+L('Zero is intentional','El cero es intencional')+'</button>':'')
+        +'</div>';}).join(''):'<div class="est-none">'+L('Every line has a description, quantity, unit and price.','Cada partida tiene descripción, cantidad, unidad y precio.')+'</div>')
+    +'</div></div>';
+  // Notes + SOW
+  if(fin)h+='<div class="est-card"><div class="est-card-hd"><span>'+L('Internal notes','Notas internas')+'</span></div><div style="padding:12px 14px"><textarea class="lp-desc" placeholder="'+L('Internal notes, margin targets…','Notas internas, objetivos de margen…')+'" onchange="estSetNotes(this.value)">'+X(_EST.notes||'')+'</textarea></div></div>';
   h+='<div class="est-card"><div class="est-card-hd"><span>Scope of Work</span><button class="btn btn-xs btn-ghost" onclick="var e=document.getElementById(\'estSowPrev\');if(e)e.style.display=e.style.display===\'none\'?\'block\':\'none\'">'+L('Show / hide','Ver / ocultar')+'</button></div><div id="estSowPrev" style="display:none;padding:12px 14px"><div class="est-sowbox">'+X(_EST.sow||'')+'</div></div></div>';
+  /* ── Siguiente paso ── */
   h+='<div class="est-next-title">'+L('Next step','Siguiente paso')+'</div>';
   h+='<div class="est-next-grid">'
-    +'<button class="btn btn-gold lead-nextbtn" onclick="estGcQuotePdf()">'+_I('filetext')+' '+L('Quote PDF (for GCs)','PDF Cotización (GCs)')+'</button>'
+    +(_EST.coId?'':(esSel
+      ?'<button class="btn btn-gold lead-nextbtn" onclick="switchTab(\'leadprop\')">'+_I('globe')+' '+L('Create proposal','Crear propuesta')+' <small>'+L('from “','desde “')+X(_EST.name||'')+'”</small></button>'
+      :'<button class="btn btn-gold lead-nextbtn" onclick="estUsarPropuesta('+jid+');setTimeout(function(){switchTab(\'leadprop\');},150)">'+_I('globe')+' '+L('Use this estimate & create proposal','Usar este estimado y crear propuesta')+'</button>'))
+    +'<button class="btn btn-ghost lead-nextbtn" onclick="estGcQuotePdf()">'+_I('filetext')+' '+L('Quote PDF (for GCs)','PDF Cotización (GCs)')+'</button>'
     +'<button class="btn btn-ghost lead-nextbtn est-subpdf" onclick="estSubPdf()">'+_I('filetext')+' '+L('Work order — Spanish, no prices (subs)','Orden de trabajo — español, sin precios (subs)')+'</button>'
-    +(canFinance()?('<button class="btn btn-ghost lead-nextbtn est-costpdf" onclick="estCostPdf()" title="'
+    +(fin?('<button class="btn btn-ghost lead-nextbtn est-costpdf" onclick="estCostPdf()" title="'
         +L('Description, unit, quantity and unit price for every line','Descripción, unidad, cantidad y precio unitario de cada partida')+'">'
-        +_I('calc')+' '+L('Cost detail','Detalle de costos')+'</button>'):'')
-    +'<button class="btn btn-ghost lead-nextbtn" onclick="switchTab(\'leadprop\')">'+_I('globe')+' '+L('Create Proposal','Crear propuesta')+'</button>'
-    +'<button class="btn btn-ghost lead-nextbtn" onclick="leadSkipToExec()">'+_I('check')+' '+L('Skip to Tasks','Saltar a Tareas')+'</button>'
+        +_I('calc')+' '+L('Internal cost breakdown','Desglose interno de costos')+'</button>'):'')
+    +'<button class="btn btn-ghost lead-nextbtn" onclick="leadSkipToExec()" title="'+L('Marks the project approved and opens Tasks — no proposal.','Marca el proyecto aprobado y abre Tareas — sin propuesta.')+'">'+_I('check')+' '+L('Skip to Tasks','Saltar a Tareas')+' <small>'+L('marks approved','marca aprobado')+'</small></button>'
     +'</div>';
   h+='<div class="est-next-hint">'+L('The Quote PDF merges your SOW + this estimate into one formal quote — ideal for general contractors, no client proposal needed.','El PDF de cotización une tu SOW + este estimado en una sola cotización formal — ideal para GCs, sin necesidad del proposal.')+'</div>';
   area.innerHTML=h;
 }
+/* Vista del cliente: conceptos e importes al cliente. Sin cantidades,
+   tarifas ni markup. Los números son los mismos de la cotización. */
+function _estClientViewHTML(){
+  var c=estClientRows(_EST);
+  var alw=estAllowRows(_EST.categories||[],_EST.adjustments||[],_EST.profitRows||[]);
+  var h='<div class="est-client"><div class="est-client-hd"><b>'+L('What the client sees','Lo que ve el cliente')+'</b><small>'+L('Same totals as the cost view. Unit prices, costs and markup stay internal.','Los mismos totales de la vista de costos. Precios unitarios, costos y markup se quedan internos.')+'</small></div>';
+  if(!c.rows.length)h+='<div class="est-none">'+L('No priced scope yet.','Aún no hay alcance con precio.')+'</div>';
+  else h+='<div class="est-client-rows">'+c.rows.map(function(r){return '<div class="est-client-row"><span>'+X(r.name)+'</span><b>'+estFmt(r.amt)+'</b></div>';}).join('')+'</div>';
+  if(alw.length)h+='<div class="est-client-alw"><div class="est-client-alw-t">'+L('Allowances','Allowances')+'</div>'+alw.map(function(r){return '<div class="est-client-row"><span>'+X(r.desc||'')+(r.qty?' <small>'+X(String(r.qty))+' '+X(r.unit||'')+'</small>':'')+'</span><b>'+estFmt(r.client)+'</b></div>';}).join('')+'</div>';
+  h+='<div class="est-client-total"><span>'+L('Client total','Total al cliente')+'</span><b>'+estFmt(c.grand)+'</b></div></div>';
+  return h;
+}
+/* Agrupado por fase (solo lectura): cada partida conserva su categoría */
+function _estPhaseGroupHTML(cats,phases){
+  var groups=phases.map(function(ph){return {id:ph.id,name:ph.name||ph.id,lines:[]};});
+  var un={id:'',name:L('Unassigned items','Partidas sin asignar'),lines:[]};
+  cats.forEach(function(cat,ci){(cat.lines||[]).forEach(function(ln,li){var g=groups.find(function(x){return x.id===ln.phaseId;})||un;g.lines.push({ln:ln,cat:cat.cat,ci:ci,li:li});});});
+  var all=groups.concat(un.lines.length?[un]:[]);
+  return '<div class="est-pg">'+all.map(function(g){
+    var tot=g.lines.reduce(function(s,x){return s+(+(x.ln.qty||0))*(+(x.ln.unitPrice||0));},0);
+    return '<div class="est-card est-pg-card'+(g.id?'':' is-un')+'"><div class="est-card-hd"><span>'+X(g.name)+' <small class="est-hd-note">'+g.lines.length+' '+L(g.lines.length===1?'line':'lines',g.lines.length===1?'partida':'partidas')+'</small></span><b>'+estFmt(tot)+'</b></div>'
+      +(g.lines.length?g.lines.map(function(x){return '<button type="button" class="est-pg-row" onclick="estSetGroup(\'cat\');setTimeout(function(){estGoLine('+x.ci+','+x.li+');},60)"><span class="est-pg-cat" style="color:'+_inkC(EST_CC[x.cat]||'var(--tx2)')+'">'+X(x.cat)+'</span><span class="est-pg-desc">'+X(x.ln.desc||L('(no description)','(sin descripción)'))+'</span><span class="est-pg-num">'+(x.ln.qty||0)+' '+X(x.ln.unit||'')+'</span><b>'+estFmt((+(x.ln.qty||0))*(+(x.ln.unitPrice||0)))+'</b></button>';}).join(''):'<div class="est-none">'+L('No lines in this phase','Sin partidas en esta fase')+'</div>')
+      +'</div>';}).join('')+'</div>';
+}
+function estSetView(v){_estView=(v==='client')?'client':'cost';_estMoreOpen=false;_estRender();}
+function estSetGroup(g){_estGroup=(g==='phase')?'phase':'cat';_estMoreOpen=false;_estRender();}
+function estMoreToggle(){_estMoreOpen=!_estMoreOpen;var m=document.querySelector('.est-more');var b=document.querySelector('.est-more-btn');if(m)m.hidden=!_estMoreOpen;if(b)b.setAttribute('aria-expanded',String(_estMoreOpen));}
+function estGoLine(ci,li){
+  if(_estView!=='cost'||_estGroup!=='cat'){_estView='cost';_estGroup='cat';_estRender();}
+  var el=document.getElementById('est-li-'+ci+'-'+li);if(!el)return;
+  el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.add('is-hl');setTimeout(function(){el.classList.remove('is-hl');},1600);
+  var inp=el.querySelector('input');if(inp)try{inp.focus({preventScroll:true});}catch(e){}
+}
+/* Un cero confirmado no es un error para siempre */
+function estZeroOk(ci,li){if(!_EST)return;var ln=_EST.categories[ci]&&_EST.categories[ci].lines[li];if(!ln)return;ln.zeroOk=!ln.zeroOk;estSchedSave();_estRender();}
+async function estSowReviewed(){if(!_EST)return;_EST.sowReviewedAt=Date.now();await estSave(true);_estRender();toast(L('Marked as reviewed against the current scope ✓','Marcado como revisado contra el alcance actual ✓'));}
+try{['estClientRows','estIssues','estSetView','estSetGroup','estMoreToggle','estGoLine','estZeroOk','estSowReviewed','_estClientViewHTML'].forEach(function(fn){window[fn]=eval(fn);});}catch(e){}
 /* Skip proposal/quote and jump straight to execution (unlock full tabs). */
 function leadSkipToExec(){
   var p=CP();if(!p)return;
@@ -43324,7 +43793,7 @@ function _estCatHTML(cat,ci,phases){
   var lines=(cat.lines||[]).map(function(ln,li){
     var lt=(+(ln.qty||0))*(+(ln.unitPrice||0));
     var phaseSel=phs.length?('<div class="est-li-phase">'+_I('route')+'<select onchange="estSetLinePhase('+ci+','+li+',this.value)"><option value="">'+L('— no phase —','— sin fase —')+'</option>'+phs.map(function(ph){return '<option value="'+X(ph.id)+'"'+(ln.phaseId===ph.id?' selected':'')+'>'+X(ph.name||ph.id)+'</option>';}).join('')+'</select></div>'):'';
-    return '<div class="est-li-wrap">'
+    return '<div class="est-li-wrap" id="est-li-'+ci+'-'+li+'">'
       +'<div class="est-li">'
       +'<input class="est-in est-in-desc" list="'+_estDLId(cat.cat)+'" placeholder="'+L('Description','Descripción')+'" value="'+X(ln.desc||'')+'" oninput="estOnLI('+ci+','+li+',\'desc\',this.value)" onchange="estLibFill('+ci+','+li+',this.value)">'
       +'<input class="est-in est-in-unit" placeholder="'+L('Unit','Unidad')+'" value="'+X(ln.unit||'')+'" oninput="estOnLI('+ci+','+li+',\'unit\',this.value)">'
@@ -43351,7 +43820,17 @@ function _estCatHTML(cat,ci,phases){
     +'<div class="est-li est-li-hd"><span>'+L('Description','Descripción')+'</span><span>'+L('Unit','Unidad')+'</span><span>'+L('Qty','Cant.')+'</span><span>$/u</span><span>'+L('Total','Total')+'</span><span></span></div>'
     +lines+'</div>';
 }
-function _estAdjHTML(a,ai){return '<div class="est-adj"><span class="est-adj-name">'+X(a.name||'')+'</span><span class="est-adj-apply">'+(a.apply==='labor'?'→Labor':a.apply==='materials'?'→Materials':'→Total')+'</span><span class="est-adj-val">'+(a.type==='pct'?'+'+a.value+'%':estFmt(a.value))+'</span><button class="est-li-del" onclick="estDelAdj('+ai+')">&#10005;</button></div>';}
+/* Cada factor dice sobre qué base aplica y cuánto suma en dinero: un
+   porcentaje sin base no se entiende. El cálculo es el de siempre. */
+function _estAdjEffect(a){
+  var cats=(_EST&&_EST.categories)||[];
+  var base=a.apply==='labor'?estCatSum(cats,'Labor'):a.apply==='materials'?estCatSum(cats,'Materials'):cats.reduce(function(s,c){return s+estCatTot(c.lines);},0);
+  return a.type==='pct'?base*(+(a.value||0)/100):(+(a.value||0));
+}
+function _estAdjHTML(a,ai){
+  var baseLbl=a.apply==='labor'?L('on labor','sobre mano de obra'):a.apply==='materials'?L('on materials','sobre materiales'):L('on all categories','sobre todas las categorías');
+  return '<div class="est-adj"><span class="est-adj-name">'+X(a.name||'')+'</span><span class="est-adj-apply">'+(a.type==='pct'?'+'+a.value+'% '+baseLbl:L('fixed','fijo')+' '+baseLbl)+'</span><span class="est-adj-val" title="'+L('Effect on cost','Efecto en el costo')+'">+'+estFmt(_estAdjEffect(a))+'</span><button class="est-li-del" onclick="estDelAdj('+ai+')" aria-label="'+L('Remove factor','Quitar factor')+'">&#10005;</button></div>';
+}
 function _estProfHTML(r,ri,cats){
   var b=(cats||[]).filter(function(c){return c.cat===r.cat;}).reduce(function(s,c){return s+estCatTot(c.lines);},0);var pa=b*(+(r.pct||0)/100);
   return '<div class="est-prof"><select class="est-in" onchange="estOnProf('+ri+',\'cat\',this.value)">'+EST_CATS.map(function(c){return '<option'+(r.cat===c?' selected':'')+'>'+c+'</option>';}).join('')+'</select>'
@@ -43366,6 +43845,9 @@ function estRecalc(){
   function up(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
   up('sb-lab',estFmt(estCatSum(cats,'Labor')));up('sb-mat',estFmt(estCatSum(cats,'Materials')));up('sb-sup',estFmt(estCatSum(cats,'Supplies')));up('sb-sub',estFmt(estCatSum(cats,'Subcontractor')));up('sb-deb',estFmt(estCatSum(cats,'Debris/Dumpster')));
   up('sb-cost',estFmt(COST));up('gt-cost',estFmt(COST));up('gt-prof',estFmt(PROF));up('gt-misc',estFmt(MISC));up('gt-grand',estFmt(GRAND));
+  up('st-cost',estFmt(COST));up('st-prof',estFmt(PROF));up('st-misc',estFmt(MISC));up('st-grand',estFmt(GRAND));
+  try{var adjEls=document.querySelectorAll('#estAdj .est-adj-val');adjs.forEach(function(a,i){if(adjEls[i])adjEls[i].textContent='+'+estFmt(_estAdjEffect(a));});}catch(e){}
+  try{var iss=estIssues(_EST,CP());var b=document.getElementById('st-attn');if(b){b.textContent=iss.length?(iss.length+' '+L('to review','por revisar')):L('Nothing to review','Nada por revisar');b.className='est-sticky-attn'+(iss.some(function(i){return i.kind==='error';})?' is-err':iss.length?' is-warn':'');}}catch(e){}
 }
 function estOnLI(ci,li,f,v){var ln=_EST.categories[ci].lines[li];ln[f]=(f==='qty'||f==='unitPrice')?(parseFloat(v)||0):v;
   var lt=(+(ln.qty||0))*(+(ln.unitPrice||0));var le=document.getElementById('lt-'+ci+'-'+li);if(le)le.textContent=estFmt(lt);
@@ -43503,7 +43985,7 @@ async function estAI(silent){
     var parsed=_aiJson(txt);
     if(!parsed)throw new Error(L('The AI did not return a readable estimate. Try again.','La IA no devolvió un estimado legible. Inténtalo otra vez.'));
     var wasCut=_aiCut(d);
-    _EST.categories=parsed.categories||[];
+    _EST.categories=parsed.categories||[];_EST.linesAt=Date.now();
     _EST.adjustments=parsed.adjustmentSuggestions||[];
     if(parsed.profitSuggestions&&parsed.profitSuggestions.length)_EST.profitRows=parsed.profitSuggestions;
     if(parsed.miscSuggestions&&parsed.miscSuggestions.length)_EST.miscItems=parsed.miscSuggestions;
@@ -44099,21 +44581,10 @@ window.estCostPdf=estCostPdf;
 function estGcQuotePdf(){
   var p=CP();if(!p||!_EST)return;
   var cats=_EST.categories||[],adjs=_EST.adjustments||[],prof=_EST.profitRows||[],misc=_EST.miscItems||[],phases=_EST.phases||[];
-  var COST=estCostTotal(cats,adjs),GRAND=COST+estProfitTotal(cats,prof)+estMiscTotal(misc);
-  var totalBase=cats.reduce(function(s,c){return s+estCatTot(c.lines);},0);
-  // Build breakdown rows (client price per phase). Fallback: by category.
-  var rows=[];
-  var activePhases=phases.filter(function(ph){return ph.active!==false;});
-  if(activePhases.length&&totalBase>0){
-    activePhases.forEach(function(ph){
-      var pRaw=0;cats.forEach(function(cat){(cat.lines||[]).forEach(function(ln){if(ln.phaseId===ph.id)pRaw+=(+(ln.qty||0))*(+(ln.unitPrice||0));});});
-      if(pRaw<=0)return;
-      rows.push({name:ph.name||'Phase',amt:GRAND*(pRaw/totalBase)});
-    });
-  }
-  if(!rows.length&&totalBase>0){
-    cats.forEach(function(cat){var b=estCatTot(cat.lines);if(b>0)rows.push({name:cat.cat,amt:GRAND*(b/totalBase)});});
-  }
+  var _cr=estClientRows(_EST);var COST=_cr.cost,GRAND=_cr.grand;
+  // Breakdown rows (client price per phase; fallback by category) — the
+  // same rows the Client view shows on screen.
+  var rows=_cr.rows;
   _loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js').then(function(){
     try{
       var jsPDF=window.jspdf.jsPDF;var d=new jsPDF({unit:'pt',format:'letter'});
@@ -44655,7 +45126,7 @@ async function propSave(silent){
 }
 async function _propEnsureTotal(){
   var p=CP();if(!p)return 0;
-  var est=(typeof _EST!=='undefined'&&_EST&&_EST._pid===p.id)?_EST:(typeof estLoad==='function'?await estLoad():null);
+  var est=(typeof estSelectedDoc==='function'?await estSelectedDoc(p.id):((typeof _EST!=='undefined'&&_EST&&_EST._pid===p.id)?_EST:null));
   if(!est)return _PROP&&_PROP.grandTotal||0;
   return estCostTotal(est.categories||[],est.adjustments||[])+estProfitTotal(est.categories||[],est.profitRows||[])+estMiscTotal(est.miscItems||[]);
 }
@@ -44664,7 +45135,7 @@ async function _propEnsureTotal(){
    generar el contenido con IA para que el PDF salga bien. */
 async function _propSyncAllowances(){
   var p=CP();if(!p||!_PROP)return [];
-  var est=(typeof _EST!=='undefined'&&_EST&&_EST._pid===p.id)?_EST:(typeof estLoad==='function'?await estLoad():null);
+  var est=(typeof estSelectedDoc==='function'?await estSelectedDoc(p.id):((typeof _EST!=='undefined'&&_EST&&_EST._pid===p.id)?_EST:null));
   if(!est){_PROP.allowances=_PROP.allowances||[];return _PROP.allowances;}
   _PROP.allowances=estAllowRows(est.categories||[],est.adjustments||[],est.profitRows||[])
     .map(function(r){return {label:r.desc,amount:Math.round(r.client),unit:r.unit||'',qty:r.qty||0};});
@@ -44718,7 +45189,9 @@ function _propRender(){
   var totLi=(_PROP.lineItems||[]).reduce(function(s,l){return s+(parseFloat(l.amount)||0);},0);
   h+='<div class="lp-sec"><div class="lp-sec-t">'+L('Investment breakdown','Desglose de inversión')+'<button class="btn btn-xs btn-gold" style="margin-left:auto" onclick="propAddLine()">'+L('+ Line','+ Línea')+'</button></div>';
   h+=(_PROP.lineItems||[]).map(function(li,i){return _propLineHTML(li,i);}).join('');
-  h+='<div class="prop-total"><span>'+L('Total shown to client','Total mostrado al cliente')+'</span><b>'+estFmt(totLi||_PROP.grandTotal||0)+'</b></div>';
+  var _selN=(typeof estSelectedName==='function')?estSelectedName():'';
+  h+='<div class="prop-total"><span>'+L('Total shown to client','Total mostrado al cliente')+'</span><b>'+estFmt(totLi||_PROP.grandTotal||0)+'</b></div>'
+    +'<div class="prop-est-src">'+(_selN?L('Investment from estimate ','Inversión del estimado ')+'<b>'+X(_selN)+'</b>':'<b class="is-warn">'+L('No estimate selected for this proposal','Ningún estimado elegido para esta propuesta')+'</b>')+' <button type="button" class="btn btn-ghost btn-xs" onclick="estVolverALista();switchTab(\'leadest\')">'+(_selN?L('Change','Cambiar'):L('Choose','Elegir'))+'</button></div>';
   h+='<div class="lp-hint">'+L('If left empty, the estimator total is used: ','Si lo dejas vacío, se usa el total del estimador: ')+estFmt(_PROP.grandTotal||0)+'</div></div>';
   // Photos
   h+='<div class="lp-sec"><div class="lp-sec-t">'+L('Photos','Fotos')+'</div>';
@@ -45027,7 +45500,7 @@ async function propGenAI(){
   if(!_PROP)await propLoad();if(!_PROP)return;
   var k=localStorage.getItem('formo_api');
   if(!k){toast(L('Add your API key in Settings → API Key','Agrega tu API key en Ajustes → API Key'),'err');if(typeof openAppSettings==='function'){openAppSettings();if(typeof stab==='function')stab('api');}return;}
-  var p=CP();var est=(typeof _EST!=='undefined'&&_EST&&_EST._pid===p.id)?_EST:(typeof estLoad==='function'?await estLoad():null);
+  var p=CP();var est=(typeof estSelectedDoc==='function'?await estSelectedDoc(p.id):((typeof _EST!=='undefined'&&_EST&&_EST._pid===p.id)?_EST:null));
   var total=await _propEnsureTotal();_PROP.grandTotal=total;
   var sow=(p.sowDraft||(est&&est.sow)||'').trim();
   var phaseList=(est&&est.phases||[]).map(function(ph){return ph.name;}).filter(Boolean).join(', ');
